@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       initialRoute: 'tablon',
-      routes: {'tablon': (_) => TablonScreen()},
+      routes: {'tablon': (_) => const TablonScreen()},
     );
   }
 }
