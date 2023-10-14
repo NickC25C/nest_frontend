@@ -92,7 +92,7 @@ class Tablon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      height: 600,
+      height: 500,
       width: 700,
       child: const Stack(
         fit: StackFit.expand,
