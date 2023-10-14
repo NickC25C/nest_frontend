@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class BotonCircular extends StatelessWidget {
   final Icon iconoBoton;
+  final Function() click;
   const BotonCircular({
     super.key,
     required this.iconoBoton,
+    required this.click,
   });
 
   @override
@@ -18,7 +20,7 @@ class BotonCircular extends StatelessWidget {
           shape: CircleBorder(),
         ),
         child: IconButton(
-          onPressed: () {},
+          onPressed: click,
           icon: iconoBoton,
           color: Colors.white,
         ),

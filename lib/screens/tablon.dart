@@ -4,6 +4,7 @@ import 'package:nest_fronted/widgets/boton_circular.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
+clickar() {}
 
 class TablonScreen extends StatelessWidget {
   const TablonScreen({super.key});
@@ -20,7 +21,10 @@ class TablonScreen extends StatelessWidget {
           Tablon(),
 
           //Botón para publicar
-          BotonCircular(iconoBoton: Icon(Icons.add))
+          BotonCircular(
+            iconoBoton: Icon(Icons.add),
+            click: clickar,
+          )
         ],
       ),
       bottomNavigationBar: BarraNavegacion(),
