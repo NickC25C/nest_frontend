@@ -84,7 +84,6 @@ class Tablon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      color: Colors.brown,
       height: 600,
       width: 700,
       child: const Column(
