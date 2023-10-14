@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
+import 'package:nest_fronted/widgets/boton_circular.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
@@ -16,7 +17,10 @@ class TablonScreen extends StatelessWidget {
           BarraTitulo(titulo: tituloScreen),
 
           //Tablón
-          Tablon()
+          Tablon(),
+
+          //Botón para publicar
+          BotonCircular(iconoBoton: Icon(Icons.add))
         ],
       ),
       bottomNavigationBar: BarraNavegacion(),
@@ -86,13 +90,22 @@ class Tablon extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       height: 600,
       width: 700,
-      child: const Column(
+      child: const Stack(
+        fit: StackFit.expand,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('prueba')],
-          )
+          Image(
+            image: AssetImage('assets/images/fondoTablon.jpg'),
+            fit: BoxFit.fill,
+          ),
+          Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text('prueba')],
+              )
+            ],
+          ),
         ],
       ),
     );
