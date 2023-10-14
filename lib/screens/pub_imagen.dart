@@ -12,6 +12,7 @@ class PubImagenScreen extends StatelessWidget {
       body: Column(
         children: [
           BarraPublicar(titulo: tituloScreen),
+          SizedBox(height: 20.0,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -33,15 +34,21 @@ class BotonIzquierdo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150.0,
-      height: 50.0,
-      child: TextButton.icon(
+      width: 150,
+      height: 110,
+      child: ElevatedButton(
         onPressed: (){},
-        icon: Icon(Icons.photo, color: Colors.white,),
-        label: Text('Seleccionar foto',
-            style: const TextStyle(color: Colors.white)),
-        style: TextButton.styleFrom(
-          padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.photo, color: Colors.white,),
+            SizedBox(height: 3.0,),
+            Text('Seleccionar foto', style: TextStyle(fontSize: 16))
+          ],
+        ),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
           backgroundColor: Colors.blueAccent,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -50,7 +57,7 @@ class BotonIzquierdo extends StatelessWidget {
               )
           ),
         ),
-      ),
+      )
     );
   }
 }
@@ -63,16 +70,23 @@ class BotonDerecho extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150.0,
-      height: 50.0,
-      child: TextButton.icon(
+        width: 150,
+        height: 110,
+        child: ElevatedButton(
         onPressed: (){},
-        icon: Icon(Icons.camera_alt, color: Colors.white,),
-        label: Text('Hacer foto',
-            style: const TextStyle(color: Colors.white)),
-        style: TextButton.styleFrom(
-          padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.camera_alt, color: Colors.white,),
+            SizedBox(height: 3.0,),
+            Text('Hacer foto', style: TextStyle(fontSize: 16))
+          ],
+        ),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
           backgroundColor: Colors.blueAccent,
+
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(30.0),

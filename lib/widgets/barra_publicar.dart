@@ -11,7 +11,7 @@ class BarraPublicar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      width: 370,
+      width: double.infinity,
       margin: const EdgeInsets.only(top: 40),
       color: Colors.grey,
       child: Row(
