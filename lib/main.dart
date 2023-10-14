@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:nest_fronted/screens/tablon.dart';
 
@@ -12,41 +13,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: 'tablon',
+      initialRoute: 'pub_imagen',
       routes: {
         'tablon': (_) => const TablonScreen(),
-        'pub_notas': (_) => const PubNotaScreen()
+        'pub_notas': (_) => const PubNotaScreen(),
+        'pub_imagen': (_) => const PubImagenScreen()
       },
-    );
-  }
-}
-
-//iconos de flechas para retroceder o pasar a siguiente
-class flechas extends StatelessWidget {
-  const flechas({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 25.0),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {},
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 25.0),
-          child: IconButton(
-            icon: Icon(Icons.arrow_forward),
-            onPressed: () {},
-          ),
-        ),
-      ],
     );
   }
 }
