@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_circular.dart';
+import 'package:nest_fronted/widgets/nota.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
@@ -11,23 +12,26 @@ class TablonScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           //Barra de título
-          BarraTitulo(titulo: tituloScreen),
+          const BarraTitulo(titulo: tituloScreen),
 
           //Tablón
-          Tablon(),
+          const Tablon(),
 
           //Botón para publicar
-          BotonCircular(
-            iconoBoton: Icon(Icons.add),
-            click: clickar,
-          )
+          Container(
+              alignment: Alignment.bottomRight,
+              margin: const EdgeInsets.only(right: 20, top: 10),
+              child: const BotonCircular(
+                iconoBoton: Icon(Icons.add),
+                click: clickar,
+              ))
         ],
       ),
-      bottomNavigationBar: BarraNavegacion(),
+      bottomNavigationBar: const BarraNavegacion(),
     );
   }
 }
@@ -94,22 +98,24 @@ class Tablon extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       height: 500,
       width: 700,
-      child: const Stack(
+      child: Stack(
         fit: StackFit.expand,
         children: [
-          Image(
-            image: AssetImage('assets/images/fondoTablon.jpg'),
-            fit: BoxFit.fill,
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10.0),
+                image: const DecorationImage(
+                    image: AssetImage('assets/images/fondoTablon.jpg'),
+                    fit: BoxFit.fill)),
           ),
-          Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text('prueba')],
+          ListView(
+            children: const [
+              Nota(
+                tituloNota: 'SALUDO',
               )
             ],
-          ),
+          )
         ],
       ),
     );
