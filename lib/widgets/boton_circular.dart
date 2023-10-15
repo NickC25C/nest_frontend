@@ -11,19 +11,15 @@ class BotonCircular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomRight,
-      margin: const EdgeInsets.only(right: 20, top: 10),
-      child: Ink(
-        decoration: const ShapeDecoration(
-          color: Colors.lightBlue,
-          shape: CircleBorder(),
-        ),
-        child: IconButton(
-          onPressed: click,
-          icon: iconoBoton,
-          color: Colors.white,
-        ),
+    return Ink(
+      decoration: const ShapeDecoration(
+        color: Colors.lightBlue,
+        shape: CircleBorder(),
+      ),
+      child: IconButton(
+        onPressed: click,
+        icon: iconoBoton,
+        color: Colors.white,
       ),
     );
   }
