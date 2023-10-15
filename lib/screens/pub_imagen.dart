@@ -9,27 +9,38 @@ class PubImagenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          BarraPublicar(titulo: tituloScreen),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BotonIzquierdo(),
-              BotonDerecho(),
-            ],
-          ),
-          AnyadirImagen(imagen: 'assets/images/anyadir_imagen.png'),
-          Titulo(),
-          Column(
-            children: [
-              DropdownSample(),
-              Listado(),
-            ],
-          )
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BarraPublicar(titulo: tituloScreen),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BotonIzquierdo(),
+                  BotonDerecho(),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: AnyadirImagen(imagen: 'assets/images/anyadir_imagen.png'),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 35.0),
+              child: Titulo(),
+            ),
+            Column(
+              children: [
+                DropdownSample(),
+                Listado(),
+              ],
+            )
 
-        ],
+          ],
+        ),
       )
     );
   }
@@ -198,7 +209,7 @@ class Listado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 130,
+      height: 150,
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
