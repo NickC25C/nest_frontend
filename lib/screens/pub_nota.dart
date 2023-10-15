@@ -114,26 +114,18 @@ class Titulin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Título:',
-          style: TextStyle(
-            fontSize: 17.0,
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      child: Container(
+        width: double.infinity,
+        child: TextField(
+          decoration: InputDecoration(
+            labelText : 'Título',
+            border: UnderlineInputBorder(),
+            hintText: 'Nick putero',
           ),
         ),
-        SizedBox(width: 8.0),
-        Container(
-          width: 200.0,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Nick putero',
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -198,7 +190,7 @@ class EnviarA extends StatelessWidget {
         ),
         SizedBox(height: 25.5),
         Container(
-          height: 150.0,
+          height: 120.0,
           width: 350,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
