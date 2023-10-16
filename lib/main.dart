@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: 'configuracion',
+      initialRoute: 'tablon',
       routes: {
-        'tablon': (_) => const TablonScreen(),
+        'tablon': (_) => TablonScreen(),
         'pub_notas': (_) => const PubNotaScreen(),
         'pub_imagen': (_) => const PubImagenScreen(),
         'crea_grupo': (_) => const CrearGrupos(),

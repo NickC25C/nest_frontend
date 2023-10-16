@@ -10,18 +10,13 @@ class ConfiguracionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
+    return const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           BarraTitulo(titulo: tituloScreen,),
           BotonNotif()
-
-
         ],
-      ),
-      bottomNavigationBar: BarraNavegacion(),
-    );
+      );
   }
 }
 

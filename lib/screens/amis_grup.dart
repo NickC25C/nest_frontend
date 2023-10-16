@@ -9,8 +9,7 @@ class AmisGrupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
+    return const Column(
         children: [
 
           BarraTitulo(titulo: tituloScreen),
@@ -21,8 +20,6 @@ class AmisGrupScreen extends StatelessWidget {
 
           Crear(),
         ],
-      ),
-      bottomNavigationBar: BarraNavegacion(),
     );
   }
 }

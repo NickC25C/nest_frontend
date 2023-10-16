@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/screens/amis_grup.dart';
+import 'package:nest_fronted/screens/configuracion.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_circular.dart';
 import 'package:nest_fronted/widgets/nota.dart';
@@ -8,46 +10,62 @@ const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
 clickar() {}
 
-class TablonScreen extends StatelessWidget {
-  const TablonScreen({super.key});
+class TablonScreen extends StatefulWidget {
+  @override
+  _TablonScreenState createState() => _TablonScreenState();
+}
+
+class _TablonScreenState extends State<TablonScreen> {
+  int selectedIndex = 0;
+
+  void onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        children: [
-          //Barra de título
-          BarraTitulo(titulo: tituloScreen),
+    final List<Widget> screens = [
+      const Tablon(), // Esta sería tu "página" de inicio
+      Text('Página de búsqueda'),
+      const AmisGrupScreen(),
+      const ConfiguracionScreen(),
+      // Agrega aquí tus otras pantallas
+    ];
 
-          //Tablón
-          Tablon(),
-        ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Tablón o contenido principal
+            screens[selectedIndex],
+          ],
+        ),
       ),
-      bottomNavigationBar: const BarraNavegacion(),
+      bottomNavigationBar: BarraNavegacion(
+        selectedIndex: selectedIndex,
+        onItemSelected: onItemTapped,
+      ),
     );
   }
 }
 
-class BarraNavegacion extends StatefulWidget {
+class BarraNavegacion extends StatelessWidget  {
+  final int selectedIndex;
+  final Function(int) onItemSelected;
   const BarraNavegacion({
     super.key,
+    required  this.selectedIndex,
+    required  this.onItemSelected,
   });
 
-  @override
-  State<BarraNavegacion> createState() => _BarraNavegacionState();
-}
-
-class _BarraNavegacionState extends State<BarraNavegacion> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         currentIndex: selectedIndex,
-        onTap: (value) {
-          setState(() {
-            selectedIndex = value;
-          });
-        },
+        onTap: onItemSelected,
         elevation: 0,
         items: const [
           BottomNavigationBarItem(
@@ -86,38 +104,43 @@ class Tablon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      height: 600,
-      width: 700,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(10.0),
-                image: const DecorationImage(
-                    image: AssetImage('assets/images/fondoTablon.jpg'),
-                    fit: BoxFit.fill)),
-          ),
-          ListView(
-            children: const [
-              Nota(
-                tituloNota: 'SALUDO',
+    return Column(
+      children: [
+        const BarraTitulo(titulo: tituloScreen),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          height: 600,
+          width: 700,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(10.0),
+                    image: const DecorationImage(
+                        image: AssetImage('assets/images/fondoTablon.jpg'),
+                        fit: BoxFit.fill)),
               ),
-              Foto(url: ('assets/images/rata.png'))
+              ListView(
+                children: const [
+                  Nota(
+                    tituloNota: 'SALUDO',
+                  ),
+                  Foto(url: ('assets/images/rata.png'))
+                ],
+              ),
+              Container(
+                  alignment: Alignment.bottomRight,
+                  margin: const EdgeInsets.all(10),
+                  child: const BotonCircular(
+                    iconoBoton: Icon(Icons.add),
+                    click: clickar,
+                  ))
             ],
           ),
-          Container(
-              alignment: Alignment.bottomRight,
-              margin: const EdgeInsets.all(10),
-              child: const BotonCircular(
-                iconoBoton: Icon(Icons.add),
-                click: clickar,
-              ))
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
