@@ -12,8 +12,9 @@ class ConfiguracionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-
+          BarraTitulo(titulo: tituloScreen,),
           BotonNotif()
 
 

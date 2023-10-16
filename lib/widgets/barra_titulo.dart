@@ -11,7 +11,7 @@ class BarraTitulo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      margin: const EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 40),
       color: Colors.grey,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
