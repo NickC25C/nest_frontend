@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_circular.dart';
 import 'package:nest_fronted/widgets/nota.dart';
+import 'package:nest_fronted/widgets/foto.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
@@ -12,23 +13,14 @@ class TablonScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
           //Barra de título
-          const BarraTitulo(titulo: tituloScreen),
+          BarraTitulo(titulo: tituloScreen),
 
           //Tablón
-          const Tablon(),
-
-          //Botón para publicar
-          Container(
-              alignment: Alignment.bottomRight,
-              margin: const EdgeInsets.only(right: 20, top: 10),
-              child: const BotonCircular(
-                iconoBoton: Icon(Icons.add),
-                click: clickar,
-              ))
+          Tablon(),
         ],
       ),
       bottomNavigationBar: const BarraNavegacion(),
@@ -96,7 +88,7 @@ class Tablon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      height: 500,
+      height: 600,
       width: 700,
       child: Stack(
         fit: StackFit.expand,
@@ -113,9 +105,17 @@ class Tablon extends StatelessWidget {
             children: const [
               Nota(
                 tituloNota: 'SALUDO',
-              )
+              ),
+              Foto(url: ('assets/images/rata.png'))
             ],
-          )
+          ),
+          Container(
+              alignment: Alignment.bottomRight,
+              margin: const EdgeInsets.all(10),
+              child: const BotonCircular(
+                iconoBoton: Icon(Icons.add),
+                click: clickar,
+              ))
         ],
       ),
     );
