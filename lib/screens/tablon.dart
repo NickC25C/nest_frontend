@@ -10,89 +10,14 @@ const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
 clickar() {}
 
-class TablonScreen extends StatefulWidget {
-  @override
-  _TablonScreenState createState() => _TablonScreenState();
-}
-
-class _TablonScreenState extends State<TablonScreen> {
-  int selectedIndex = 0;
-
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
+class TablonScreen extends StatelessWidget {
+  const TablonScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> screens = [
-      const Tablon(), // Esta sería tu "página" de inicio
-      Text('Página de búsqueda'),
-      const AmisGrupScreen(),
-      const ConfiguracionScreen(),
-      // Agrega aquí tus otras pantallas
-    ];
-
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Tablón o contenido principal
-            screens[selectedIndex],
-          ],
-        ),
-      ),
-      bottomNavigationBar: BarraNavegacion(
-        selectedIndex: selectedIndex,
-        onItemSelected: onItemTapped,
-      ),
+    return SingleChildScrollView(
+      child: Tablon(),
     );
-  }
-}
-
-class BarraNavegacion extends StatelessWidget  {
-  final int selectedIndex;
-  final Function(int) onItemSelected;
-  const BarraNavegacion({
-    super.key,
-    required  this.selectedIndex,
-    required  this.onItemSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: selectedIndex,
-        onTap: onItemSelected,
-        elevation: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'Home',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            activeIcon: Icon(Icons.saved_search),
-            label: 'Search',
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            activeIcon: Icon(Icons.group_add),
-            label: 'Friends',
-            backgroundColor: Colors.purpleAccent,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            activeIcon: Icon(Icons.settings_applications),
-            label: 'Settings',
-            backgroundColor: Colors.teal,
-          ),
-        ]);
   }
 }
 
