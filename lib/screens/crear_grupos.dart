@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/screens/tablon.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
+import 'package:nest_fronted/screens/tablon.dart';
 
 const tituloScreen = 'NUEVO GRUPO';
 
@@ -57,7 +59,12 @@ class BarraGrupo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TablonScreen()),
+              );
+            },
             icon: Icon(Icons.arrow_circle_left, color: Colors.white, size: 30),
           ),
           Text(
