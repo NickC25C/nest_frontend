@@ -21,58 +21,6 @@ class ConfiguracionScreen extends StatelessWidget {
 }
 
 
-//barra de navegacion inferior
-class BarraNavegacion extends StatefulWidget {
-  const BarraNavegacion({
-    super.key,
-  });
-
-  @override
-  State<BarraNavegacion> createState() => _BarraNavegacionState();
-}
-
-class _BarraNavegacionState extends State<BarraNavegacion> {
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: selectedIndex,
-        onTap: (value) {
-          setState(() {
-            selectedIndex = value;
-          });
-        },
-        elevation: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'Home',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            activeIcon: Icon(Icons.saved_search),
-            label: 'Search',
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            activeIcon: Icon(Icons.group_add),
-            label: 'Friends',
-            backgroundColor: Colors.purpleAccent,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            activeIcon: Icon(Icons.settings_applications),
-            label: 'Settings',
-            backgroundColor: Colors.teal,
-          ),
-        ]);
-  }
-}
-
-
 class BotonNotif extends StatefulWidget {
   const BotonNotif({Key? key}) : super(key: key);
 
