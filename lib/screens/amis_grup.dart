@@ -69,13 +69,19 @@ class Solicitudes extends StatelessWidget {
                           //ja vorem
                         },
                         child: Text('✔️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                       SizedBox(width: 8.0),
                       ElevatedButton(
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Text('❌'),
+                        child: Text('✖️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                     ],
                   ),
@@ -90,13 +96,19 @@ class Solicitudes extends StatelessWidget {
                           //ja vorem
                         },
                         child: Text('✔️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                       SizedBox(width: 8.0),
                       ElevatedButton(
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Text('❌'),
+                        child: Text('✖️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                     ],
                   ),
@@ -111,13 +123,19 @@ class Solicitudes extends StatelessWidget {
                           //ja vorem
                         },
                         child: Text('✔️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                       SizedBox(width: 8.0),
                       ElevatedButton(
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Text('❌'),
+                        child: Text('✖️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                     ],
                   ),
@@ -132,13 +150,19 @@ class Solicitudes extends StatelessWidget {
                           //ja vorem
                         },
                         child: Text('✔️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                       SizedBox(width: 8.0),
                       ElevatedButton(
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Text('❌'),
+                        child: Text('✖️'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                        ),
                       ),
                     ],
                   ),
@@ -299,6 +323,7 @@ class Crear extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purpleAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
