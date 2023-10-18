@@ -1,6 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:nest_fronted/screens/amis_grup.dart';
-import 'package:nest_fronted/screens/configuracion.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_circular.dart';
 import 'package:nest_fronted/widgets/nota.dart';
@@ -8,27 +8,45 @@ import 'package:nest_fronted/widgets/foto.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
-clickar() {}
 
-class TablonScreen extends StatelessWidget {
+double _opacityLevel = 0;
+double _sigmaLevel = 0;
+
+class TablonScreen extends StatefulWidget {
   const TablonScreen({super.key});
+
+  @override
+  TablonState createState() => TablonState();
+}
+
+class TablonState extends State<TablonScreen> {
+  void publicar() {
+    setState(() {
+      _opacityLevel = 1;
+      _sigmaLevel = 10;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Tablon(),
-    );
+        child: Stack(
+      children: <Widget>[
+        tablon(),
+        Container(
+            child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+          child: Container(
+            color: Colors.black.withOpacity(_opacityLevel),
+          ),
+        ))
+      ],
+    ));
   }
-}
 
 //Se ha de cambiar por un stack para la foto de fondo
-class Tablon extends StatelessWidget {
-  const Tablon({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
+  Widget tablon() {
     return Column(
       children: [
         const BarraTitulo(titulo: tituloScreen),
@@ -56,12 +74,11 @@ class Tablon extends StatelessWidget {
                 ],
               ),
               Container(
-                  alignment: Alignment.bottomRight,
-                  margin: const EdgeInsets.all(10),
-                  child: const BotonCircular(
-                    iconoBoton: Icon(Icons.add),
-                    click: clickar,
-                  ))
+                alignment: Alignment.bottomRight,
+                margin: const EdgeInsets.all(10),
+                child: BotonCircular(
+                    iconoBoton: const Icon(Icons.add), click: publicar),
+              ),
             ],
           ),
         ),
