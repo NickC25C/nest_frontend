@@ -33,12 +33,13 @@ class Solicitudes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 40.5),
         Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Text(
             'Solicitudes:',
             style: TextStyle(
@@ -48,9 +49,11 @@ class Solicitudes extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8.0),
-        Container(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Container(
           height: 190.0,
-          width: 350.0,
+          width: double.infinity,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(10.0),
@@ -171,6 +174,7 @@ class Solicitudes extends StatelessWidget {
             ),
           ),
         ),
+        ),
       ],
     );
   }
@@ -189,7 +193,7 @@ class Grupos extends StatelessWidget {
       children: [
         SizedBox(height: 40.5),
         Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Text(
             'Grupos:',
             style: TextStyle(
@@ -199,9 +203,11 @@ class Grupos extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8.0),
-        Container(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Container(
           height: 190.0,
-          width: 350.0,
+          width: double.infinity,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(10.0),
@@ -295,6 +301,7 @@ class Grupos extends StatelessWidget {
             ),
           ),
         ),
+          ),
       ],
     );
   }
