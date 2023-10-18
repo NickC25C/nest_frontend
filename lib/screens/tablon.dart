@@ -33,13 +33,12 @@ class TablonState extends State<TablonScreen> {
         child: Stack(
       children: <Widget>[
         tablon(),
-        Container(
-            child: BackdropFilter(
+        BackdropFilter(
           filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
           child: Container(
             color: Colors.black.withOpacity(_opacityLevel),
           ),
-        ))
+        )
       ],
     ));
   }
