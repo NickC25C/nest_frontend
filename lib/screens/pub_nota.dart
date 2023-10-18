@@ -20,7 +20,7 @@ class PubNotaScreen extends StatelessWidget {
 
           Titulin(),
 
-          Nota(),
+          EscribirNota(),
 
           EnviarA(),
 
@@ -131,8 +131,8 @@ class Titulin extends StatelessWidget {
 }
 
 //contenido de la nota
-class Nota extends StatelessWidget {
-  const Nota({
+class EscribirNota extends StatelessWidget {
+  const EscribirNota({
     Key? key,
   }) : super(key: key);
 

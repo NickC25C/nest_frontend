@@ -5,6 +5,9 @@ import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:nest_fronted/widgets/foto.dart';
+import 'package:nest_fronted/screens/pub_imagen.dart';
+import 'package:nest_fronted/screens/pub_nota.dart';
+import 'package:page_transition/page_transition.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
@@ -57,26 +60,12 @@ class TablonState extends State<TablonScreen> {
             fit: StackFit.expand,
             children: [
               ListView(
-                children: const [
-                  Nota(
-                    tituloNota: 'SALUDO',
-                  ),
+                children: [
+                  Nota(tituloNota: 'SALUDO'),
                   Foto(url: ('assets/images/rata.png'))
                 ],
               ),
-              BotonExpandible(
-                distance: 112,
-                children: [
-                  ActionButton(
-                    icon: const Icon(Icons.photo),
-                    onPressed: () => {},
-                  ),
-                  ActionButton(
-                    icon: const Icon(Icons.text_snippet),
-                    onPressed: () => {},
-                  ),
-                ],
-              ),
+              BotonPublicar(),
             ],
           ),
         ),
@@ -84,3 +73,37 @@ class TablonState extends State<TablonScreen> {
     );
   }
 }
+class BotonPublicar extends StatelessWidget {
+  const BotonPublicar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BotonExpandible(
+      distance: 112,
+      children: [
+        ActionButton(
+          icon: const Icon(Icons.photo),
+          onPressed: () => {
+            Navigator.push(
+              context,
+              PageTransition(child: PubImagenScreen(), type: PageTransitionType.size, alignment: Alignment.center)
+            )
+          },
+        ),
+        ActionButton(
+          icon: const Icon(Icons.text_snippet),
+          onPressed: () => {
+            Navigator.push(
+                context,
+                PageTransition(child: PubNotaScreen(), type: PageTransitionType.size, alignment: Alignment.center)
+            )
+          },
+        ),
+      ],
+    );
+  }
+}
+
+

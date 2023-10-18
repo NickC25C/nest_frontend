@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
+import 'package:page_transition/page_transition.dart';
 
 const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
@@ -325,8 +326,8 @@ class Crear extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CrearGrupos()),
+                    context,
+                    PageTransition(child: CrearGrupos(), type: PageTransitionType.size, alignment: Alignment.center)
                 );
               },
               style: ElevatedButton.styleFrom(
