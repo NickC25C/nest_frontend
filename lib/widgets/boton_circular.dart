@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
 
-class BotonCircular extends StatefulWidget {
+class BotonCircular extends StatelessWidget {
   final Icon iconoBoton;
   final Function() click;
   const BotonCircular({
     super.key,
-    required this.iconoBoton,
-    required this.click,
-  });
-  @override
-  BotonCircularState createState() =>
-      BotonCircularState(iconoBoton: iconoBoton, click: click);
-}
-
-class BotonCircularState extends State<BotonCircular> {
-  final Icon iconoBoton;
-  final Function() click;
-  BotonCircularState({
     required this.iconoBoton,
     required this.click,
   });

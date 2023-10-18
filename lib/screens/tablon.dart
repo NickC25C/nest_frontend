@@ -22,7 +22,7 @@ class TablonScreen extends StatefulWidget {
 class TablonState extends State<TablonScreen> {
   void publicar() {
     setState(() {
-      _opacityLevel = 1;
+      _opacityLevel = 0.5;
       _sigmaLevel = 10;
     });
   }
