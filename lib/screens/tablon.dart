@@ -56,14 +56,6 @@ class TablonState extends State<TablonScreen> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(10.0),
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/fondoTablon.jpg'),
-                        fit: BoxFit.fill)),
-              ),
               ListView(
                 children: const [
                   Nota(
