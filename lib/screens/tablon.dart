@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
-import 'package:nest_fronted/widgets/boton_circular.dart';
+import 'package:nest_fronted/widgets/boton_expandible.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:nest_fronted/widgets/foto.dart';
 
@@ -52,7 +52,7 @@ class TablonState extends State<TablonScreen> {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           height: 600,
-          width: 700,
+          width: double.infinity,
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -64,11 +64,18 @@ class TablonState extends State<TablonScreen> {
                   Foto(url: ('assets/images/rata.png'))
                 ],
               ),
-              Container(
-                alignment: Alignment.bottomRight,
-                margin: const EdgeInsets.all(10),
-                child: BotonCircular(
-                    iconoBoton: const Icon(Icons.add), click: publicar),
+              BotonExpandible(
+                distance: 112,
+                children: [
+                  ActionButton(
+                    icon: const Icon(Icons.photo),
+                    onPressed: () => {},
+                  ),
+                  ActionButton(
+                    icon: const Icon(Icons.text_snippet),
+                    onPressed: () => {},
+                  ),
+                ],
               ),
             ],
           ),
