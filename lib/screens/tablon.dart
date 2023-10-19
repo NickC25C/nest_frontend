@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:photo_view/photo_view.dart';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
@@ -11,7 +11,7 @@ import 'package:page_transition/page_transition.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
-
+bool open = false;
 double _opacityLevel = 0;
 double _sigmaLevel = 0;
 
@@ -30,20 +30,38 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
+  _buildPhotoView() {
+    setState(() {
+      open = !open;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Stack(
-      children: <Widget>[
-        tablon(),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-          child: Container(
-            color: Colors.black.withOpacity(_opacityLevel),
-          ),
-        )
-      ],
-    ));
+    if (open) {
+      return SingleChildScrollView(
+          child: GestureDetector(
+              onTap: () => {_buildPhotoView()},
+              child: Container(
+                height: 500,
+                width: 500,
+                child: PhotoView(
+                    imageProvider: AssetImage('assets/images/rata.png')),
+              )));
+    } else {
+      return SingleChildScrollView(
+          child: Stack(
+        children: <Widget>[
+          tablon(),
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+            child: Container(
+              color: Colors.black.withOpacity(_opacityLevel),
+            ),
+          )
+        ],
+      ));
+    }
   }
 
 //Se ha de cambiar por un stack para la foto de fondo
@@ -62,7 +80,10 @@ class TablonState extends State<TablonScreen> {
               ListView(
                 children: [
                   Nota(tituloNota: 'SALUDO'),
-                  Foto(url: ('assets/images/rata.png'))
+                  GestureDetector(
+                    onTap: () => {_buildPhotoView()},
+                    child: Foto(url: ('assets/images/rata.png')),
+                  )
                 ],
               ),
               BotonPublicar(),
@@ -73,6 +94,7 @@ class TablonState extends State<TablonScreen> {
     );
   }
 }
+
 class BotonPublicar extends StatelessWidget {
   const BotonPublicar({
     super.key,
@@ -87,9 +109,11 @@ class BotonPublicar extends StatelessWidget {
           icon: const Icon(Icons.photo),
           onPressed: () => {
             Navigator.push(
-              context,
-              PageTransition(child: PubImagenScreen(), type: PageTransitionType.size, alignment: Alignment.center)
-            )
+                context,
+                PageTransition(
+                    child: PubImagenScreen(),
+                    type: PageTransitionType.size,
+                    alignment: Alignment.center))
           },
         ),
         ActionButton(
@@ -97,13 +121,13 @@ class BotonPublicar extends StatelessWidget {
           onPressed: () => {
             Navigator.push(
                 context,
-                PageTransition(child: PubNotaScreen(), type: PageTransitionType.size, alignment: Alignment.center)
-            )
+                PageTransition(
+                    child: PubNotaScreen(),
+                    type: PageTransitionType.size,
+                    alignment: Alignment.center))
           },
         ),
       ],
     );
   }
 }
-
-
