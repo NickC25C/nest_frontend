@@ -150,11 +150,11 @@ class _Enviar extends State<DropdownSample> {
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Enviar A:'),
+            Text('Enviar A:', style: TextStyle(fontWeight: FontWeight.bold),),
             Container(
               width: double.infinity,
               child: DropdownButton<String>(
@@ -188,7 +188,6 @@ class Listado extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 150,
-      padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue, width: 2),
