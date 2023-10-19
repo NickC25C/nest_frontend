@@ -18,7 +18,11 @@ class BarraPublicar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(
+                  context
+              );
+            },
             icon: Icon(Icons.arrow_circle_left, color: Colors.white, size: 30),
           ),
           Text(

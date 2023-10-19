@@ -60,9 +60,8 @@ class BarraGrupo extends StatelessWidget {
           children: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyApp()),
+              Navigator.pop(
+                context
               );
             },
             icon: Icon(Icons.arrow_circle_left, color: Colors.white, size: 30),
@@ -159,6 +158,7 @@ class Listado extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListView(
+        padding: EdgeInsets.all(0.0),
         children: [
           ListTile(title: Text('Ítem 1'),),
           ListTile(title: Text('Ítem 2')),

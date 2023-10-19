@@ -11,20 +11,22 @@ class PubNotaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Column(
-        children: [
-          //Barra de título
-          BarraTitulo(titulo: tituloScreen),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            //Barra de título
+            BarraTitulo(titulo: tituloScreen),
 
-          Flechas(),
+            Flechas(),
 
-          Titulin(),
+            Titulin(),
 
-          EscribirNota(),
+            EscribirNota(),
 
-          EnviarA(),
+            EnviarA(),
 
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BarraNavegacion(),
     );

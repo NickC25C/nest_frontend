@@ -195,6 +195,7 @@ class Listado extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListView(
+        padding: EdgeInsets.all(0.0),
         children: [
           ListTile(title: Text('Ítem 1'),),
           ListTile(title: Text('Ítem 2')),
