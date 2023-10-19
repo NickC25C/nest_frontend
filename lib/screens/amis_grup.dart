@@ -327,7 +327,10 @@ class Crear extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                     context,
-                    PageTransition(child: CrearGrupos(), type: PageTransitionType.size, alignment: Alignment.center)
+                    PageTransition(
+                        child: CrearGrupos(),
+                        type: PageTransitionType.fade
+                    )
                 );
               },
               style: ElevatedButton.styleFrom(

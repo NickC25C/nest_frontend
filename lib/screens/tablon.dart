@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:photo_view/photo_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
@@ -8,6 +8,7 @@ import 'package:nest_fronted/widgets/foto.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:photo_view/photo_view.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
@@ -38,19 +39,19 @@ class TablonState extends State<TablonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+
     if (open) {
-      return SingleChildScrollView(
-          child: GestureDetector(
+      return GestureDetector(
               onTap: () => {_buildPhotoView()},
               child: Container(
-                height: 500,
-                width: 500,
+                height: screenSize.height,
+                width: double.infinity,
                 child: PhotoView(
                     imageProvider: AssetImage('assets/images/rata.png')),
-              )));
+              ));
     } else {
-      return SingleChildScrollView(
-          child: Stack(
+      return Stack(
         children: <Widget>[
           tablon(),
           BackdropFilter(
@@ -60,7 +61,7 @@ class TablonState extends State<TablonScreen> {
             ),
           )
         ],
-      ));
+      );
     }
   }
 
@@ -94,7 +95,6 @@ class TablonState extends State<TablonScreen> {
     );
   }
 }
-
 class BotonPublicar extends StatelessWidget {
   const BotonPublicar({
     super.key,
@@ -109,11 +109,12 @@ class BotonPublicar extends StatelessWidget {
           icon: const Icon(Icons.photo),
           onPressed: () => {
             Navigator.push(
-                context,
-                PageTransition(
-                    child: PubImagenScreen(),
-                    type: PageTransitionType.size,
-                    alignment: Alignment.center))
+              context,
+              PageTransition(
+                  child: PubImagenScreen(),
+                  type: PageTransitionType.fade
+              )
+            )
           },
         ),
         ActionButton(
@@ -123,11 +124,14 @@ class BotonPublicar extends StatelessWidget {
                 context,
                 PageTransition(
                     child: PubNotaScreen(),
-                    type: PageTransitionType.size,
-                    alignment: Alignment.center))
+                    type: PageTransitionType.fade
+                )
+            )
           },
         ),
       ],
     );
   }
 }
+
+
