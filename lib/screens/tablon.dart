@@ -13,11 +13,12 @@ import 'package:photo_view/photo_view.dart';
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
 bool open = false;
+bool openNote = false;
 double _opacityLevel = 0;
 double _sigmaLevel = 0;
 
 class TablonScreen extends StatefulWidget {
-  const TablonScreen({super.key});
+  const TablonScreen({Key? key}) : super(key: key);
 
   @override
   TablonState createState() => TablonState();
@@ -31,10 +32,40 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
-  _buildPhotoView() {
+  _buildContentView() {
     setState(() {
       open = !open;
+      openNote = false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
     });
+  }
+
+  _buildNoteView() {
+    setState(() {
+      openNote = !openNote;
+      open = false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
+    });
+  }
+
+  Widget _buildPhotoView() {
+    return PhotoView(
+      imageProvider: AssetImage('assets/images/rata.png'),
+    );
+  }
+
+  Widget _buildNoteViewContent() {
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.all(16.0),
+      child: Text(
+        'La porroflexia es una técnica que consiste en crear formas y estructuras'
+            ' a partir del liado de porros de marihuana. Esta técnica, que requiere de '
+            'habilidades manuales y una gran dosis de creatividad, ha evolucionado hasta '
+            'convertirse en una verdadera forma de arte. A través de la porroflexia, se pueden'
+            ' crear figuras y formas de todo tipo, desde animales hasta aviones, pasando por personajes '
+            'de ficción y elementos de la naturaleza.',
+        style: TextStyle(fontSize: 18.0),
+      ),
+    );
   }
 
   @override
@@ -43,13 +74,22 @@ class TablonState extends State<TablonScreen> {
 
     if (open) {
       return GestureDetector(
-              onTap: () => {_buildPhotoView()},
-              child: Container(
-                height: screenSize.height,
-                width: double.infinity,
-                child: PhotoView(
-                    imageProvider: AssetImage('assets/images/rata.png')),
-              ));
+        onTap: () => {_buildContentView()},
+        child: Container(
+          height: screenSize.height,
+          width: double.infinity,
+          child: _buildPhotoView(),
+        ),
+      );
+    } else if (openNote) {
+      return GestureDetector(
+        onTap: () => {_buildNoteView()},
+        child: Container(
+          height: screenSize.height,
+          width: double.infinity,
+          child: _buildNoteViewContent(),
+        ),
+      );
     } else {
       return Stack(
         children: <Widget>[
@@ -65,8 +105,6 @@ class TablonState extends State<TablonScreen> {
     }
   }
 
-//Se ha de cambiar por un stack para la foto de fondo
-
   Widget tablon() {
     return Column(
       children: [
@@ -80,11 +118,14 @@ class TablonState extends State<TablonScreen> {
             children: [
               ListView(
                 children: [
-                  Nota(tituloNota: 'SALUDO', mensaje: ""),
                   GestureDetector(
-                    onTap: () => {_buildPhotoView()},
+                    onTap: () => {_buildContentView()},
                     child: Foto(url: ('assets/images/rata.png')),
-                  )
+                  ),
+                  GestureDetector(
+                    onTap: () => {_buildNoteView()},
+                    child: Nota(tituloNota: 'SALUDO', mensaje: ""),
+                  ),
                 ],
               ),
               BotonPublicar(),
@@ -95,10 +136,11 @@ class TablonState extends State<TablonScreen> {
     );
   }
 }
+
 class BotonPublicar extends StatelessWidget {
   const BotonPublicar({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,9 +153,9 @@ class BotonPublicar extends StatelessWidget {
             Navigator.push(
               context,
               PageTransition(
-                  child: PubImagenScreen(),
-                  type: PageTransitionType.fade
-              )
+                child: PubImagenScreen(),
+                type: PageTransitionType.fade,
+              ),
             )
           },
         ),
@@ -121,11 +163,11 @@ class BotonPublicar extends StatelessWidget {
           icon: const Icon(Icons.text_snippet),
           onPressed: () => {
             Navigator.push(
-                context,
-                PageTransition(
-                    child: PubNotaScreen(),
-                    type: PageTransitionType.fade
-                )
+              context,
+              PageTransition(
+                child: PubNotaScreen(),
+                type: PageTransitionType.fade,
+              ),
             )
           },
         ),
@@ -133,5 +175,3 @@ class BotonPublicar extends StatelessWidget {
     );
   }
 }
-
-
