@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class Nota extends StatelessWidget {
   final String tituloNota;
-  const Nota({super.key, required this.tituloNota});
+  final String mensaje;
+  const Nota({super.key, required this.tituloNota, required this.mensaje});
 
   @override
   Widget build(BuildContext context) {

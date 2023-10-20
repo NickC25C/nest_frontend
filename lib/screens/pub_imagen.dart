@@ -42,7 +42,7 @@ class _ImagenScreen extends State<ImagenScreen>{
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     BotonIzquierdo(onImageSelected: _updateImage),
-                    BotonDerecho(),
+                    BotonDerecho(onImageDone: _updateImage),
                   ],
                 ),
               ),
@@ -124,9 +124,20 @@ class BotonIzquierdo extends StatelessWidget {
 }
 
 class BotonDerecho extends StatelessWidget {
+  final Function(File) onImageDone;
   const BotonDerecho({
     super.key,
+    required this.onImageDone,
   });
+
+  Future<void> _pickImage() async{
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+
+    if(image != null){
+      onImageDone(File(image.path));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +145,9 @@ class BotonDerecho extends StatelessWidget {
       width: 150,
       height: 110,
       child: ElevatedButton(
-        onPressed: (){},
+        onPressed: () async {
+          await _pickImage();
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

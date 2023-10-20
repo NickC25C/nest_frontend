@@ -80,7 +80,7 @@ class TablonState extends State<TablonScreen> {
             children: [
               ListView(
                 children: [
-                  Nota(tituloNota: 'SALUDO'),
+                  Nota(tituloNota: 'SALUDO', mensaje: ""),
                   GestureDetector(
                     onTap: () => {_buildPhotoView()},
                     child: Foto(url: ('assets/images/rata.png')),
