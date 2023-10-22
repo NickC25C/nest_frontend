@@ -35,14 +35,16 @@ class TablonState extends State<TablonScreen> {
   _buildContentView() {
     setState(() {
       open = !open;
-      openNote = false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
+      openNote =
+          false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
     });
   }
 
   _buildNoteView() {
     setState(() {
       openNote = !openNote;
-      open = false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
+      open =
+          false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
     });
   }
 
@@ -56,15 +58,34 @@ class TablonState extends State<TablonScreen> {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(16.0),
-      child: Text(
-        'La porroflexia es una técnica que consiste en crear formas y estructuras'
+      child: const Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'SALUDO',
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textScaleFactor: 2,
+          ),
+          Text(
+            'La porroflexia es una técnica que consiste en crear formas y estructuras'
             ' a partir del liado de porros de marihuana. Esta técnica, que requiere de '
             'habilidades manuales y una gran dosis de creatividad, ha evolucionado hasta '
             'convertirse en una verdadera forma de arte. A través de la porroflexia, se pueden'
             ' crear figuras y formas de todo tipo, desde animales hasta aviones, pasando por personajes '
             'de ficción y elementos de la naturaleza.',
-        style: TextStyle(fontSize: 18.0),
-      ),
+            style: TextStyle(fontSize: 18.0),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'De: PEPA',
+              )
+            ],
+          )
+        ],
+      )),
     );
   }
 
@@ -124,7 +145,11 @@ class TablonState extends State<TablonScreen> {
                   ),
                   GestureDetector(
                     onTap: () => {_buildNoteView()},
-                    child: Nota(tituloNota: 'SALUDO', mensaje: ""),
+                    child: const Nota(
+                      tituloNota: 'SALUDO',
+                      mensaje: "",
+                      usu: 'PEPA',
+                    ),
                   ),
                 ],
               ),
