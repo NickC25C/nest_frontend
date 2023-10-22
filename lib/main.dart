@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nest_fronted/screens/busqueda.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
@@ -48,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Listado de screens o widgets
   final List<Widget> _children = [
     Center(child: TablonScreen()),
-    Center(child: Text('Busqueda')),
+    Center(child: BusquedaScreen()),
     Center(child: AmisGrupScreen()),
     Center(child: ConfiguracionScreen()),
   ];
@@ -66,37 +67,36 @@ class _MyHomePageState extends State<MyHomePage> {
         child: _children[_currentIndex], // Mostramos el widget según el índice
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _currentIndex,
-        onTap: onTabTapped,
-        elevation: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'Home',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            activeIcon: Icon(Icons.saved_search),
-            label: 'Search',
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            activeIcon: Icon(Icons.group_add),
-            label: 'Friends',
-            backgroundColor: Colors.purpleAccent,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            activeIcon: Icon(Icons.settings_applications),
-            label: 'Settings',
-            backgroundColor: Colors.teal,
-        ),
-        ]
-      ),
+          type: BottomNavigationBarType.shifting,
+          currentIndex: _currentIndex,
+          onTap: onTabTapped,
+          elevation: 0,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              activeIcon: Icon(Icons.home_filled),
+              label: 'Home',
+              backgroundColor: Colors.blue,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              activeIcon: Icon(Icons.saved_search),
+              label: 'Search',
+              backgroundColor: Colors.green,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.group),
+              activeIcon: Icon(Icons.group_add),
+              label: 'Friends',
+              backgroundColor: Colors.purpleAccent,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              activeIcon: Icon(Icons.settings_applications),
+              label: 'Settings',
+              backgroundColor: Colors.teal,
+            ),
+          ]),
     );
   }
 }
