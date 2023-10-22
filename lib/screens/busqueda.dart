@@ -34,11 +34,16 @@ class _FormBusquedaState extends State<FormBusqueda> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.all(16.0),
             child: TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Nombre de usuario',
-              ),
+                  hintText: 'Nombre de usuario',
+                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2)),
+                  labelStyle: TextStyle(color: Colors.green)),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'El usuario introducido no existe';
@@ -52,6 +57,7 @@ class _FormBusquedaState extends State<FormBusqueda> {
             child: Container(
               alignment: Alignment.center,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   // Validate will return true if the form is valid, or false if
                   // the form is invalid.
