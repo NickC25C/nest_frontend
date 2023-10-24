@@ -10,7 +10,11 @@ class BusquedaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SingleChildScrollView(
       child: Column(
-        children: [BarraTitulo(titulo: tituloScreen), FormBusqueda()],
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          BarraTitulo(titulo: tituloScreen),
+          FormBusqueda()
+        ],
       ),
     );
   }
@@ -25,6 +29,32 @@ class FormBusqueda extends StatefulWidget {
 
 class _FormBusquedaState extends State<FormBusqueda> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _controller = TextEditingController();
+  bool _isButtonDisabled = true;
+
+  //deshabilitará al boton cuando no haya nada puesto
+  @override
+  void initState() {
+    super.initState();
+
+    _controller.addListener(() {
+      if (_controller.text.isEmpty && !_isButtonDisabled) {
+        setState(() {
+          _isButtonDisabled = true;
+        });
+      } else if (_controller.text.isNotEmpty && _isButtonDisabled) {
+        setState(() {
+          _isButtonDisabled = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +66,18 @@ class _FormBusquedaState extends State<FormBusqueda> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextFormField(
+              controller: _controller,
               decoration: const InputDecoration(
                   hintText: 'Nombre de usuario',
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green)),
+                      borderSide: BorderSide(color: Colors.green),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                  ),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 2)),
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                  ),
                   labelStyle: TextStyle(color: Colors.green)),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -53,12 +88,19 @@ class _FormBusquedaState extends State<FormBusqueda> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Container(
-              alignment: Alignment.center,
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              height: 50.0,
+              width: double.infinity,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                onPressed: () {
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    )
+                ),
+                onPressed: _isButtonDisabled ? null : () {
                   // Validate will return true if the form is valid, or false if
                   // the form is invalid.
                   if (_formKey.currentState!.validate()) {
@@ -66,7 +108,7 @@ class _FormBusquedaState extends State<FormBusqueda> {
                   }
                 },
                 child: const Text(
-                  'Enviar Solicitud',
+                  'Enviar solicitud',
                   textAlign: TextAlign.center,
                 ),
               ),

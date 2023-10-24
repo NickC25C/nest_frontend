@@ -10,13 +10,14 @@ class ConfiguracionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          BarraTitulo(titulo: tituloScreen,),
-          BotonNotif()
-        ],
-      );
+    return SingleChildScrollView(
+      child: const Column(
+          children: [
+            BarraTitulo(titulo: tituloScreen,),
+            BotonNotif()
+          ],
+        ),
+    );
   }
 }
 
@@ -34,50 +35,52 @@ class _BotonNotifState extends State<BotonNotif> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 230.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Activar/Desactivar Notificaciones',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 25),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: SlideAction(
-                borderRadius: 12,
-                elevation: 0,
-                text: activado ? 'Desactivadas' : 'Activadas',
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              child: Text(
+                'Activar/Desactivar Notificaciones',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                outerColor: activado ? Colors.red : Colors.green,
-                onSubmit: () {
-                  setState(() {
-                    activado = !activado;
-                  });
-                  // Cositas que hará al deslizar (activar las notificaciones)
-                },
               ),
             ),
-            SizedBox(height: 25),
-            Text(
-              'Recomendamos no activar las notificaciones por si te da amsiedad',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              child: Container(
+                child: SlideAction(
+                  borderRadius: 12,
+                  elevation: 0,
+                  text: activado ? 'Desactivadas' : 'Activadas',
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                  outerColor: activado ? Colors.red : Colors.green,
+                  onSubmit: () {
+                    setState(() {
+                      activado = !activado;
+                    });
+                    // Cositas que hará al deslizar (activar las notificaciones)
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              child: Text(
+                'Recomendamos no activar las notificaciones por si te da amsiedad',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
-      ),
     );
   }
 }
