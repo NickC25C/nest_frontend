@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
@@ -7,8 +8,14 @@ import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:nest_fronted/screens/tablon.dart';
 import 'package:nest_fronted/screens/amis_grup.dart';
 import 'package:nest_fronted/screens/configuracion.dart';
+import 'package:nest_fronted/services/api_service.dart';
 
+List<User> usuarios = List.empty();
+ApiService api = ApiService();
 void main() {
+  api.getUsers().then((data) {
+    usuarios = data;
+  });
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

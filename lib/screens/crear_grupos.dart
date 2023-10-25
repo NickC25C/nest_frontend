@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
 
-
 const tituloScreen = 'NUEVO GRUPO';
 
 class CrearGrupos extends StatelessWidget {
@@ -11,28 +10,27 @@ class CrearGrupos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            BarraGrupo(titulo: tituloScreen),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Titulo(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Descripcion(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Listado(),
-            ),
-            BotonCrear(),
-          ],
-        ),
-      )
-    );
+        body: SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          BarraGrupo(titulo: tituloScreen),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Titulo(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Descripcion(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Listado(),
+          ),
+          BotonCrear(),
+        ],
+      ),
+    ));
   }
 }
 
@@ -51,13 +49,11 @@ class BarraGrupo extends StatelessWidget {
       margin: const EdgeInsets.only(top: 40),
       color: Colors.grey,
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
           IconButton(
             onPressed: () {
-              Navigator.pop(
-                context
-              );
+              Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_circle_left, color: Colors.white, size: 30),
           ),
@@ -65,10 +61,10 @@ class BarraGrupo extends StatelessWidget {
             titulo,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-            SizedBox(
-              width: 50,
-            )
-          ],
+          SizedBox(
+            width: 50,
+          )
+        ],
       ),
     );
   }
@@ -88,7 +84,7 @@ class Descripcion extends StatelessWidget {
         child: TextField(
           maxLines: 8,
           decoration: InputDecoration(
-            labelText : 'Descripción',
+            labelText: 'Descripción',
             border: OutlineInputBorder(),
           ),
         ),
@@ -127,7 +123,9 @@ class Listado extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.all(0.0),
             children: [
-              ListTile(title: Text('Ítem 1'),),
+              ListTile(
+                title: Text(usuarios[0].username),
+              ),
               ListTile(title: Text('Ítem 2')),
               ListTile(title: Text('Ítem 3')),
             ],
@@ -153,16 +151,21 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: (){},
-            icon: Icon(Icons.groups, color: Colors.white,),
-            label: Text('Crear grupo', style: TextStyle(color: Colors.white),),
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  )
-              ),
+            onPressed: () {},
+            icon: Icon(
+              Icons.groups,
+              color: Colors.white,
             ),
+            label: Text(
+              'Crear grupo',
+              style: TextStyle(color: Colors.white),
+            ),
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                )),
+          ),
         ),
       ),
     );
