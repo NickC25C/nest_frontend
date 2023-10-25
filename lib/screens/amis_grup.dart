@@ -20,7 +20,7 @@ class AmisGrupScreen extends StatelessWidget {
 
           Grupos(),
 
-          Crear(),
+          BotonCrear(),
         ],
     );
   }
@@ -38,9 +38,8 @@ class Solicitudes extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 40.5),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Text(
             'Solicitudes:',
             style: TextStyle(
@@ -49,11 +48,10 @@ class Solicitudes extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 8.0),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-          height: 190.0,
+          height: 250.0,
           width: double.infinity,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
@@ -72,9 +70,13 @@ class Solicitudes extends StatelessWidget {
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Text('✔️'),
+                        child: Icon(Icons.check, color: Colors.purpleAccent,),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
+                          backgroundColor: Colors.white,
+                          side: BorderSide(color: Colors.purpleAccent, width: 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0)
+                          )
                         ),
                       ),
                       SizedBox(width: 8.0),
@@ -82,9 +84,13 @@ class Solicitudes extends StatelessWidget {
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Text('✖️'),
+                        child: Icon(Icons.close, color: Colors.purpleAccent,),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
+                            backgroundColor: Colors.white,
+                            side: BorderSide(color: Colors.purpleAccent, width: 1),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.0)
+                            )
                         ),
                       ),
                     ],
@@ -192,9 +198,8 @@ class Grupos extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 40.5),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Text(
             'Grupos:',
             style: TextStyle(
@@ -203,9 +208,8 @@ class Grupos extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 8.0),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
           height: 190.0,
           width: double.infinity,
@@ -309,45 +313,39 @@ class Grupos extends StatelessWidget {
 }
 
 //boton de redireccion a crear grupos
-class Crear extends StatelessWidget {
-  const Crear({
-    Key? key,
-  }) : super(key: key);
+class BotonCrear extends StatelessWidget {
+  const BotonCrear({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: CrearGrupos(),
-                        type: PageTransitionType.fade
-                    )
-                );
-              },
-              style: ElevatedButton.styleFrom(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: SizedBox(
+          height: 50,
+          width: 150,
+          child: TextButton.icon(
+            onPressed: (){
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: CrearGrupos(),
+                  type: PageTransitionType.fade,
+                ),
+              );
+            },
+            icon: Icon(Icons.groups, color: Colors.white,),
+            label: Text('Crear grupo', style: TextStyle(color: Colors.white),),
+            style: TextButton.styleFrom(
                 backgroundColor: Colors.purpleAccent,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.group),
-                  SizedBox(width: 8.0),
-                  Text('Crear grupo'),
-                ],
-              ),
+                  borderRadius: BorderRadius.circular(20.0),
+                )
             ),
-          ],
+          ),
         ),
       ),
     );

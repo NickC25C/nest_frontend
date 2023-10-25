@@ -70,9 +70,10 @@ class _BotonNotifState extends State<BotonNotif> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
               child: Text(
                 'Recomendamos no activar las notificaciones por si te da amsiedad',
+                textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,

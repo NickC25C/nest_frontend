@@ -60,13 +60,7 @@ class _ImagenScreen extends State<ImagenScreen>{
                 padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 35.0),
                 child: Titulo(),
               ),
-              Column(
-                children: [
-                  DropdownSample(),
-                  Listado(),
-                ],
-              )
-
+              Listado(),
             ],
           ),
         )
@@ -191,46 +185,6 @@ class AnyadirImagen extends StatelessWidget {
 
 }
 
-class DropdownSample extends StatefulWidget {
-  @override
-  _Enviar createState() => _Enviar();
-}
-
-class _Enviar extends State<DropdownSample> {
-  String? selectedValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return  Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Enviar A:', style: TextStyle(fontWeight: FontWeight.bold),),
-          Container(
-            width: double.infinity,
-            child: DropdownButton<String>(
-                items: <String>['Opción 1', 'Opción 2'].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-
-                value: selectedValue,
-                hint: Text('Selecciona una opción'),
-                onChanged: (String? newValue){
-                  setState(() {
-                    selectedValue = newValue;
-                  });
-                }),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class Listado extends StatelessWidget {
   const Listado({
     super.key,
@@ -238,21 +192,36 @@ class Listado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      margin: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue, width: 2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: ListView(
-        padding: EdgeInsets.all(0.0),
-        children: [
-          ListTile(title: Text('Ítem 1'),),
-          ListTile(title: Text('Ítem 2')),
-          ListTile(title: Text('Ítem 3')),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+            'Enviar a:',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+          height: 150,
+          margin: EdgeInsets.symmetric(horizontal: 20.0),
+          decoration: BoxDecoration(
+            border: Border.all(width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: ListView(
+            padding: EdgeInsets.all(0.0),
+            children: [
+              ListTile(title: Text('Ítem 1'),),
+              ListTile(title: Text('Ítem 2')),
+              ListTile(title: Text('Ítem 3')),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
