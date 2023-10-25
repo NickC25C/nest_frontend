@@ -25,7 +25,6 @@ class Publication {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'owner': owner,
       'date': date,
       'publiType': publiType

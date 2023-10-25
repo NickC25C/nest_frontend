@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:nest_fronted/models/publication.dart';
+import 'package:nest_fronted/models/user.dart'
 import 'package:http/http.dart' as http;
 
+import '../models/picture.dart';
 import '../models/user.dart';
 
 class ApiService {
-  final String baseUrl = 'http://tu_servidor/api';
-
+  final String baseUrl = 'http://localhost:8080';
+  late User loggedUser;
 
   //
   // USER
@@ -76,6 +80,28 @@ class ApiService {
       return;
     } else {
       throw Exception('Failed to delete user');
+    }
+  }
+
+  //
+  // IMAGE
+  //
+
+  Future<void> uploadImage(File image, String description) async {
+
+    final url = Uri.parse("$baseUrl/file/upload");
+    Picture picture = Picture(id: -1, owner: loggedUser, date: DateTime.now(), publiType: PublicationType.picture, description: description, url: null, image: image);
+
+    var request = http.MultipartRequest('POST', url);
+    request.fields.addAll(picture.toJson().cast<String,String>());
+    request.files.add(await http.MultipartFile.fromPath('file', image.path));
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      print("Image uploaded successfully");
+    } else {
+      print("Image upload failed");
     }
   }
 
