@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.group),
               activeIcon: Icon(Icons.group_add),
               label: 'Friends',
-              backgroundColor: Colors.purpleAccent,
+              backgroundColor: Colors.deepPurpleAccent,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),

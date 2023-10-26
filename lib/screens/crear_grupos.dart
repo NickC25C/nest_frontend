@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
-import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/widgets/barra_publi.dart';
 
 const tituloScreen = 'NUEVO GRUPO';
 
@@ -14,82 +14,22 @@ class CrearGrupos extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          BarraGrupo(titulo: tituloScreen),
+          BarraPublicar(titulo: tituloScreen),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Titulo(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Descripcion(),
-          ),
-          Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Listado(),
           ),
-          BotonCrear(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+            child: BotonCrear(),
+          ),
         ],
       ),
     ));
-  }
-}
-
-class BarraGrupo extends StatelessWidget {
-  final String titulo;
-  const BarraGrupo({
-    super.key,
-    required this.titulo,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: double.infinity,
-      margin: const EdgeInsets.only(top: 40),
-      color: Colors.grey,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_circle_left, color: Colors.white, size: 30),
-          ),
-          Text(
-            titulo,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            width: 50,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class Descripcion extends StatelessWidget {
-  const Descripcion({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Container(
-        width: double.infinity,
-        child: TextField(
-          maxLines: 8,
-          decoration: InputDecoration(
-            labelText: 'Descripción',
-            border: OutlineInputBorder(),
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -114,7 +54,7 @@ class Listado extends StatelessWidget {
           ),
         ),
         Container(
-          height: 150,
+          height: 420,
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           decoration: BoxDecoration(
             border: Border.all(width: 1),
@@ -123,9 +63,9 @@ class Listado extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.all(0.0),
             children: [
-              ListTile(
+              /*ListTile(
                 title: Text(usuarios[0].username),
-              ),
+              ),*/
               ListTile(title: Text('Ítem 2')),
               ListTile(title: Text('Ítem 3')),
             ],

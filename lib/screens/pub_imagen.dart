@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/services/api_service.dart';
-import 'package:nest_fronted/widgets/barra_publicar.dart';
+import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -58,10 +58,17 @@ class _ImagenScreen extends State<ImagenScreen>{
 
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 35.0),
+                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0),
                 child: Titulo(),
               ),
-              Listado(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Listado(),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+                child: BotonCrear(),
+              ),
             ],
           ),
         )
@@ -208,7 +215,7 @@ class Listado extends StatelessWidget {
           ),
         ),
         Container(
-          height: 150,
+          height: 250,
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           decoration: BoxDecoration(
             border: Border.all(width: 1),
@@ -224,6 +231,42 @@ class Listado extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class BotonCrear extends StatelessWidget {
+  const BotonCrear({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: SizedBox(
+          height: 50,
+          width: 170,
+          child: TextButton.icon(
+            onPressed: () {},
+            icon: Icon(
+              Icons.image_outlined,
+              color: Colors.white,
+            ),
+            label: Text(
+              'Publicar imagen',
+              style: TextStyle(color: Colors.white),
+            ),
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                )),
+          ),
+        ),
+      ),
     );
   }
 }

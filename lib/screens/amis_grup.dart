@@ -11,7 +11,7 @@ class AmisGrupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
         children: [
 
           BarraTitulo(titulo: tituloScreen),
@@ -28,10 +28,10 @@ class AmisGrupScreen extends StatelessWidget {
 
 //Aceptar o denegar solicitudes
 class Solicitudes extends StatelessWidget {
-  const Solicitudes({
+  Solicitudes({
     Key? key,
   }) : super(key: key);
-
+  final List<String> listaAuxiliar = ['Guillem_proxeneta69', 'Ivan_politoxicomano33', 'Magic_Patrisio777', 'Pepe_Viyuela'];
   @override
   Widget build(BuildContext context) {
 
@@ -58,11 +58,12 @@ class Solicitudes extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Scrollbar(
-            child: ListView(
+            child: ListView.builder(
               padding: EdgeInsets.only(top: 0.0),
-              children: [
-                ListTile(
-                  title: Text('Guillem_proxeneta69'),
+              itemCount: listaAuxiliar.length,
+              itemBuilder: (BuildContext context, int index){
+                return ListTile(
+                  title: Text(listaAuxiliar[index]),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -70,13 +71,13 @@ class Solicitudes extends StatelessWidget {
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Icon(Icons.check, color: Colors.purpleAccent,),
+                        child: Icon(Icons.check, color: Colors.deepPurpleAccent,),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          side: BorderSide(color: Colors.purpleAccent, width: 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0)
-                          )
+                            backgroundColor: Colors.white,
+                            side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.0)
+                            )
                         ),
                       ),
                       SizedBox(width: 8.0),
@@ -84,10 +85,10 @@ class Solicitudes extends StatelessWidget {
                         onPressed: () {
                           //ja vorem
                         },
-                        child: Icon(Icons.close, color: Colors.purpleAccent,),
+                        child: Icon(Icons.close, color: Colors.deepPurpleAccent,),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
-                            side: BorderSide(color: Colors.purpleAccent, width: 1),
+                            side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50.0)
                             )
@@ -95,89 +96,8 @@ class Solicitudes extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                ListTile(
-                  title: Text('Ivan_politoxicomano33'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Text('✔️'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
-                        ),
-                      ),
-                      SizedBox(width: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Text('✖️'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  title: Text('Magic_Patrisio777'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Text('✔️'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
-                        ),
-                      ),
-                      SizedBox(width: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Text('✖️'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  title: Text('Pepe_Viyuela'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Text('✔️'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
-                        ),
-                      ),
-                      SizedBox(width: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Text('✖️'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ),
@@ -340,7 +260,7 @@ class BotonCrear extends StatelessWidget {
             icon: Icon(Icons.groups, color: Colors.white,),
             label: Text('Crear grupo', style: TextStyle(color: Colors.white),),
             style: TextButton.styleFrom(
-                backgroundColor: Colors.purpleAccent,
+                backgroundColor: Colors.deepPurpleAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )
