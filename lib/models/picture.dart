@@ -26,7 +26,7 @@ class Picture extends Publication
     Map<String, dynamic> m = super.toJson();
     m.addAll({
       'url': null,
-      'image': image
+      'image': null
     });
     return m;
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/widgets/barra_publicar.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:image_picker/image_picker.dart';
@@ -70,19 +71,20 @@ class _ImagenScreen extends State<ImagenScreen>{
 
 class BotonIzquierdo extends StatelessWidget {
   final Function(File) onImageSelected;
-
   const BotonIzquierdo({
     super.key,
     required this.onImageSelected
   });
 
   Future<void> _pickImage() async{
+    final apiService = ApiService();
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
     if(image != null){
       onImageSelected(File(image.path));
     }
+    apiService.uploadImage(File(image!.path), "hola");
   }
   @override
   Widget build(BuildContext context) {
