@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../models/picture.dart';
 
 class ApiService {
-  final String baseUrl = 'http://10.0.2.2:8080';
+  final String baseUrl = 'http://192.168.1.59:8080'; // para el emulador es 10.0.2.2
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
