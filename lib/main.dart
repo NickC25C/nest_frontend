@@ -16,6 +16,30 @@ void main() {
   api.getUsers().then((data) {
     usuarios = data;
   });
+  //Poblar la base de datos con usuarios nuevos
+void poblarUsers(){
+  api.createUser(api.loggedUser);
+  User newUser1 = User(
+    id: "iikkiid",
+    name: "Nick",
+    lastname: "Contreras",
+    username: "El_nicoloau",
+    password: "123",
+    mail: "ahhrh@hmail.com",
+  );
+  User newUser2 = User(
+    id: "ipd",
+    name: "Javier",
+    lastname: "Lanza",
+    username: "Reshulon21",
+    password: "123",
+    mail: "ahhsh@hmail.com",
+  );
+  api.createUser(newUser1);
+  api.createUser(newUser2);
+
+}
+  poblarUsers();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

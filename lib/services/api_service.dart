@@ -10,7 +10,7 @@ class ApiService {
   final String baseUrl = 'http://10.0.2.2:8080';
   User loggedUser = User(
       id: "60b3105b-1248-410d-a3e7-429282e91864",
-      name: "Guiem",
+      name: "Guiekkkkkm",
       lastname: "Fornet",
       username: "g4net",
       password: "pass123",
