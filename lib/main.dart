@@ -13,39 +13,47 @@ import 'package:nest_fronted/services/api_service.dart';
 List<User> usuarios = List.empty();
 ApiService api = ApiService();
 void main() {
+  //Poblar la base de datos con usuarios nuevos
+  void poblarUsers() {
+    User newUser = User(
+        id: "",
+        name: "Guiekkkkkm",
+        lastname: "Fornet",
+        username: "g4net",
+        password: "pass123",
+        mail: "g@g.com");
+    User newUser1 = User(
+      id: "",
+      name: "Nick",
+      lastname: "Contreras",
+      username: "El_nicoloau",
+      password: "123",
+      mail: "ahhrh@hmail.com",
+    );
+    User newUser2 = User(
+      id: "",
+      name: "Javier",
+      lastname: "Lanza",
+      username: "Reshulon21",
+      password: "123",
+      mail: "ahhsh@hmail.com",
+    );
+    api.createUser(newUser).whenComplete(() =>
+        api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
+  }
+
+  poblarUsers();
   api.getUsers().then((data) {
     usuarios = data;
-  });
-  //Poblar la base de datos con usuarios nuevos
-void poblarUsers(){
-  api.createUser(api.loggedUser);
-  User newUser1 = User(
-    id: "iikkiid",
-    name: "Nick",
-    lastname: "Contreras",
-    username: "El_nicoloau",
-    password: "123",
-    mail: "ahhrh@hmail.com",
-  );
-  User newUser2 = User(
-    id: "ipd",
-    name: "Javier",
-    lastname: "Lanza",
-    username: "Reshulon21",
-    password: "123",
-    mail: "ahhsh@hmail.com",
-  );
-  api.createUser(newUser1);
-  api.createUser(newUser2);
-
-}
-  poblarUsers();
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  runApp(const MyApp());
+  }).whenComplete(() => {
+        api.loggedUser = usuarios[0],
+        WidgetsFlutterBinding.ensureInitialized(),
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]),
+        runApp(const MyApp()),
+      });
 }
 
 class MyApp extends StatelessWidget {

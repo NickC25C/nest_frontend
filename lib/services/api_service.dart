@@ -8,13 +8,7 @@ import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl = 'http://10.0.2.2:8080';
-  User loggedUser = User(
-      id: "60b3105b-1248-410d-a3e7-429282e91864",
-      name: "Guiekkkkkm",
-      lastname: "Fornet",
-      username: "g4net",
-      password: "pass123",
-      mail: "g@g.com");
+  late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
 
@@ -58,7 +52,7 @@ class ApiService {
       body: jsonEncode(user.toJson()),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
       return User.fromJson(responseData);
     } else {

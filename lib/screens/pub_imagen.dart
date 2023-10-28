@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/screens/configuracion.dart';
 import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
@@ -20,11 +22,11 @@ class ImagenScreen extends StatefulWidget {
   _ImagenScreen createState() => _ImagenScreen();
 }
 
-class _ImagenScreen extends State<ImagenScreen>{
+class _ImagenScreen extends State<ImagenScreen> {
   File? _selectedImagen;
 
-  void _updateImage(File image){
-    setState((){
+  void _updateImage(File image) {
+    setState(() {
       _selectedImagen = image;
     });
   }
@@ -33,66 +35,63 @@ class _ImagenScreen extends State<ImagenScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BarraPublicar(titulo: tituloScreen),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BotonIzquierdo(onImageSelected: _updateImage),
-                    BotonDerecho(onImageDone: _updateImage),
-                  ],
-                ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Column(
-                    children: [
-                      if(_selectedImagen != null)
-                        AnyadirImagen(imagen: _selectedImagen!,),
-                    ],
-                  )
-
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0),
-                child: Titulo(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Listado(),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-                child: BotonCrear(),
-              ),
-            ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          BarraPublicar(titulo: tituloScreen),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                BotonIzquierdo(onImageSelected: _updateImage),
+                BotonDerecho(onImageDone: _updateImage),
+              ],
+            ),
           ),
-        )
-    );
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Column(
+                children: [
+                  if (_selectedImagen != null)
+                    AnyadirImagen(
+                      imagen: _selectedImagen!,
+                    ),
+                ],
+              )),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0),
+            child: Titulo(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Listado(),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+            child: BotonCrear(),
+          ),
+        ],
+      ),
+    ));
   }
 }
 
 class BotonIzquierdo extends StatelessWidget {
   final Function(File) onImageSelected;
-  const BotonIzquierdo({
-    super.key,
-    required this.onImageSelected
-  });
+  const BotonIzquierdo({super.key, required this.onImageSelected});
 
-  Future<void> _pickImage() async{
+  Future<void> _pickImage() async {
     final apiService = ApiService();
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
-    if(image != null){
+    if (image != null) {
       onImageSelected(File(image.path));
     }
     apiService.uploadImage(File(image!.path), "hola");
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -106,8 +105,13 @@ class BotonIzquierdo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.photo, color: Colors.white,),
-              SizedBox(height: 3.0,),
+              Icon(
+                Icons.photo,
+                color: Colors.white,
+              ),
+              SizedBox(
+                height: 3.0,
+              ),
               Text('Seleccionar foto', style: TextStyle(fontSize: 16))
             ],
           ),
@@ -116,13 +120,11 @@ class BotonIzquierdo extends StatelessWidget {
             backgroundColor: Colors.blueAccent,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  bottomLeft: Radius.circular(30.0),
-                )
-            ),
+              topLeft: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+            )),
           ),
-        )
-    );
+        ));
   }
 }
 
@@ -133,11 +135,11 @@ class BotonDerecho extends StatelessWidget {
     required this.onImageDone,
   });
 
-  Future<void> _pickImage() async{
+  Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
 
-    if(image != null){
+    if (image != null) {
       onImageDone(File(image.path));
     }
   }
@@ -155,21 +157,24 @@ class BotonDerecho extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(Icons.camera_alt, color: Colors.white,),
-            SizedBox(height: 3.0,),
+            Icon(
+              Icons.camera_alt,
+              color: Colors.white,
+            ),
+            SizedBox(
+              height: 3.0,
+            ),
             Text('Hacer foto', style: TextStyle(fontSize: 16))
           ],
         ),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
           backgroundColor: Colors.blueAccent,
-
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                topRight: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0),
-              )
-          ),
+            topRight: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          )),
         ),
       ),
     );
@@ -191,7 +196,6 @@ class AnyadirImagen extends StatelessWidget {
       fit: BoxFit.fill,
     );
   }
-
 }
 
 class Listado extends StatelessWidget {
@@ -224,7 +228,9 @@ class Listado extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.all(0.0),
             children: [
-              ListTile(title: Text('Ítem 1'),),
+              ListTile(
+                title: Text('Ítem 1'),
+              ),
               ListTile(title: Text('Ítem 2')),
               ListTile(title: Text('Ítem 3')),
             ],
