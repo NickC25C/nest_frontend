@@ -5,7 +5,7 @@ class User {
   final String username;
   final String password;
   final String mail;
-  final List<String> friendsIds;
+  final List<dynamic> friendsIds;
 
   User(
       {required this.id,
