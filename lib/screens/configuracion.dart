@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:slide_to_act/slide_to_act.dart';
-import 'package:nest_fronted/services/api_service.dart';
 
 import '../models/user.dart';
 
 const tituloScreen = 'CONFIGURACIÓN';
 int selectedIndex = 0;
-ApiService api = ApiService();
 
 class ConfiguracionScreen extends StatelessWidget {
   const ConfiguracionScreen({super.key});

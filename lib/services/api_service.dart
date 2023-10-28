@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 import '../models/picture.dart';
 
 class ApiService {
-  final String baseUrl = 'http://192.168.1.59:8080'; // para el emulador es 10.0.2.2
+  final String baseUrl =
+      'http://10.0.2.2:8080'; // para el movil es 192.168.1.59
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
@@ -94,9 +95,9 @@ class ApiService {
   //
 
   Future<void> uploadImage(File image, String description) async {
-    final url = Uri.parse("$baseUrl/publications/picture");
+    final url = Uri.parse("$baseUrl/publications/createPicture");
     Picture picture = Picture(
-        id: -1,
+        id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
         owner: loggedUser,
         date: DateTime.now(),
         publiType: PublicationType.picture,
@@ -114,7 +115,7 @@ class ApiService {
     if (response.statusCode == 200) {
       print("Image uploaded successfully");
     } else {
-      print("Image upload failed");
+      print(response.statusCode);
     }
   }
 }

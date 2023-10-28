@@ -2,12 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/screens/configuracion.dart';
-import 'package:nest_fronted/services/api_service.dart';
+
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:image_picker/image_picker.dart';
 
 const tituloScreen = 'PUBLICAR IMAGEN';
+Titulo titulete = const Titulo();
 
 class PubImagenScreen extends StatelessWidget {
   const PubImagenScreen({super.key});
@@ -61,7 +62,7 @@ class _ImagenScreen extends State<ImagenScreen> {
               )),
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0),
-            child: Titulo(),
+            child: titulete,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -69,7 +70,9 @@ class _ImagenScreen extends State<ImagenScreen> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-            child: BotonCrear(),
+            child: BotonCrear(
+              imageToPub: _selectedImagen,
+            ),
           ),
         ],
       ),
@@ -82,14 +85,12 @@ class BotonIzquierdo extends StatelessWidget {
   const BotonIzquierdo({super.key, required this.onImageSelected});
 
   Future<void> _pickImage() async {
-    final apiService = ApiService();
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
       onImageSelected(File(image.path));
     }
-    apiService.uploadImage(File(image!.path), "hola");
   }
 
   @override
@@ -242,8 +243,10 @@ class Listado extends StatelessWidget {
 }
 
 class BotonCrear extends StatelessWidget {
+  final File? imageToPub;
   const BotonCrear({
     super.key,
+    this.imageToPub,
   });
 
   @override
@@ -256,7 +259,9 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 170,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              api.uploadImage(File(imageToPub!.path), titulete.darValor());
+            },
             icon: Icon(
               Icons.image_outlined,
               color: Colors.white,
