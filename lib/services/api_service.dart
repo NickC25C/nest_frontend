@@ -7,8 +7,14 @@ import 'package:http/http.dart' as http;
 import '../models/picture.dart';
 
 class ApiService {
-  final String baseUrl = 'http://localhost:8080';
-  User loggedUser = User(id: "60b3105b-1248-410d-a3e7-429282e91864", name: "Guiem", lastname: "Fornet", username: "g4net", password: "pass123", mail: "g@g.com");
+  final String baseUrl = 'http://10.0.2.2:8080';
+  User loggedUser = User(
+      id: "60b3105b-1248-410d-a3e7-429282e91864",
+      name: "Guiem",
+      lastname: "Fornet",
+      username: "g4net",
+      password: "pass123",
+      mail: "g@g.com");
 
   static final ApiService _instance = ApiService._internal();
 
@@ -94,7 +100,6 @@ class ApiService {
   //
 
   Future<void> uploadImage(File image, String description) async {
-
     final url = Uri.parse("$baseUrl/publications/picture");
     Picture picture = Picture(
         id: -1,
@@ -103,11 +108,11 @@ class ApiService {
         publiType: PublicationType.picture,
         description: description,
         url: null,
-        image: image
-    );
+        image: image);
 
     var request = http.MultipartRequest('POST', url);
-    request.fields.addAll(picture.toJson().map((key, value) => MapEntry(key, value.toString())));
+    request.fields.addAll(
+        picture.toJson().map((key, value) => MapEntry(key, value.toString())));
     request.files.add(await http.MultipartFile.fromPath('file', image.path));
 
     var response = await request.send();
