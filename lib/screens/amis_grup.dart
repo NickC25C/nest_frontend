@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
@@ -26,15 +27,22 @@ class AmisGrupScreen extends StatelessWidget {
   }
 }
 
+class Solicitudes extends StatefulWidget{
+  @override
+  _Solicitudes createState() => _Solicitudes();
+}
+
 //Aceptar o denegar solicitudes
-class Solicitudes extends StatelessWidget {
-  Solicitudes({
-    Key? key,
-  }) : super(key: key);
+class _Solicitudes extends State<Solicitudes> {
   final List<String> listaAuxiliar = ['Guillem_proxeneta69', 'Ivan_politoxicomano33', 'Magic_Patrisio777', 'Pepe_Viyuela'];
+
+  void _removeItem(int index) {
+    setState(() {
+      listaAuxiliar.removeAt(index);
+    });
+  }
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -58,51 +66,69 @@ class Solicitudes extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Scrollbar(
-            child: ListView.builder(
-              padding: EdgeInsets.only(top: 0.0),
-              itemCount: listaAuxiliar.length,
-              itemBuilder: (BuildContext context, int index){
-                return ListTile(
-                  title: Text(listaAuxiliar[index]),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Icon(Icons.check, color: Colors.deepPurpleAccent,),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0)
-                            )
-                        ),
-                      ),
-                      SizedBox(width: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          //ja vorem
-                        },
-                        child: Icon(Icons.close, color: Colors.deepPurpleAccent,),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0)
-                            )
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+            child: CustomListView(
+              items: listaAuxiliar,
+              onItemRemoved: _removeItem,
             ),
           ),
         ),
         ),
       ],
+    );
+  }
+}
+
+class CustomListView extends StatelessWidget {
+  final List<String> items;
+  final Function(int) onItemRemoved;
+
+  CustomListView({
+    required this.items,
+    required this.onItemRemoved
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: EdgeInsets.only(top: 0.0),
+      itemCount: items.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(items[index]),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  onItemRemoved(index);
+                },
+                child: Icon(Icons.check, color: Colors.deepPurpleAccent,),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0)
+                    )
+                ),
+              ),
+              SizedBox(width: 8.0),
+              ElevatedButton(
+                onPressed: () {
+                  onItemRemoved(index);
+                },
+                child: Icon(Icons.close, color: Colors.deepPurpleAccent,),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0)
+                    )
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
