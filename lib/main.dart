@@ -21,7 +21,8 @@ void main() {
         lastname: "Fornet",
         username: "g4net",
         password: "pass123",
-        mail: "g@g.com");
+        mail: "g@g.com",
+        friendsIds: List.empty());
     User newUser1 = User(
       id: "",
       name: "Nick",
@@ -29,6 +30,7 @@ void main() {
       username: "El_nicoloau",
       password: "123",
       mail: "ahhrh@hmail.com",
+      friendsIds: List.empty()
     );
     User newUser2 = User(
       id: "",
@@ -37,6 +39,7 @@ void main() {
       username: "Reshulon21",
       password: "123",
       mail: "ahhsh@hmail.com",
+      friendsIds: List.empty()
     );
     api.createUser(newUser).whenComplete(() =>
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
