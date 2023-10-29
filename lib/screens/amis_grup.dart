@@ -3,11 +3,9 @@ import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nest_fronted/main.dart';
 
 const tituloScreen = 'GRUPOS Y AMISTADES';
-int selectedIndex = 0;
 
 class AmisGrupScreen extends StatelessWidget {
   const AmisGrupScreen({super.key});
@@ -34,10 +32,18 @@ class Solicitudes extends StatefulWidget {
 class _Solicitudes extends State<Solicitudes> {
   final List<User> listaAuxiliar = bd.loggedUser.solicitudesPend!;
 
-  void _removeItem(int index) {
+  void _check(int index) {
     setState(() {
       listaAuxiliar.removeAt(index);
     });
+    bd.addFriend(bd.loggedUser, bd.loggedUser.solicitudesPend![index]);
+  }
+
+  void _cross(int index) {
+    setState(() {
+      listaAuxiliar.removeAt(index);
+    });
+    bd.rejectFriend(bd.loggedUser, bd.loggedUser.solicitudesPend![index]);
   }
 
   @override
@@ -67,7 +73,8 @@ class _Solicitudes extends State<Solicitudes> {
             child: Scrollbar(
               child: CustomListView(
                 items: listaAuxiliar,
-                onItemRemoved: _removeItem,
+                onCheck: _check,
+                onCross: _cross,
               ),
             ),
           ),
@@ -79,9 +86,11 @@ class _Solicitudes extends State<Solicitudes> {
 
 class CustomListView extends StatelessWidget {
   final List<User> items;
-  final Function(int) onItemRemoved;
+  final Function(int) onCheck;
+  final Function(int) onCross;
 
-  CustomListView({required this.items, required this.onItemRemoved});
+  CustomListView(
+      {required this.items, required this.onCheck, required this.onCross});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +105,7 @@ class CustomListView extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  onItemRemoved(index);
+                  onCheck(index);
                 },
                 child: Icon(
                   Icons.check,
@@ -111,7 +120,7 @@ class CustomListView extends StatelessWidget {
               SizedBox(width: 8.0),
               ElevatedButton(
                 onPressed: () {
-                  onItemRemoved(index);
+                  onCross(index);
                 },
                 child: Icon(
                   Icons.close,
