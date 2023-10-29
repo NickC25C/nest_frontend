@@ -9,9 +9,9 @@ class User {
   final String username;
   final String password;
   final String mail;
-  final List<User>? friends;
-  final List<User>? solicitudesPend;
-  final List<Publication>? feedPublications;
+  List<User>? friends;
+  List<User>? solicitudesPend;
+  List<Publication>? feedPublications;
   bool notificationActive;
 
   User(

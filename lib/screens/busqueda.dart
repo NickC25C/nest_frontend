@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
+import 'package:nest_fronted/main.dart';
 
 const tituloScreen = 'BÚSQUEDA';
+String? usuToAdd;
 
 class BusquedaScreen extends StatelessWidget {
   const BusquedaScreen({super.key});
@@ -11,10 +14,7 @@ class BusquedaScreen extends StatelessWidget {
     return const SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          BarraTitulo(titulo: tituloScreen),
-          FormBusqueda()
-        ],
+        children: [BarraTitulo(titulo: tituloScreen), FormBusqueda()],
       ),
     );
   }
@@ -47,6 +47,7 @@ class _FormBusquedaState extends State<FormBusqueda> {
           _isButtonDisabled = false;
         });
       }
+      usuToAdd = _controller.text;
     });
   }
 
@@ -72,12 +73,10 @@ class _FormBusquedaState extends State<FormBusqueda> {
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.green),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.green, width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
                   labelStyle: TextStyle(color: Colors.green)),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -98,15 +97,28 @@ class _FormBusquedaState extends State<FormBusqueda> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                    )
-                ),
-                onPressed: _isButtonDisabled ? null : () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_formKey.currentState!.validate()) {
-                    // Process data.
-                  }
-                },
+                    )),
+                onPressed: _isButtonDisabled
+                    ? null
+                    : () {
+                        // Validate will return true if the form is valid, or false if
+                        // the form is invalid.
+                        if (_formKey.currentState!.validate()) {
+                          if (usuToAdd != null) {
+                            User? u =
+                                bd.getUserByUsername(bd.usuarios, usuToAdd!);
+                            if (u != null) {
+                              bd.addFriend(bd.loggedUser, u);
+                            } else {
+                              print('Usuario u no existe');
+                            }
+                          } else {
+                            print('nombre de usuario nulo');
+                          }
+
+                          // Process data.
+                        }
+                      },
                 child: const Text(
                   'Enviar solicitud',
                   textAlign: TextAlign.center,
