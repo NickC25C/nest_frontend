@@ -4,12 +4,10 @@ import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/widgets/contenido_pub.dart';
 import 'package:nest_fronted/main.dart';
 
-
 const tituloScreen = 'PUBLICAR NOTA';
 int selectedIndex = 0;
 Titulo titulin = Titulo();
 Content mensajin = Content();
-
 
 class PubNotaScreen extends StatelessWidget {
   const PubNotaScreen({super.key});
@@ -118,7 +116,9 @@ class Listado extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.all(0.0),
             children: [
-              ListTile(title: Text('Ítem 1'),),
+              ListTile(
+                title: Text('Ítem 1'),
+              ),
               ListTile(title: Text('Ítem 2')),
               ListTile(title: Text('Ítem 3')),
             ],
@@ -145,13 +145,14 @@ class BotonCrear extends StatelessWidget {
           width: 150,
           child: TextButton.icon(
             onPressed: () {
-
               String titulo = titulin.darValor();
               String mensaje = mensajin.darValor();
 
               if (titulo.isNotEmpty && mensaje.isNotEmpty) {
                 bd.addNota(bd.loggedUser, titulo, bd.usuarios, mensaje);
               }
+
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.sticky_note_2_outlined,
