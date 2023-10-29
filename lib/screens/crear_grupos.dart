@@ -47,7 +47,7 @@ class Listado extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'Enviar a:',
+            'Añadir a:',
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
