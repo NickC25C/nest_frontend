@@ -13,9 +13,9 @@ class Bd {
       username: 'Gullem98',
       password: '1234',
       mail: 'guillem@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u1 = User(
@@ -25,9 +25,9 @@ class Bd {
       username: 'NickP20',
       password: '1234',
       mail: 'nick@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u2 = User(
@@ -37,9 +37,9 @@ class Bd {
       username: 'lanza10',
       password: '1234',
       mail: 'lanza@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u3 = User(
@@ -49,9 +49,9 @@ class Bd {
       username: 'Anton32',
       password: '1234',
       mail: 'AleAnton@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u4 = User(
@@ -61,9 +61,9 @@ class Bd {
       username: 'ivanharo',
       password: '1234',
       mail: 'iavan@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
 

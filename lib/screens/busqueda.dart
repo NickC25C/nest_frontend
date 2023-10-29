@@ -108,7 +108,7 @@ class _FormBusquedaState extends State<FormBusqueda> {
                             User? u =
                                 bd.getUserByUsername(bd.usuarios, usuToAdd!);
                             if (u != null) {
-                              bd.addFriend(bd.loggedUser, u);
+                              bd.enviarSolicitud(bd.loggedUser, u);
                             } else {
                               print('Usuario u no existe');
                             }
