@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/nota.dart';
 import 'package:nest_fronted/models/publiNoId.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
@@ -29,7 +30,6 @@ class TablonScreen extends StatefulWidget {
 }
 
 class TablonState extends State<TablonScreen> {
-
   void publicar() {
     setState(() {
       _opacityLevel = 0.5;
@@ -45,8 +45,9 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
-  _buildNoteView() {
+  _buildNoteView(int index) {
     setState(() {
+      selectedIndex = index;
       openNote = !openNote;
       open =
           false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
@@ -56,28 +57,24 @@ class TablonState extends State<TablonScreen> {
   ListView _buildTablon(List<Publication> publications) {
     return ListView.builder(
         itemCount: publications.length,
-        itemBuilder: (BuildContext context, int index){
-          if(publications[index].publiType == PublicationType.note){
+        itemBuilder: (BuildContext context, int index) {
+          if (publications[index].publiType == PublicationType.note) {
             return GestureDetector(
-                onTap: () => {_buildNoteView()},
-                child: PublicationWidget(
-                  pub: publications[index],
-                ),
-            );
-          }else{
-            return GestureDetector(
-                onTap: () => {_buildContentView()},
-                child: PublicationWidget(
+              onTap: () => {_buildNoteView(index)},
+              child: PublicationWidget(
                 pub: publications[index],
               ),
             );
-          };
-        }
-    );
-  }
-
-  List<Widget> _buildListContent(List<Publication> publications) {
-    return [];
+          } else {
+            return GestureDetector(
+              onTap: () => {_buildContentView()},
+              child: PublicationWidget(
+                pub: publications[index],
+              ),
+            );
+          }
+          ;
+        });
   }
 
   Widget _buildPhotoView() {
@@ -87,32 +84,28 @@ class TablonState extends State<TablonScreen> {
   }
 
   Widget _buildNoteViewContent() {
+    NotaPub notita = bd.loggedUser.feedPublications![selectedIndex] as NotaPub;
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(16.0),
-      child: const Center(
+      child: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'SALUDO',
+            notita.titulo,
             style: TextStyle(fontWeight: FontWeight.bold),
             textScaleFactor: 2,
           ),
           Text(
-            'La porroflexia es una técnica que consiste en crear formas y estructuras'
-            ' a partir del liado de porros de marihuana. Esta técnica, que requiere de '
-            'habilidades manuales y una gran dosis de creatividad, ha evolucionado hasta '
-            'convertirse en una verdadera forma de arte. A través de la porroflexia, se pueden'
-            ' crear figuras y formas de todo tipo, desde animales hasta aviones, pasando por personajes '
-            'de ficción y elementos de la naturaleza.',
+            notita.mensaje,
             style: TextStyle(fontSize: 18.0),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'De: PEPA',
+                'De: ${notita.owner.username}',
               )
             ],
           )
@@ -136,7 +129,7 @@ class TablonState extends State<TablonScreen> {
       );
     } else if (openNote) {
       return GestureDetector(
-        onTap: () => {_buildNoteView()},
+        onTap: () => {_buildNoteView(selectedIndex)},
         child: Container(
           height: screenSize.height,
           width: double.infinity,
