@@ -21,6 +21,7 @@ class _FotoState extends State<Foto> {
   void initState() {
     super.initState();
     fotoUrl = widget.url;
+    image = widget.file;
   }
 
   @override

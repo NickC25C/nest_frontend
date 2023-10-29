@@ -68,7 +68,7 @@ class Bd {
     );
 
     usuarios = [u, u1, u2, u3, u4];
-    loggedUser = u1;
+    loggedUser = u;
   }
   void changeLoggedUser(User userToLog) {
     loggedUser = userToLog;
@@ -84,7 +84,9 @@ class Bd {
     loggUser.solicitudesPend!.remove(userToAdd);
   }
 
-  void addPublication(User owner, PubliNoId p, List<User> usersToSend) {
+  void addPublication(User owner, PubliNoId p, List<User> users) {
+    List<User> usersToSend = users;
+    usersToSend.remove(owner);
     for (int i = 0; i < usersToSend.length; i++) {
       usersToSend[i].feedPublications!.add(Publication(
           id: usersToSend[i].feedPublications!.length,
