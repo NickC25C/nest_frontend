@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
+import 'package:nest_fronted/main.dart';
 
 const tituloScreen = 'NUEVO GRUPO';
 
@@ -60,15 +61,14 @@ class Listado extends StatelessWidget {
             border: Border.all(width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: ListView(
+          child: ListView.builder(
             padding: EdgeInsets.all(0.0),
-            children: [
-              /*ListTile(
-                title: Text(usuarios[0].username),
-              ),*/
-              ListTile(title: Text('Ítem 2')),
-              ListTile(title: Text('Ítem 3')),
-            ],
+            itemCount: bd.loggedUser.friends!.length,
+            itemBuilder: (BuildContext context, int index){
+              return ListTile(
+                  title: Text(bd.loggedUser.friends![index].username),
+              );
+            },
           ),
         ),
       ],
