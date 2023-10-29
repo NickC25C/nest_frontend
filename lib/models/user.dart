@@ -5,7 +5,7 @@ class User {
   final String username;
   final String password;
   final String mail;
-  final List<dynamic> friendsIds;
+  final bool enableNotifications;
 
   User(
       {required this.id,
@@ -14,7 +14,7 @@ class User {
       required this.username,
       required this.password,
       required this.mail,
-      required this.friendsIds});
+      required this.enableNotifications});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -24,7 +24,7 @@ class User {
         username: json['username'],
         password: json['password'],
         mail: json['mail'],
-        friendsIds : json['friendsIds']);
+        enableNotifications : json['enableNotifications']);
   }
 
   Map<String, dynamic> toJson() {
@@ -34,6 +34,7 @@ class User {
       'username': username,
       'password': password,
       'mail': mail,
+      'enableNotifications': enableNotifications
     };
   }
 }

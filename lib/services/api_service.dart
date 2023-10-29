@@ -8,7 +8,7 @@ import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =
-      'http://192.168.1.59:8080'; // para el movil es 192.168.1.59
+      'http://10.0.2.2:8080'; // para el movil es 192.168.1.59
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
@@ -33,7 +33,7 @@ class ApiService {
     }
   }
 
-  Future<User> getUser(int userId) async {
+  Future<User> getUser(String userId) async {
     final response = await http.get(Uri.parse('$baseUrl/users/$userId'));
 
     if (response.statusCode == 200) {
@@ -61,7 +61,7 @@ class ApiService {
     }
   }
 
-  Future<User> updateUser(int userId, User user) async {
+  Future<User> updateUser(String userId, User user) async {
     final response = await http.put(
       Uri.parse('$baseUrl/users/$userId'),
       headers: <String, String>{
@@ -78,7 +78,7 @@ class ApiService {
     }
   }
 
-  Future<void> deleteUser(int userId) async {
+  Future<void> deleteUser(String userId) async {
     final response = await http.delete(
       Uri.parse('$baseUrl/users/$userId'),
     );
@@ -90,6 +90,50 @@ class ApiService {
     }
   }
 
+  Future<List<User>> getUserFriends(String userId) async {
+    final response = await http.get(Uri.parse('$baseUrl/users/$userId/friends'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((user) => User.fromJson(user)).toList();
+    } else {
+      throw Exception('Error getting user friends: ${response.statusCode}');
+    }
+  }
+
+  Future<User> addFriend(String id, String friendId) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/$id/friends?friendId=$friendId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      User user = User.fromJson(data);
+      return user;
+    } else {
+      throw Exception('Failed to add a friend: ${response.statusCode}');
+    }
+  }
+
+  Future<User> deleteFriend(String id, String friendId) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/$id/friends?friendId=$friendId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      return User.fromJson(responseData);
+    } else {
+      throw Exception('Failed to delete a friend: ${response.statusCode}');
+    }
+  }
+
+
   //
   // IMAGE
   //
@@ -97,8 +141,8 @@ class ApiService {
   Future<void> uploadImage(File image, String description) async {
     final url = Uri.parse("$baseUrl/publications/createPicture");
     Picture picture = Picture(
-        id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        owner: loggedUser,
+        id: 'noid',
+        owner: loggedUser.id,
         date: DateTime.now(),
         publiType: PublicationType.picture,
         description: description,
@@ -115,7 +159,60 @@ class ApiService {
     if (response.statusCode == 200) {
       print("Image uploaded successfully");
     } else {
-      print(response.statusCode);
+      print("Image not uploaded, error code: ${response.statusCode} ");
+    }
+  }
+
+
+  Future<List<Publication>> getFeed(String userId) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/publications/$userId/feed'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      List<Publication> feed = data.map((item) => Publication.fromJson(item)).toList();
+      return feed;
+    } else {
+      throw Exception('Failed to load feed: ${response.statusCode}');
+    }
+  }
+
+  Future<Publication> getPublicationById(String id) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/publications/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      Publication publication = Publication.fromJson(data);
+      return publication;
+    } else {
+      throw Exception('Failed to load publication: ${response.statusCode}');
+    }
+  }
+
+  Future<Publication> createPublication(Publication publicationDto) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/publications/createNote'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(publicationDto.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      Publication publication = Publication.fromJson(data);
+      return publication;
+    } else {
+      throw Exception('Failed to create publication: ${response.statusCode}');
     }
   }
 }

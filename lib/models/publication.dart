@@ -4,7 +4,7 @@ enum PublicationType { note, picture, song }
 
 class Publication {
   final String id;
-  final User owner;
+  final String owner;
   final DateTime date;
   final PublicationType publiType;
 
