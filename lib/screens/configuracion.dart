@@ -33,7 +33,7 @@ class CambiarUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        User? u = bd.getUserById(bd.usuarios, 1);
+        User? u = bd.getUserById(bd.usuarios, 2);
         if (u != null) {
           bd.changeLoggedUser(u!);
         } else {

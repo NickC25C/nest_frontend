@@ -142,11 +142,13 @@ class CustomListView extends StatelessWidget {
   }
 }
 
+class Grupos extends StatefulWidget {
+  @override
+  _Grupos createState() => _Grupos();
+}
+
 //visualizar los grupos y la contidad de gente de estos
-class Grupos extends StatelessWidget {
-  const Grupos({
-    Key? key,
-  }) : super(key: key);
+class _Grupos extends State<Grupos> {
 
   @override
   Widget build(BuildContext context) {
@@ -177,24 +179,36 @@ class Grupos extends StatelessWidget {
                 padding: EdgeInsets.only(left: 10.0),
                 itemCount: bd.loggedUser.diffusionGroups!.length,
                 itemBuilder: (BuildContext context, int index){
-                  return ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text(bd.loggedUser.diffusionGroups![index].name),
-                    trailing: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          bd.loggedUser.diffusionGroups![index].friends!.length.toString(),
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                          bd.loggedUser.diffusionGroups![index].name,
                           style: TextStyle(
+                            fontSize: 24,
                             color: Colors.black,
                           ),
-                        ),
-                        Icon(
-                          Icons.group,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            bd.loggedUser.diffusionGroups![index].friends!.length.toString(),
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Icon(
+                            Icons.group,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                    ],
                   );
                 },
               ),

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/group.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/main.dart';
 
+import '../models/user.dart';
+
 const tituloScreen = 'NUEVO GRUPO';
+List<String> selectedItems = [];
+Titulo titulin = Titulo();
 
 class CrearGrupos extends StatelessWidget {
   const CrearGrupos({super.key});
@@ -18,7 +23,7 @@ class CrearGrupos extends StatelessWidget {
           BarraPublicar(titulo: tituloScreen),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Titulo(),
+            child: titulin,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -33,11 +38,13 @@ class CrearGrupos extends StatelessWidget {
     ));
   }
 }
+class Listado extends StatefulWidget{
+  @override
+  _Listado createState() => _Listado();
+}
 
-class Listado extends StatelessWidget {
-  const Listado({
-    super.key,
-  });
+class _Listado extends State<Listado> {
+  List<bool> _selectedItems = List.generate(bd.loggedUser.friends!.length, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +74,17 @@ class Listado extends StatelessWidget {
             itemBuilder: (BuildContext context, int index){
               return ListTile(
                   title: Text(bd.loggedUser.friends![index].username),
+                tileColor: _selectedItems[index] ? Colors.deepPurpleAccent[100] : null,
+                onTap: () {
+                  if (selectedItems.contains(bd.loggedUser.friends![index].name)) {
+                    selectedItems.remove(bd.loggedUser.friends![index].name);
+                  } else {
+                    selectedItems.add(bd.loggedUser.friends![index].name);
+                  }
+                  setState(() {
+                    _selectedItems[index] = !_selectedItems[index];
+                  });
+                },
               );
             },
           ),
@@ -91,7 +109,10 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              bd.addGroup(bd.loggedUser, titulin.darValor(), bd.loggedUser.friends!);
+              Navigator.pop(context);
+            },
             icon: Icon(
               Icons.groups,
               color: Colors.white,
@@ -101,7 +122,7 @@ class BotonCrear extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.deepPurpleAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

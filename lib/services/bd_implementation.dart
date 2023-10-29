@@ -45,7 +45,7 @@ class Bd {
       username: 'lanza10',
       password: '1234',
       mail: 'lanza@gmail.com',
-      friends: List<User>.empty(growable: true),
+      friends: [u1],
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
       diffusionGroups: List<Group>.empty(growable: true),
@@ -129,6 +129,17 @@ class Bd {
             ),
           );
     }
+  }
+
+  void addGroup(User owner, String titulo, List<User> friends){
+    owner.diffusionGroups!.add(
+      Group(
+          id: owner.diffusionGroups!.length,
+          name: titulo,
+          owner: owner,
+          friends: friends
+      )
+    );
   }
 
   void enviarSolicitud(User loggUser, User userToAdd) {
