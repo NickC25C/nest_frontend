@@ -33,7 +33,7 @@ class _FotoState extends State<Foto> {
         height: 300,
         width: 300,
         child: Image(
-          image: image as ImageProvider,
+          image: FileImage(image),
           fit: BoxFit.cover,
         ));
   }

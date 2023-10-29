@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/models/publiNoId.dart';
 import 'package:nest_fronted/screens/configuracion.dart';
 
 import 'package:nest_fronted/widgets/barra_publi.dart';
@@ -259,7 +260,18 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 170,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              bd.addPublication(
+                  bd.loggedUser,
+                  PubliNoId(
+                      titulo: titulete.darValor(),
+                      owner: bd.loggedUser,
+                      date: DateTime.now(),
+                      publiType: PublicationType.picture),
+                  bd.usuarios,
+                  imageToPub!);
+              Navigator.pop(context);
+            },
             icon: Icon(
               Icons.image_outlined,
               color: Colors.white,

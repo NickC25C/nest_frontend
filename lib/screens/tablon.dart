@@ -6,14 +6,13 @@ import 'package:nest_fronted/models/publiNoId.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
-import 'package:nest_fronted/widgets/nota.dart';
-import 'package:nest_fronted/widgets/foto.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/widgets/publication_widget.dart';
+import 'package:nest_fronted/models/picture.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
@@ -37,8 +36,9 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
-  _buildContentView() {
+  _buildContentView(int index) {
     setState(() {
+      selectedIndex = index;
       open = !open;
       openNote =
           false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
@@ -67,7 +67,7 @@ class TablonState extends State<TablonScreen> {
             );
           } else {
             return GestureDetector(
-              onTap: () => {_buildContentView()},
+              onTap: () => {_buildContentView(index)},
               child: PublicationWidget(
                 pub: publications[index],
               ),
@@ -78,9 +78,8 @@ class TablonState extends State<TablonScreen> {
   }
 
   Widget _buildPhotoView() {
-    return PhotoView(
-      imageProvider: AssetImage('assets/images/rata.png'),
-    );
+    Picture fotita = bd.loggedUser.feedPublications![selectedIndex] as Picture;
+    return PhotoView(imageProvider: FileImage(fotita.image!));
   }
 
   Widget _buildNoteViewContent() {
@@ -120,7 +119,7 @@ class TablonState extends State<TablonScreen> {
 
     if (open) {
       return GestureDetector(
-        onTap: () => {_buildContentView()},
+        onTap: () => {_buildContentView(selectedIndex)},
         child: Container(
           height: screenSize.height,
           width: double.infinity,
