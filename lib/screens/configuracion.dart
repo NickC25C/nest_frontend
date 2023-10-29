@@ -33,7 +33,12 @@ class CambiarUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        api.loggedUser = usuarios[1];
+        User? u = bd.getUserById(bd.usuarios, 1);
+        if (u != null) {
+          bd.changeLoggedUser(u!);
+        } else {
+          print('No se encuentra al usuario con ese ID');
+        }
       },
       child: Text('Cambiar Usuario'),
     );

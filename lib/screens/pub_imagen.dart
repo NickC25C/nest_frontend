@@ -259,9 +259,7 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 170,
           child: TextButton.icon(
-            onPressed: () {
-              api.uploadImage(File(imageToPub!.path), titulete.darValor());
-            },
+            onPressed: () {},
             icon: Icon(
               Icons.image_outlined,
               color: Colors.white,

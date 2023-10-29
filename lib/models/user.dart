@@ -1,11 +1,18 @@
+import 'dart:ffi';
+
+import 'package:nest_fronted/models/publication.dart';
+
 class User {
-  final String id;
+  final int id;
   final String name;
   final String lastname;
   final String username;
   final String password;
   final String mail;
-  final List<dynamic> friendsIds;
+  final List<User>? friends;
+  final List<User>? solicitudesPend;
+  final List<Publication>? feedPublications;
+  bool notificationActive;
 
   User(
       {required this.id,
@@ -14,26 +21,8 @@ class User {
       required this.username,
       required this.password,
       required this.mail,
-      required this.friendsIds});
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-        id: json['id'],
-        name: json['name'],
-        lastname: json['lastname'],
-        username: json['username'],
-        password: json['password'],
-        mail: json['mail'],
-        friendsIds : json['friendsIds']);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'lastname': lastname,
-      'username': username,
-      'password': password,
-      'mail': mail,
-    };
-  }
+      required this.friends,
+      required this.solicitudesPend,
+      required this.feedPublications,
+      required this.notificationActive});
 }

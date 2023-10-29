@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/publiNoId.dart';
+import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
 import 'package:nest_fronted/widgets/nota.dart';
@@ -9,6 +11,8 @@ import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/widgets/publication_widget.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
@@ -46,6 +50,14 @@ class TablonState extends State<TablonScreen> {
       open =
           false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
     });
+  }
+
+  ListView _buildTablon(List<Publication> publications) {
+    return ListView(children: _buildListContent(publications));
+  }
+
+  List<Widget> _buildListContent(List<Publication> publications) {
+    return [];
   }
 
   Widget _buildPhotoView() {
@@ -139,10 +151,10 @@ class TablonState extends State<TablonScreen> {
             children: [
               ListView(
                 children: [
-                  GestureDetector(
+                  /*GestureDetector(
                     onTap: () => {_buildContentView()},
-                    child: Foto(url: ('assets/images/rata.png')),
-                  ),
+                    child: Foto(url: '', file: ,),
+                  ),*/
                   GestureDetector(
                     onTap: () => {_buildNoteView()},
                     child: const Nota(

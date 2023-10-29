@@ -1,29 +1,12 @@
-import 'package:nest_fronted/models/user.dart';
+import 'package:nest_fronted/models/publiNoId.dart';
 
-enum PublicationType { note, picture, song }
-
-class Publication {
-  final String id;
-  final User owner;
-  final DateTime date;
-  final PublicationType publiType;
+class Publication extends PubliNoId {
+  final int id;
 
   Publication(
       {required this.id,
-      required this.owner,
-      required this.date,
-      required this.publiType});
-
-  factory Publication.fromJson(Map<String, dynamic> json) {
-    return Publication(
-      id: json['id'],
-      owner: json['owner'],
-      date: json['date'],
-      publiType: json['publiType'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {'owner': owner, 'date': date, 'publiType': publiType};
-  }
+      required super.titulo,
+      required super.owner,
+      required super.date,
+      required super.publiType});
 }
