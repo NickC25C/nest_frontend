@@ -86,9 +86,13 @@ class Bd {
   }
 
   void addFriend(User loggUser, User userToAdd) {
-    loggUser.friends!.add(userToAdd);
-    userToAdd.friends!.add(loggUser);
-    loggUser.solicitudesPend!.remove(userToAdd);
+    if (loggUser != userToAdd) {
+      loggUser.friends!.add(userToAdd);
+      userToAdd.friends!.add(loggUser);
+      loggUser.solicitudesPend!.remove(userToAdd);
+    } else {
+      print('No puedes ser tu propio amigo soplapollas');
+    }
   }
 
   void rejectFriend(User loggUser, User userToAdd) {
@@ -115,22 +119,24 @@ class Bd {
     usersToSend.remove(owner);
     for (int i = 0; i < usersToSend.length; i++) {
       usersToSend[i].feedPublications!.add(
-        NotaPub(
-          id: usersToSend[i].feedPublications!.length,
-          titulo: titulo,
-          owner: loggedUser,
-          date: DateTime.now(),
-          publiType: PublicationType.note,
-          mensaje: mensaje,
-        ),
-      );
+            NotaPub(
+              id: usersToSend[i].feedPublications!.length,
+              titulo: titulo,
+              owner: loggedUser,
+              date: DateTime.now(),
+              publiType: PublicationType.note,
+              mensaje: mensaje,
+            ),
+          );
     }
   }
 
-
-
   void enviarSolicitud(User loggUser, User userToAdd) {
-    userToAdd.solicitudesPend!.add(loggUser);
+    if (loggUser != userToAdd) {
+      userToAdd.solicitudesPend!.add(loggUser);
+    } else {
+      print('No puedes ser tu propio amigo soplapollas');
+    }
   }
 
   User? getUserByUsername(List<User> users, String nameOfUser) {
