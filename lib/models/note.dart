@@ -4,8 +4,9 @@ import 'package:nest_fronted/models/publication.dart';
 
 class Note extends Publication
 {
-  final String text;
-  Note({required super.id, required super.owner, required super.date, required super.publiType, required this.text});
+  final String title;
+  final String message;
+  Note({required super.id, required super.owner, required super.date, required super.publiType, required this.title, required this.message});
 
   factory Note.fromJson(Map<String, dynamic> json) {
     return Note(
@@ -13,7 +14,8 @@ class Note extends Publication
       owner: json['owner'],
       date: json['date'],
       publiType: json['publiType'],
-      text: json['text'],
+      title: json['title'],
+      message: json['message']
     );
   }
 
@@ -21,7 +23,8 @@ class Note extends Publication
   Map<String, dynamic> toJson() {
     Map<String, dynamic> m = super.toJson();
     m.addAll({
-      'text': text,
+      'title': title,
+      'message': message
     });
     return m;
   }

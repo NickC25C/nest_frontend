@@ -44,6 +44,25 @@ class ApiService {
     }
   }
 
+  Future<User> getUserByUsername(String username) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/users/username/$username'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      User user = User.fromJson(data);
+      return user;
+    } else if (response.statusCode == 404) {
+      throw Exception('User not found');
+    } else {
+      throw Exception('Failed to load user by username');
+    }
+  }
+
   Future<User> createUser(User user) async {
     final response = await http.post(
       Uri.parse('$baseUrl/users'),
@@ -134,6 +153,8 @@ class ApiService {
   }
 
 
+
+
   //
   // IMAGE
   //
@@ -142,7 +163,7 @@ class ApiService {
     final url = Uri.parse("$baseUrl/publications/createPicture");
     Picture picture = Picture(
         id: 'noid',
-        owner: loggedUser.id,
+        owner: loggedUser,
         date: DateTime.now(),
         publiType: PublicationType.picture,
         description: description,
