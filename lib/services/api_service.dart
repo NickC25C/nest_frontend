@@ -102,7 +102,7 @@ class ApiService {
 
   Future<User> addFriend(String id, String friendId) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/$id/friends?friendId=$friendId'),
+      Uri.parse('$baseUrl/users/$id/friends?friendId=$friendId'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -119,7 +119,7 @@ class ApiService {
 
   Future<User> deleteFriend(String id, String friendId) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/$id/friends?friendId=$friendId'),
+      Uri.parse('$baseUrl/users/$id/friends?friendId=$friendId'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
