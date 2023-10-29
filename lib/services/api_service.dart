@@ -4,6 +4,7 @@ import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/note.dart';
 import '../models/picture.dart';
 
 class ApiService {
@@ -160,7 +161,7 @@ class ApiService {
   //
 
   Future<void> uploadImage(File image, String description) async {
-    final url = Uri.parse("$baseUrl/publications/createPicture");
+    final url = Uri.parse("$baseUrl/publications/picture");
     Picture picture = Picture(
         id: 'noid',
         owner: loggedUser,
@@ -219,21 +220,21 @@ class ApiService {
     }
   }
 
-  Future<Publication> createPublication(Publication publicationDto) async {
+  Future<Note> createNote(Note note) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/publications/createNote'),
+      Uri.parse('$baseUrl/publications/note'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(publicationDto.toJson()),
+      body: jsonEncode(note.toJson()),
     );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      Publication publication = Publication.fromJson(data);
-      return publication;
+      Note note = Note.fromJson(data);
+      return note;
     } else {
-      throw Exception('Failed to create publication: ${response.statusCode}');
+      throw Exception('Failed to create note: ${response.statusCode}');
     }
   }
 }
