@@ -115,7 +115,7 @@ class _FormBusquedaState extends State<FormBusqueda> {
                           } else {
                             print('nombre de usuario nulo');
                           }
-
+                          _controller.text = '';
                           // Process data.
                         }
                       },
