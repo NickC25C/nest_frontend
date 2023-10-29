@@ -10,9 +10,17 @@ const tituloScreen = 'NUEVO GRUPO';
 List<String> selectedItems = [];
 Titulo titulin = Titulo();
 
-class CrearGrupos extends StatelessWidget {
-  const CrearGrupos({super.key});
+class CrearGrupos extends StatefulWidget{
+  @override
+  _CrearGrupos createState() => _CrearGrupos();
+}
 
+class _CrearGrupos extends State<CrearGrupos> {
+  @override
+  void initState(){
+    super.initState();
+    selectedItems = [];
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +84,10 @@ class _Listado extends State<Listado> {
                   title: Text(bd.loggedUser.friends![index].username),
                 tileColor: _selectedItems[index] ? Colors.deepPurpleAccent[100] : null,
                 onTap: () {
-                  if (selectedItems.contains(bd.loggedUser.friends![index].name)) {
-                    selectedItems.remove(bd.loggedUser.friends![index].name);
+                  if (selectedItems.contains(bd.loggedUser.friends![index].username)) {
+                    selectedItems.remove(bd.loggedUser.friends![index].username);
                   } else {
-                    selectedItems.add(bd.loggedUser.friends![index].name);
+                    selectedItems.add(bd.loggedUser.friends![index].username);
                   }
                   setState(() {
                     _selectedItems[index] = !_selectedItems[index];
@@ -110,7 +118,8 @@ class BotonCrear extends StatelessWidget {
           width: 150,
           child: TextButton.icon(
             onPressed: () {
-              bd.addGroup(bd.loggedUser, titulin.darValor(), bd.loggedUser.friends!);
+              print(selectedItems);
+              bd.addGroup(bd.loggedUser, titulin.darValor(), selectedItems);
               Navigator.pop(context);
             },
             icon: Icon(

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         'tablon': (_) => const TablonScreen(),
         'pub_notas': (_) => const PubNotaScreen(),
         'pub_imagen': (_) => const PubImagenScreen(),
-        'crea_grupo': (_) => const CrearGrupos(),
+        'crea_grupo': (_) => CrearGrupos(),
         'amis_grup': (_) => const AmisGrupScreen(),
         'configuracion': (_) => const ConfiguracionScreen(),
       },

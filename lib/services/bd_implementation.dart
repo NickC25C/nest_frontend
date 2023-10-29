@@ -131,13 +131,18 @@ class Bd {
     }
   }
 
-  void addGroup(User owner, String titulo, List<User> friends){
+  void addGroup(User owner, String titulo, List<String> friends){
+    List<User> listUserShared = [];
+    print(friends);
+    for(int i = 0; i < friends.length; i++){
+      listUserShared.add(getUserByUsername(usuarios, friends[i])!);
+    }
     owner.diffusionGroups!.add(
       Group(
           id: owner.diffusionGroups!.length,
           name: titulo,
           owner: owner,
-          friends: friends
+          friends: listUserShared
       )
     );
   }

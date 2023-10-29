@@ -179,36 +179,39 @@ class _Grupos extends State<Grupos> {
                 padding: EdgeInsets.only(left: 10.0),
                 itemCount: bd.loggedUser.diffusionGroups!.length,
                 itemBuilder: (BuildContext context, int index){
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                          bd.loggedUser.diffusionGroups![index].name,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.black,
-                          ),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            bd.loggedUser.diffusionGroups![index].friends!.length.toString(),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                            bd.loggedUser.diffusionGroups![index].name,
                             style: TextStyle(
                               fontSize: 24,
                               color: Colors.black,
                             ),
-                          ),
-                          Icon(
-                            Icons.group,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              bd.loggedUser.diffusionGroups![index].friends!.length.toString(),
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Icon(
+                              Icons.group,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
