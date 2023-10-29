@@ -103,19 +103,24 @@ class Bd {
     }
   }
 
-  void addNota(User owner, PubliNoId p, List<User> users, String mensaje) {
+  void addNota(User owner, String titulo, List<User> users, String mensaje) {
     List<User> usersToSend = users;
     usersToSend.remove(owner);
     for (int i = 0; i < usersToSend.length; i++) {
-      usersToSend[i].feedPublications!.add(NotaPub(
+      usersToSend[i].feedPublications!.add(
+        NotaPub(
           id: usersToSend[i].feedPublications!.length,
-          titulo: p.titulo,
-          owner: p.owner,
-          date: p.date,
+          titulo: titulo,
+          owner: loggedUser,
+          date: DateTime.now(),
           publiType: PublicationType.note,
-          mensaje: mensaje));
+          mensaje: mensaje,
+        ),
+      );
     }
   }
+
+
 
   void enviarSolicitud(User loggUser, User userToAdd) {
     userToAdd.solicitudesPend!.add(loggUser);

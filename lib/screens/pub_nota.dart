@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
+import 'package:nest_fronted/widgets/contenido_pub.dart';
+import 'package:nest_fronted/main.dart';
+
 
 const tituloScreen = 'PUBLICAR NOTA';
 int selectedIndex = 0;
+Titulo titulin = Titulo();
+Content mensajin = Content();
 
 
 class PubNotaScreen extends StatelessWidget {
@@ -21,10 +26,13 @@ class PubNotaScreen extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Titulo(),
+              child: titulin,
             ),
 
-            EscribirNota(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: mensajin,
+            ),
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -42,7 +50,7 @@ class PubNotaScreen extends StatelessWidget {
 }
 
 //contenido de la nota
-class EscribirNota extends StatelessWidget {
+/*class EscribirNota extends StatelessWidget {
   const EscribirNota({
     Key? key,
   }) : super(key: key);
@@ -78,7 +86,7 @@ class EscribirNota extends StatelessWidget {
       ],
     );
   }
-}
+}*/
 //Seleccionar a los usuarios/grupos a los q enviar
 class Listado extends StatelessWidget {
   const Listado({
@@ -136,7 +144,15 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+
+              String titulo = titulin.darValor();
+              String mensaje = mensajin.darValor();
+
+              if (titulo.isNotEmpty && mensaje.isNotEmpty) {
+                bd.addNota(bd.loggedUser, titulo, bd.usuarios, mensaje);
+              }
+            },
             icon: Icon(
               Icons.sticky_note_2_outlined,
               color: Colors.white,
