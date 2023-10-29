@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:nest_fronted/models/nota.dart';
+import 'package:nest_fronted/models/picture.dart';
 import 'package:nest_fronted/models/publiNoId.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
@@ -13,9 +17,9 @@ class Bd {
       username: 'Gullem98',
       password: '1234',
       mail: 'guillem@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u1 = User(
@@ -25,9 +29,9 @@ class Bd {
       username: 'NickP20',
       password: '1234',
       mail: 'nick@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u2 = User(
@@ -37,9 +41,9 @@ class Bd {
       username: 'lanza10',
       password: '1234',
       mail: 'lanza@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u3 = User(
@@ -49,9 +53,9 @@ class Bd {
       username: 'Anton32',
       password: '1234',
       mail: 'AleAnton@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
     User u4 = User(
@@ -61,9 +65,9 @@ class Bd {
       username: 'ivanharo',
       password: '1234',
       mail: 'iavan@gmail.com',
-      friends: List<User>.empty(),
-      solicitudesPend: List<User>.empty(),
-      feedPublications: List<Publication>.empty(),
+      friends: List<User>.empty(growable: true),
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
       notificationActive: false,
     );
 
@@ -84,16 +88,32 @@ class Bd {
     loggUser.solicitudesPend!.remove(userToAdd);
   }
 
-  void addPublication(User owner, PubliNoId p, List<User> users) {
+  void addPublication(User owner, PubliNoId p, List<User> users, File file) {
     List<User> usersToSend = users;
     usersToSend.remove(owner);
     for (int i = 0; i < usersToSend.length; i++) {
-      usersToSend[i].feedPublications!.add(Publication(
+      usersToSend[i].feedPublications!.add(Picture(
           id: usersToSend[i].feedPublications!.length,
           titulo: p.titulo,
           owner: p.owner,
           date: p.date,
-          publiType: p.publiType));
+          publiType: p.publiType,
+          url: file.path,
+          image: file));
+    }
+  }
+
+  void addNota(User owner, PubliNoId p, List<User> users, String mensaje) {
+    List<User> usersToSend = users;
+    usersToSend.remove(owner);
+    for (int i = 0; i < usersToSend.length; i++) {
+      usersToSend[i].feedPublications!.add(NotaPub(
+          id: usersToSend[i].feedPublications!.length,
+          titulo: p.titulo,
+          owner: p.owner,
+          date: p.date,
+          publiType: PublicationType.note,
+          mensaje: mensaje));
     }
   }
 
