@@ -6,6 +6,8 @@ import 'package:nest_fronted/models/publiNoId.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
 
+import '../models/group.dart';
+
 class Bd {
   late List<User> usuarios;
   late User loggedUser;
@@ -20,6 +22,7 @@ class Bd {
       friends: List<User>.empty(growable: true),
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
+      diffusionGroups: List<Group>.empty(growable: true),
       notificationActive: false,
     );
     User u1 = User(
@@ -32,6 +35,7 @@ class Bd {
       friends: List<User>.empty(growable: true),
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
+      diffusionGroups: List<Group>.empty(growable: true),
       notificationActive: false,
     );
     User u2 = User(
@@ -44,6 +48,7 @@ class Bd {
       friends: List<User>.empty(growable: true),
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
+      diffusionGroups: List<Group>.empty(growable: true),
       notificationActive: false,
     );
     User u3 = User(
@@ -56,6 +61,7 @@ class Bd {
       friends: List<User>.empty(growable: true),
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
+      diffusionGroups: List<Group>.empty(growable: true),
       notificationActive: false,
     );
     User u4 = User(
@@ -68,6 +74,7 @@ class Bd {
       friends: List<User>.empty(growable: true),
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
+      diffusionGroups: List<Group>.empty(growable: true),
       notificationActive: false,
     );
 
@@ -133,6 +140,10 @@ class Bd {
       }
     }
     return null;
+  }
+
+  List<Group>? getGroupsFromUserId(int userId){
+    return getUserById(usuarios, userId)!.diffusionGroups;
   }
 
   User? getUserById(List<User> users, int idUser) {

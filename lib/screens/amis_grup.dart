@@ -173,17 +173,18 @@ class Grupos extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Scrollbar(
-              child: ListView(
+              child: ListView.builder(
                 padding: EdgeInsets.only(left: 10.0),
-                children: [
-                  ListTile(
+                itemCount: bd.loggedUser.diffusionGroups!.length,
+                itemBuilder: (BuildContext context, int index){
+                  return ListTile(
                     contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('Familia'),
+                    title: Text(bd.loggedUser.diffusionGroups![index].name),
                     trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '1',
+                          bd.loggedUser.diffusionGroups![index].friends!.length.toString(),
                           style: TextStyle(
                             color: Colors.black,
                           ),
@@ -194,65 +195,8 @@ class Grupos extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('Colegio'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '18',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(
-                          Icons.group,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('mckdhvudif'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '18334',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(
-                          Icons.group,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('Nest'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '12',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(
-                          Icons.group,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ),
