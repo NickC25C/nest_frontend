@@ -33,17 +33,19 @@ class _Solicitudes extends State<Solicitudes> {
   final List<User> listaAuxiliar = bd.loggedUser.solicitudesPend!;
 
   void _check(int index) {
+    User u = listaAuxiliar[index];
     setState(() {
       listaAuxiliar.removeAt(index);
     });
-    bd.addFriend(bd.loggedUser, bd.loggedUser.solicitudesPend![index]);
+    bd.addFriend(bd.loggedUser, u);
   }
 
   void _cross(int index) {
+    User u = listaAuxiliar[index];
     setState(() {
       listaAuxiliar.removeAt(index);
     });
-    bd.rejectFriend(bd.loggedUser, bd.loggedUser.solicitudesPend![index]);
+    bd.rejectFriend(bd.loggedUser, u);
   }
 
   @override
