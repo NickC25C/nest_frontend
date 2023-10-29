@@ -29,6 +29,7 @@ class TablonScreen extends StatefulWidget {
 }
 
 class TablonState extends State<TablonScreen> {
+
   void publicar() {
     setState(() {
       _opacityLevel = 0.5;
@@ -53,7 +54,26 @@ class TablonState extends State<TablonScreen> {
   }
 
   ListView _buildTablon(List<Publication> publications) {
-    return ListView(children: _buildListContent(publications));
+    return ListView.builder(
+        itemCount: publications.length,
+        itemBuilder: (BuildContext context, int index){
+          if(publications[index].publiType == PublicationType.note){
+            return GestureDetector(
+                onTap: () => {_buildNoteView()},
+                child: PublicationWidget(
+                  pub: publications[index],
+                ),
+            );
+          }else{
+            return GestureDetector(
+                onTap: () => {_buildContentView()},
+                child: PublicationWidget(
+                pub: publications[index],
+              ),
+            );
+          };
+        }
+    );
   }
 
   List<Widget> _buildListContent(List<Publication> publications) {
@@ -149,22 +169,7 @@ class TablonState extends State<TablonScreen> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              ListView(
-                children: [
-                  /*GestureDetector(
-                    onTap: () => {_buildContentView()},
-                    child: Foto(url: '', file: ,),
-                  ),*/
-                  GestureDetector(
-                    onTap: () => {_buildNoteView()},
-                    child: const Nota(
-                      tituloNota: 'SALUDO',
-                      mensaje: "",
-                      usu: 'PEPA',
-                    ),
-                  ),
-                ],
-              ),
+              _buildTablon(bd.loggedUser.feedPublications!),
               BotonPublicar(),
             ],
           ),
