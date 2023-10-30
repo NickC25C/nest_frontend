@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/screens/crear_grupos.dart';
 
 class Listado extends StatefulWidget {
   const Listado({
@@ -47,7 +48,7 @@ class _ListadoState extends State<Listado> {
                   Container(
                     width: 150.0,
                     child: Text(
-                      'Enviar a todo cristo',
+                      'Enviar a todos',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -86,43 +87,46 @@ class _ListadoState extends State<Listado> {
             border: Border.all(width: 2),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Scrollbar(
-            child: ListView.builder(
+          child: ListView.builder(
+              clipBehavior: Clip.hardEdge,
               padding: EdgeInsets.all(0.0),
               itemCount: bd.loggedUser.diffusionGroups!.length + bd.loggedUser.friends!.length,
               itemBuilder: (BuildContext context, int index) {
                 if (index < bd.loggedUser.diffusionGroups!.length) {
                   // Grupetes
-                  return ListTile(
-                    title: Text(bd.loggedUser.diffusionGroups![index].name),
+                  return Material(
+                    child: ListTile(
+                      title: Text(bd.loggedUser.diffusionGroups![index].name),
+                      //key: ValueKey(selectedItems[index]),
+                      tileColor: isSelectedList[index] ? Colors.blue : null,
+                      onTap: () {
+                        setState(() {
 
-                    tileColor: isSelectedList[index] ? Colors.blue : null,
-                    onTap: () {
-                      setState(() {
-
-                        isSelectedList[index] = !isSelectedList[index];
-                      });
-                    },
+                          isSelectedList[index] = !isSelectedList[index];
+                        });
+                      },
+                    ),
                   );
                 } else {
                   // Amiguetes
                   final friendIndex = index - bd.loggedUser.diffusionGroups!.length;
-                  return ListTile(
-                    title: Text(bd.loggedUser.friends![friendIndex].username),
+                  return Material(
+                    child: ListTile(
+                      title: Text(bd.loggedUser.friends![friendIndex].username),
 
-                    tileColor: isSelectedList[index] ? Colors.blue : null,
-                    onTap: () {
-                      setState(() {
+                      tileColor: isSelectedList[index] ? Colors.blue : null,
+                      onTap: () {
+                        setState(() {
 
-                        isSelectedList[index] = !isSelectedList[index];
-                      });
-                    },
+                          isSelectedList[index] = !isSelectedList[index];
+                        });
+                      },
+                    ),
                   );
                 }
               },
             ),
           ),
-        ),
       ],
     );
   }
