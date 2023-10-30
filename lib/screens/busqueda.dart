@@ -110,7 +110,19 @@ class _FormBusquedaState extends State<FormBusqueda> {
                             if (u != null) {
                               bd.enviarSolicitud(bd.loggedUser, u);
                             } else {
-                              print('Usuario u no existe');
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text(
+                                            'El usuario introducido no existe'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('OK'))
+                                        ],
+                                      ));
                             }
                           } else {
                             print('nombre de usuario nulo');

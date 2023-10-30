@@ -10,17 +10,18 @@ const tituloScreen = 'NUEVO GRUPO';
 List<String> selectedItems = [];
 Titulo titulin = Titulo();
 
-class CrearGrupos extends StatefulWidget{
+class CrearGrupos extends StatefulWidget {
   @override
   _CrearGrupos createState() => _CrearGrupos();
 }
 
 class _CrearGrupos extends State<CrearGrupos> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
     selectedItems = [];
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,13 +47,15 @@ class _CrearGrupos extends State<CrearGrupos> {
     ));
   }
 }
-class Listado extends StatefulWidget{
+
+class Listado extends StatefulWidget {
   @override
   _Listado createState() => _Listado();
 }
 
 class _Listado extends State<Listado> {
-  List<bool> _selectedItems = List.generate(bd.loggedUser.friends!.length, (index) => false);
+  List<bool> _selectedItems =
+      List.generate(bd.loggedUser.friends!.length, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +82,16 @@ class _Listado extends State<Listado> {
           child: ListView.builder(
             padding: EdgeInsets.all(0.0),
             itemCount: bd.loggedUser.friends!.length,
-            itemBuilder: (BuildContext context, int index){
+            itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                  title: Text(bd.loggedUser.friends![index].username),
-                tileColor: _selectedItems[index] ? Colors.deepPurpleAccent[100] : null,
+                title: Text(bd.loggedUser.friends![index].username),
+                tileColor:
+                    _selectedItems[index] ? Colors.deepPurpleAccent[100] : null,
                 onTap: () {
-                  if (selectedItems.contains(bd.loggedUser.friends![index].username)) {
-                    selectedItems.remove(bd.loggedUser.friends![index].username);
+                  if (selectedItems
+                      .contains(bd.loggedUser.friends![index].username)) {
+                    selectedItems
+                        .remove(bd.loggedUser.friends![index].username);
                   } else {
                     selectedItems.add(bd.loggedUser.friends![index].username);
                   }
@@ -119,8 +125,25 @@ class BotonCrear extends StatelessWidget {
           child: TextButton.icon(
             onPressed: () {
               print(selectedItems);
-              bd.addGroup(bd.loggedUser, titulin.darValor(), selectedItems);
-              Navigator.pop(context);
+              if (titulin.darValor() != null && selectedItems.length != 0) {
+                bd.addGroup(bd.loggedUser, titulin.darValor(), selectedItems);
+                Navigator.pop(context);
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: const Text('Error al crear grupo'),
+                          content: const Text(
+                              'Un grupo debe tener un Nombre y al menos un integrante'),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'))
+                          ],
+                        ));
+              }
             },
             icon: Icon(
               Icons.groups,
