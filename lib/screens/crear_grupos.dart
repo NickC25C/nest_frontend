@@ -125,7 +125,7 @@ class BotonCrear extends StatelessWidget {
           child: TextButton.icon(
             onPressed: () {
               print(selectedItems);
-              if (titulin.darValor() != null && selectedItems.length != 0) {
+              if (titulin.darValor() != '' && selectedItems.length != 0) {
                 bd.addGroup(bd.loggedUser, titulin.darValor(), selectedItems);
                 Navigator.pop(context);
               } else {
