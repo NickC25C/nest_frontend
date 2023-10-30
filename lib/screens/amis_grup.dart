@@ -187,7 +187,7 @@ class _Grupos extends State<Grupos> {
                         Text(
                             bd.loggedUser.diffusionGroups![index].name,
                             style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 16,
                               color: Colors.black,
                             ),
                         ),

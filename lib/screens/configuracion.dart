@@ -20,7 +20,11 @@ class ConfiguracionScreen extends StatelessWidget {
             titulo: tituloScreen,
           ),
           BotonNotif(),
-          CambiarUser(),
+          CambiarUser(userId: 1,),
+          CambiarUser(userId: 2,),
+          CambiarUser(userId: 3,),
+          CambiarUser(userId: 4,),
+
         ],
       ),
     );
@@ -28,19 +32,20 @@ class ConfiguracionScreen extends StatelessWidget {
 }
 
 class CambiarUser extends StatelessWidget {
-  const CambiarUser({Key? key}) : super(key: key);
+  final int userId;
+  const CambiarUser({Key? key, required this.userId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        User? u = bd.getUserById(bd.usuarios, 2);
+        User? u = bd.getUserById(bd.usuarios, userId);
         if (u != null) {
           bd.changeLoggedUser(u!);
         } else {
           print('No se encuentra al usuario con ese ID');
         }
       },
-      child: Text('Cambiar Usuario'),
+      child: Text('Cambiar Usuario a ' + bd.getUserById(bd.usuarios, userId)!.username),
     );
   }
 }

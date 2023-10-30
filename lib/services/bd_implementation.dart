@@ -12,19 +12,6 @@ class Bd {
   late List<User> usuarios;
   late User loggedUser;
   Bd() {
-    User u = User(
-      id: 0,
-      name: 'Guillem',
-      lastname: 'Forr',
-      username: 'Gullem98',
-      password: '1234',
-      mail: 'guillem@gmail.com',
-      friends: List<User>.empty(growable: true),
-      solicitudesPend: List<User>.empty(growable: true),
-      feedPublications: List<Publication>.empty(growable: true),
-      diffusionGroups: List<Group>.empty(growable: true),
-      notificationActive: false,
-    );
     User u1 = User(
       id: 1,
       name: 'Nick',
@@ -45,7 +32,7 @@ class Bd {
       username: 'lanza10',
       password: '1234',
       mail: 'lanza@gmail.com',
-      friends: [u1],
+      friends: [u1], //nick amigo de lanza
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
       diffusionGroups: List<Group>.empty(growable: true),
@@ -58,7 +45,7 @@ class Bd {
       username: 'Anton32',
       password: '1234',
       mail: 'AleAnton@gmail.com',
-      friends: List<User>.empty(growable: true),
+      friends: [u2],
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
       diffusionGroups: List<Group>.empty(growable: true),
@@ -77,9 +64,52 @@ class Bd {
       diffusionGroups: List<Group>.empty(growable: true),
       notificationActive: false,
     );
+    User u = User(
+      id: 0,
+      name: 'Guillem',
+      lastname: 'Forr',
+      username: 'Gullem98',
+      password: '1234',
+      mail: 'guillem@gmail.com',
+      friends: [u1, u2, u3, u4],
+      solicitudesPend: List<User>.empty(growable: true),
+      feedPublications: List<Publication>.empty(growable: true),
+      diffusionGroups: List<Group>.empty(growable: true),
+      notificationActive: false,
+    );
+
+    //AMISTADES
+    u2.friends!.add(u3); //anton amigo de lanza
+    u3.friends!.add(u2); //lanza amigo de anton
+    u2.friends!.add(u); //guillem amigo de lanza
+    u3.friends!.add(u); //guillem amigo de anton
+    u1.friends!.add(u); //guillem amigo de nick
+    u4.friends!.add(u); //guillem amigo de ivan
+    u1.friends!.add(u2); //lanza amigo de nick
+
+    //SOLICITUDES
+    u4.solicitudesPend!.add(u1);
+    u4.solicitudesPend!.add(u2);
+
 
     usuarios = [u, u1, u2, u3, u4];
     loggedUser = u;
+    // GRUPOS
+    Group g1 = Group(
+      id: 1,
+      friends: [u1,u2],
+      name: 'SonMisAmigos',
+      owner: u,
+    );
+    Group g2 = Group(
+      id: 2,
+      friends: [u1,u2,u4],
+      name: 'EllosNoSonMisAmigos',
+      owner: u,
+    );
+    u.diffusionGroups!.add(g1);
+    u.diffusionGroups!.add(g2);
+
   }
   void changeLoggedUser(User userToLog) {
     loggedUser = userToLog;
@@ -136,7 +166,10 @@ class Bd {
     print(friends);
     for(int i = 0; i < friends.length; i++){
       listUserShared.add(getUserByUsername(usuarios, friends[i])!);
+      print(listUserShared.length);
+      print(friends.length);
     }
+
     owner.diffusionGroups!.add(
       Group(
           id: owner.diffusionGroups!.length,
