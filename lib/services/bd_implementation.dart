@@ -91,25 +91,23 @@ class Bd {
     u4.solicitudesPend!.add(u1);
     u4.solicitudesPend!.add(u2);
 
-
     usuarios = [u, u1, u2, u3, u4];
     loggedUser = u;
     // GRUPOS
     Group g1 = Group(
       id: 1,
-      friends: [u1,u2],
+      friends: [u1, u2],
       name: 'SonMisAmigos',
       owner: u,
     );
     Group g2 = Group(
       id: 2,
-      friends: [u1,u2,u4],
+      friends: [u1, u2, u4],
       name: 'EllosNoSonMisAmigos',
       owner: u,
     );
     u.diffusionGroups!.add(g1);
     u.diffusionGroups!.add(g2);
-
   }
   void changeLoggedUser(User userToLog) {
     loggedUser = userToLog;
@@ -130,54 +128,51 @@ class Bd {
   }
 
   void addPublication(User owner, PubliNoId p, List<User> users, File file) {
-    List<User> usersToSend = users;
-    usersToSend.remove(owner);
-    for (int i = 0; i < usersToSend.length; i++) {
-      usersToSend[i].feedPublications!.add(Picture(
-          id: usersToSend[i].feedPublications!.length,
-          titulo: p.titulo,
-          owner: p.owner,
-          date: p.date,
-          publiType: p.publiType,
-          url: file.path,
-          image: file));
+    for (int i = 0; i < users.length; i++) {
+      if (users[i] != owner) {
+        users[i].feedPublications!.add(Picture(
+            id: users[i].feedPublications!.length,
+            titulo: p.titulo,
+            owner: p.owner,
+            date: p.date,
+            publiType: p.publiType,
+            url: file.path,
+            image: file));
+      }
     }
   }
 
   void addNota(User owner, String titulo, List<User> users, String mensaje) {
-    List<User> usersToSend = users;
-    usersToSend.remove(owner);
-    for (int i = 0; i < usersToSend.length; i++) {
-      usersToSend[i].feedPublications!.add(
-            NotaPub(
-              id: usersToSend[i].feedPublications!.length,
-              titulo: titulo,
-              owner: loggedUser,
-              date: DateTime.now(),
-              publiType: PublicationType.note,
-              mensaje: mensaje,
-            ),
-          );
+    for (int i = 0; i < users.length; i++) {
+      if (users[i] != owner) {
+        users[i].feedPublications!.add(
+              NotaPub(
+                id: users[i].feedPublications!.length,
+                titulo: titulo,
+                owner: loggedUser,
+                date: DateTime.now(),
+                publiType: PublicationType.note,
+                mensaje: mensaje,
+              ),
+            );
+      }
     }
   }
 
-  void addGroup(User owner, String titulo, List<String> friends){
+  void addGroup(User owner, String titulo, List<String> friends) {
     List<User> listUserShared = [];
     print(friends);
-    for(int i = 0; i < friends.length; i++){
+    for (int i = 0; i < friends.length; i++) {
       listUserShared.add(getUserByUsername(usuarios, friends[i])!);
       print(listUserShared.length);
       print(friends.length);
     }
 
-    owner.diffusionGroups!.add(
-      Group(
-          id: owner.diffusionGroups!.length,
-          name: titulo,
-          owner: owner,
-          friends: listUserShared
-      )
-    );
+    owner.diffusionGroups!.add(Group(
+        id: owner.diffusionGroups!.length,
+        name: titulo,
+        owner: owner,
+        friends: listUserShared));
   }
 
   void enviarSolicitud(User loggUser, User userToAdd) {
@@ -197,7 +192,7 @@ class Bd {
     return null;
   }
 
-  List<Group>? getGroupsFromUserId(int userId){
+  List<Group>? getGroupsFromUserId(int userId) {
     return getUserById(usuarios, userId)!.diffusionGroups;
   }
 
