@@ -32,7 +32,7 @@ class Bd {
       username: 'lanza10',
       password: '1234',
       mail: 'lanza@gmail.com',
-      friends: [u1], //nick amigo de lanza
+      friends: List<User>.empty(growable: true),
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
       diffusionGroups: List<Group>.empty(growable: true),
@@ -45,7 +45,7 @@ class Bd {
       username: 'Anton32',
       password: '1234',
       mail: 'AleAnton@gmail.com',
-      friends: [u2],
+      friends: List<User>.empty(growable: true),
       solicitudesPend: List<User>.empty(growable: true),
       feedPublications: List<Publication>.empty(growable: true),
       diffusionGroups: List<Group>.empty(growable: true),
@@ -176,11 +176,7 @@ class Bd {
   }
 
   void enviarSolicitud(User loggUser, User userToAdd) {
-    if (loggUser != userToAdd) {
-      userToAdd.solicitudesPend!.add(loggUser);
-    } else {
-      print('No puedes ser tu propio amigo soplapollas');
-    }
+    userToAdd.solicitudesPend!.add(loggUser);
   }
 
   User? getUserByUsername(List<User> users, String nameOfUser) {
@@ -207,5 +203,14 @@ class Bd {
 
   void toggleNotification(User loggUser) {
     loggUser.notificationActive = !loggUser.notificationActive;
+  }
+
+  bool estaEnlista(List<User> us, User u) {
+    for (int i = 0; i < us.length; i++) {
+      if (us[i] == u) {
+        return true;
+      }
+    }
+    return false;
   }
 }

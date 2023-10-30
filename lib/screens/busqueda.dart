@@ -108,7 +108,44 @@ class _FormBusquedaState extends State<FormBusqueda> {
                             User? u =
                                 bd.getUserByUsername(bd.usuarios, usuToAdd!);
                             if (u != null) {
-                              bd.enviarSolicitud(bd.loggedUser, u);
+                              if (u != bd.loggedUser) {
+                                if (!bd.estaEnlista(
+                                        bd.loggedUser.friends!, u) &&
+                                    !bd.estaEnlista(
+                                        u.solicitudesPend!, bd.loggedUser)) {
+                                  bd.enviarSolicitud(bd.loggedUser, u);
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: const Text(
+                                                'No se puede enviar solicitud'),
+                                            content: const Text(
+                                                'El usuario ya es tu amigo o ya le has enviado una solicitud'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('OK'))
+                                            ],
+                                          ));
+                                }
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: const Text(
+                                              'No puedes ser tu propio amigo'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('OK'))
+                                          ],
+                                        ));
+                              }
                             } else {
                               showDialog(
                                   context: context,
