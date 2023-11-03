@@ -17,30 +17,28 @@ void main() {
   void poblarUsers() {
     User newUser = User(
         id: "",
-        name: "Guiekkkkkm",
+        name: "Guillem",
         lastname: "Fornet",
         username: "g4net",
         password: "pass123",
         mail: "g@g.com",
         enableNotifications: true);
     User newUser1 = User(
-      id: "",
-      name: "Nick",
-      lastname: "Contreras",
-      username: "El_nicoloau",
-      password: "123",
-      mail: "ahhrh@hmail.com",
-      enableNotifications: true
-    );
+        id: "",
+        name: "Nick",
+        lastname: "Contreras",
+        username: "El_nicoloau",
+        password: "123",
+        mail: "ahhrh@hmail.com",
+        enableNotifications: true);
     User newUser2 = User(
-      id: "",
-      name: "Javier",
-      lastname: "Lanza",
-      username: "Reshulon21",
-      password: "123",
-      mail: "ahhsh@hmail.com",
-      enableNotifications: true
-    );
+        id: "",
+        name: "Javier",
+        lastname: "Lanza",
+        username: "Reshulon21",
+        password: "123",
+        mail: "ahhsh@hmail.com",
+        enableNotifications: true);
     api.createUser(newUser).whenComplete(() =>
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
@@ -49,7 +47,10 @@ void main() {
   api.getUsers().then((data) {
     usuarios = data;
   }).whenComplete(() => {
-        api.loggedUser = usuarios[0],
+        api
+            .getUserByUsername('g4net')
+            .then((value) => api.loggedUser = value)
+            .whenComplete(() => null),
         WidgetsFlutterBinding.ensureInitialized(),
         SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,

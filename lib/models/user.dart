@@ -5,7 +5,7 @@ class User {
   final String username;
   final String password;
   final String mail;
-  final bool enableNotifications;
+  bool enableNotifications;
 
   User(
       {required this.id,
@@ -24,7 +24,7 @@ class User {
         username: json['username'],
         password: json['password'],
         mail: json['mail'],
-        enableNotifications : json['enableNotifications']);
+        enableNotifications: json['enableNotifications']);
   }
 
   Map<String, dynamic> toJson() {

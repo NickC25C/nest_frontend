@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/note.dart';
+import 'package:nest_fronted/models/publication.dart';
+import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
+import 'package:nest_fronted/main.dart';
 
 const tituloScreen = 'PUBLICAR NOTA';
 int selectedIndex = 0;
-
+Titulo titulin = Titulo();
 
 class PubNotaScreen extends StatelessWidget {
   const PubNotaScreen({super.key});
@@ -41,6 +45,8 @@ class PubNotaScreen extends StatelessWidget {
   }
 }
 
+String msj = '';
+
 //contenido de la nota
 class EscribirNota extends StatelessWidget {
   const EscribirNota({
@@ -67,9 +73,10 @@ class EscribirNota extends StatelessWidget {
           child: Container(
             width: double.infinity,
             child: TextField(
+              onChanged: (value) => msj = value,
               maxLines: 5,
               decoration: InputDecoration(
-                labelText : 'Mensaje',
+                labelText: 'Mensaje',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -79,6 +86,7 @@ class EscribirNota extends StatelessWidget {
     );
   }
 }
+
 //Seleccionar a los usuarios/grupos a los q enviar
 class Listado extends StatelessWidget {
   const Listado({
@@ -110,7 +118,9 @@ class Listado extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.all(0.0),
             children: [
-              ListTile(title: Text('Ítem 1'),),
+              ListTile(
+                title: Text('Ítem 1'),
+              ),
               ListTile(title: Text('Ítem 2')),
               ListTile(title: Text('Ítem 3')),
             ],
@@ -136,7 +146,16 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Note n = Note(
+                  id: '',
+                  owner: api.loggedUser,
+                  date: DateTime.now(),
+                  publiType: PublicationType.note,
+                  title: titulin.darValor(),
+                  message: msj);
+              api.createNote(n).whenComplete(() => print('¿Nota subida?'));
+            },
             icon: Icon(
               Icons.sticky_note_2_outlined,
               color: Colors.white,

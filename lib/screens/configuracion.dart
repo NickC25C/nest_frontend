@@ -48,8 +48,6 @@ class BotonNotif extends StatefulWidget {
 }
 
 class _BotonNotifState extends State<BotonNotif> {
-  bool activado = true;
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -74,15 +72,23 @@ class _BotonNotifState extends State<BotonNotif> {
               child: SlideAction(
                 borderRadius: 12,
                 elevation: 0,
-                text: activado ? 'Desactivadas' : 'Activadas',
+                text: api.loggedUser.enableNotifications
+                    ? 'Activadas'
+                    : 'Desactivadas',
                 textStyle: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                 ),
-                outerColor: activado ? Colors.red : Colors.green,
+                outerColor: api.loggedUser.enableNotifications
+                    ? Colors.green
+                    : Colors.red,
                 onSubmit: () {
                   setState(() {
-                    activado = !activado;
+                    api.loggedUser.enableNotifications =
+                        !api.loggedUser.enableNotifications;
+                    api
+                        .updateUser(api.loggedUser.id, api.loggedUser)
+                        .whenComplete(() => print('Usuario updated'));
                   });
                   // Cositas que hará al deslizar (activar las notificaciones)
                 },
