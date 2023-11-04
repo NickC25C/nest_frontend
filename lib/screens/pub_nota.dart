@@ -3,6 +3,7 @@ import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
+import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
 
@@ -80,50 +81,6 @@ class EscribirNota extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-//Seleccionar a los usuarios/grupos a los q enviar
-class Listado extends StatelessWidget {
-  const Listado({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            'Enviar a:',
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Container(
-          height: 250,
-          margin: EdgeInsets.symmetric(horizontal: 20.0),
-          decoration: BoxDecoration(
-            border: Border.all(width: 1),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: ListView(
-            padding: EdgeInsets.all(0.0),
-            children: [
-              ListTile(
-                title: Text('Ítem 1'),
-              ),
-              ListTile(title: Text('Ítem 2')),
-              ListTile(title: Text('Ítem 3')),
-            ],
           ),
         ),
       ],
