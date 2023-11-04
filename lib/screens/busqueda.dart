@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nest_fronted/widgets/barra_titulo.dart';
 
 const tituloScreen = 'BÚSQUEDA';
 
@@ -12,7 +11,6 @@ class BusquedaScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          BarraTitulo(titulo: tituloScreen),
           FormBusqueda()
         ],
       ),

@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:nest_fronted/widgets/foto.dart';
@@ -129,7 +128,6 @@ class TablonState extends State<TablonScreen> {
   Widget tablon() {
     return Column(
       children: [
-        const BarraTitulo(titulo: tituloScreen),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           height: 600,

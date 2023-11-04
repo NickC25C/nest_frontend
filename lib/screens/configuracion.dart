@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
-import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 import '../models/user.dart';
@@ -16,9 +15,6 @@ class ConfiguracionScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: const Column(
         children: [
-          BarraTitulo(
-            titulo: tituloScreen,
-          ),
           BotonNotif(),
           CambiarUser(),
         ],

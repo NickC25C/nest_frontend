@@ -97,6 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
     Center(child: ConfiguracionScreen()),
   ];
 
+  final List<String> _nombresitos = [
+    'MI TABLÓN PERSONAL',
+    'BÚSQUEDA',
+    'GRUPETES',
+    'CONFIGURACIÓN',
+  ];
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -106,6 +113,39 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text('Nombre de usuario'),
+              accountEmail: Text('usuario@gmail.com'),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('inicio'),
+              onTap: (){
+//Acción chavalin
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Configuración'),
+              onTap: () {
+//Otra acción chavalines
+              },
+            )
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        title: Text(
+          _nombresitos[_currentIndex],
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: SingleChildScrollView(
         child: _children[_currentIndex], // Mostramos el widget según el índice
       ),
