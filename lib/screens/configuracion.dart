@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/themes/temasClaros.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 import '../models/user.dart';
@@ -14,10 +15,7 @@ class ConfiguracionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: const Column(
-        children: [
-          BotonNotif(),
-          CambiarUser(),
-        ],
+        children: [BotonNotif(), CambiarUser()],
       ),
     );
   }

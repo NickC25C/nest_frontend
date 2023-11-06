@@ -13,17 +13,14 @@ class BarraPublicar extends StatelessWidget {
       height: 50,
       width: double.infinity,
       margin: const EdgeInsets.only(top: 40),
-      color: Colors.grey,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
             onPressed: () {
-              Navigator.pop(
-                  context
-              );
+              Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_circle_left, color: Colors.white, size: 30),
+            icon: Icon(Icons.arrow_circle_left, size: 30),
           ),
           Text(
             titulo,
@@ -31,7 +28,7 @@ class BarraPublicar extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.arrow_circle_right, color: Colors.white, size: 30),
+            icon: Icon(Icons.arrow_circle_right, size: 30),
           ),
         ],
       ),

@@ -9,7 +9,7 @@ import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =
-      'http://192.168.1.59:8080'; // para el movil es 192.168.1.59
+      'http://10.0.2.2:8080'; // para el movil es 192.168.1.59
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
@@ -111,7 +111,8 @@ class ApiService {
   }
 
   Future<List<User>> getUserFriends(String userId) async {
-    final response = await http.get(Uri.parse('$baseUrl/users/$userId/friends'));
+    final response =
+        await http.get(Uri.parse('$baseUrl/users/$userId/friends'));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data.map((user) => User.fromJson(user)).toList();
@@ -153,9 +154,6 @@ class ApiService {
     }
   }
 
-
-
-
   //
   // IMAGE
   //
@@ -185,7 +183,6 @@ class ApiService {
     }
   }
 
-
   Future<List<Publication>> getFeed(String userId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/publications/$userId/feed'),
@@ -196,7 +193,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      List<Publication> feed = data.map((item) => Publication.fromJson(item)).toList();
+      List<Publication> feed =
+          data.map((item) => Publication.fromJson(item)).toList();
       return feed;
     } else {
       throw Exception('Failed to load feed: ${response.statusCode}');

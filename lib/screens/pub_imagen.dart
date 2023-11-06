@@ -111,17 +111,19 @@ class BotonIzquierdo extends StatelessWidget {
             children: [
               Icon(
                 Icons.photo,
-                color: Colors.white,
+                color: actual.colorScheme.onSecondary,
               ),
               SizedBox(
                 height: 3.0,
               ),
-              Text('Seleccionar foto', style: TextStyle(fontSize: 16))
+              Text('Seleccionar foto',
+                  style: TextStyle(
+                      fontSize: 16, color: actual.colorScheme.onSecondary))
             ],
           ),
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
-            backgroundColor: Colors.blueAccent,
+            backgroundColor: actual.colorScheme.secondary,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0),
@@ -163,17 +165,19 @@ class BotonDerecho extends StatelessWidget {
           children: [
             Icon(
               Icons.camera_alt,
-              color: Colors.white,
+              color: actual.colorScheme.onSecondary,
             ),
             SizedBox(
               height: 3.0,
             ),
-            Text('Hacer foto', style: TextStyle(fontSize: 16))
+            Text('Hacer foto',
+                style: TextStyle(
+                    fontSize: 16, color: actual.colorScheme.onSecondary))
           ],
         ),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: actual.colorScheme.secondary,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topRight: Radius.circular(30.0),
@@ -224,14 +228,13 @@ class BotonCrear extends StatelessWidget {
             },
             icon: Icon(
               Icons.image_outlined,
-              color: Colors.white,
             ),
             label: Text(
               'Publicar imagen',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: actual.colorScheme.secondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

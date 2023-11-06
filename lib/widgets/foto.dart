@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/main.dart';
 
 class Foto extends StatefulWidget {
   final String url;
@@ -22,7 +23,7 @@ class _FotoState extends State<Foto> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: actual.colorScheme.secondary),
         ),
         height: 300,
         width: 300,

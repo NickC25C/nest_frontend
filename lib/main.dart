@@ -9,9 +9,11 @@ import 'package:nest_fronted/screens/tablon.dart';
 import 'package:nest_fronted/screens/amis_grup.dart';
 import 'package:nest_fronted/screens/configuracion.dart';
 import 'package:nest_fronted/services/api_service.dart';
+import 'package:nest_fronted/themes/temasClaros.dart';
 
 List<User> usuarios = List.empty();
 ApiService api = ApiService();
+ThemeData actual = cafe;
 void main() {
   //Poblar la base de datos con usuarios nuevos
   void poblarUsers() {
@@ -66,6 +68,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: actual,
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       routes: {
@@ -126,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               leading: Icon(Icons.home),
               title: Text('inicio'),
-              onTap: (){
+              onTap: () {
 //Acción chavalin
               },
             ),
@@ -154,30 +157,32 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _currentIndex,
           onTap: onTabTapped,
           elevation: 0,
-          items: const [
+          selectedItemColor: actual.colorScheme.onPrimary,
+          unselectedItemColor: actual.colorScheme.onPrimary,
+          items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               activeIcon: Icon(Icons.home_filled),
               label: 'Home',
-              backgroundColor: Colors.blue,
+              backgroundColor: actual.colorScheme.primary,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
               activeIcon: Icon(Icons.saved_search),
               label: 'Search',
-              backgroundColor: Colors.green,
+              backgroundColor: actual.colorScheme.primary,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.group),
               activeIcon: Icon(Icons.group_add),
               label: 'Friends',
-              backgroundColor: Colors.deepPurpleAccent,
+              backgroundColor: actual.colorScheme.primary,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
               activeIcon: Icon(Icons.settings_applications),
               label: 'Settings',
-              backgroundColor: Colors.teal,
+              backgroundColor: actual.colorScheme.primary,
             ),
           ]),
     );

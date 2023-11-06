@@ -115,14 +115,13 @@ class BotonCrear extends StatelessWidget {
             },
             icon: Icon(
               Icons.sticky_note_2_outlined,
-              color: Colors.white,
             ),
             label: Text(
               'Publicar nota',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: actual.colorScheme.secondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

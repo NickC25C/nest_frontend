@@ -87,7 +87,7 @@ class _ListadoState extends State<Listado> {
           height: 250,
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           decoration: BoxDecoration(
-            border: Border.all(width: 2),
+            border: Border.all(width: 2, color: actual.colorScheme.secondary),
             borderRadius: BorderRadius.circular(10),
           ),
           child: ListView.builder(
@@ -100,7 +100,9 @@ class _ListadoState extends State<Listado> {
                 return Material(
                   child: ListTile(
                     title: Text(userFriends[index].username),
-                    tileColor: isSelectedList[index] ? Colors.blue : null,
+                    tileColor: isSelectedList[index]
+                        ? actual.colorScheme.primary
+                        : null,
                     onTap: () {
                       setState(() {
                         isSelectedList[index] = !isSelectedList[index];

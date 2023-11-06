@@ -55,7 +55,6 @@ class TablonState extends State<TablonScreen> {
 
   Widget _buildNoteViewContent() {
     return Container(
-      color: Colors.white,
       padding: EdgeInsets.all(16.0),
       child: const Center(
           child: Column(

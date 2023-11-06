@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/main.dart';
 
 const tituloScreen = 'BÚSQUEDA';
 
@@ -10,9 +11,7 @@ class BusquedaScreen extends StatelessWidget {
     return const SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          FormBusqueda()
-        ],
+        children: [FormBusqueda()],
       ),
     );
   }
@@ -65,18 +64,18 @@ class _FormBusquedaState extends State<FormBusqueda> {
             padding: const EdgeInsets.all(16.0),
             child: TextFormField(
               controller: _controller,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                   hintText: 'Nombre de usuario',
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  ),
+                      borderSide:
+                          BorderSide(color: actual.colorScheme.secondary),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  ),
-                  labelStyle: TextStyle(color: Colors.green)),
+                      borderSide: BorderSide(
+                          color: actual.colorScheme.secondary, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                  labelStyle: TextStyle(color: actual.colorScheme.secondary)),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'El usuario introducido no existe';
@@ -92,21 +91,23 @@ class _FormBusquedaState extends State<FormBusqueda> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: actual.colorScheme.secondary,
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                    )
-                ),
-                onPressed: _isButtonDisabled ? null : () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_formKey.currentState!.validate()) {
-                    // Process data.
-                  }
-                },
-                child: const Text(
+                    )),
+                onPressed: _isButtonDisabled
+                    ? null
+                    : () {
+                        // Validate will return true if the form is valid, or false if
+                        // the form is invalid.
+                        if (_formKey.currentState!.validate()) {
+                          // Process data.
+                        }
+                      },
+                child: Text(
                   'Enviar solicitud',
+                  style: TextStyle(color: actual.colorScheme.onSecondary),
                   textAlign: TextAlign.center,
                 ),
               ),

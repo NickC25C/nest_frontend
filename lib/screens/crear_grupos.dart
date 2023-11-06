@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
@@ -52,14 +53,13 @@ class BotonCrear extends StatelessWidget {
             onPressed: () {},
             icon: Icon(
               Icons.groups,
-              color: Colors.white,
             ),
             label: Text(
               'Crear grupo',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: actual.colorScheme.secondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

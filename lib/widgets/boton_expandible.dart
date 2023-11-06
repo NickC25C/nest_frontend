@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:nest_fronted/main.dart';
+
 class BotonExpandible extends StatefulWidget {
   const BotonExpandible({
     super.key,
@@ -80,6 +82,7 @@ class _BotonExpandibleState extends State<BotonExpandible>
         child: Material(
           shape: const CircleBorder(),
           clipBehavior: Clip.antiAlias,
+          color: actual.colorScheme.error,
           elevation: 4,
           child: InkWell(
             onTap: _toggle,
@@ -151,14 +154,14 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: actual.colorScheme.secondary,
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: Colors.lightBlue,
       elevation: 4,
       child: IconButton(
         onPressed: onPressed,
+        color: actual.colorScheme.onSecondary,
         icon: icon,
-        color: Colors.white,
       ),
     );
   }

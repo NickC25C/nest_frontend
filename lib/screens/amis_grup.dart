@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,31 +13,35 @@ class AmisGrupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
-          Solicitudes(),
-
-          Grupos(),
-
-          BotonCrear(),
-        ],
+      children: [
+        Solicitudes(),
+        Grupos(),
+        BotonCrear(),
+      ],
     );
   }
 }
 
-class Solicitudes extends StatefulWidget{
+class Solicitudes extends StatefulWidget {
   @override
   _Solicitudes createState() => _Solicitudes();
 }
 
 //Aceptar o denegar solicitudes
 class _Solicitudes extends State<Solicitudes> {
-  final List<String> listaAuxiliar = ['Guillem_proxeneta69', 'Ivan_politoxicomano33', 'Magic_Patrisio777', 'Pepe_Viyuela'];
+  final List<String> listaAuxiliar = [
+    'Guillem_proxeneta69',
+    'Ivan_politoxicomano33',
+    'Magic_Patrisio777',
+    'Pepe_Viyuela'
+  ];
 
   void _removeItem(int index) {
     setState(() {
       listaAuxiliar.removeAt(index);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,19 +60,19 @@ class _Solicitudes extends State<Solicitudes> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-          height: 250.0,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Scrollbar(
-            child: CustomListView(
-              items: listaAuxiliar,
-              onItemRemoved: _removeItem,
+            height: 250.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              border: Border.all(color: actual.colorScheme.secondary),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Scrollbar(
+              child: CustomListView(
+                items: listaAuxiliar,
+                onItemRemoved: _removeItem,
+              ),
             ),
           ),
-        ),
         ),
       ],
     );
@@ -78,10 +83,7 @@ class CustomListView extends StatelessWidget {
   final List<String> items;
   final Function(int) onItemRemoved;
 
-  CustomListView({
-    required this.items,
-    required this.onItemRemoved
-  });
+  CustomListView({required this.items, required this.onItemRemoved});
 
   @override
   Widget build(BuildContext context) {
@@ -98,28 +100,33 @@ class CustomListView extends StatelessWidget {
                 onPressed: () {
                   onItemRemoved(index);
                 },
-                child: Icon(Icons.check, color: Colors.deepPurpleAccent,),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0)
-                    )
+                child: Icon(
+                  Icons.check,
+                  color: actual.colorScheme.secondary,
                 ),
+                style: ElevatedButton.styleFrom(
+                    side: BorderSide(
+                      width: 1,
+                      color: actual.colorScheme.secondary,
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0))),
               ),
               SizedBox(width: 8.0),
               ElevatedButton(
                 onPressed: () {
                   onItemRemoved(index);
                 },
-                child: Icon(Icons.close, color: Colors.deepPurpleAccent,),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    side: BorderSide(color: Colors.deepPurpleAccent, width: 1),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0)
-                    )
+                child: Icon(
+                  Icons.close,
+                  color: actual.colorScheme.secondary,
                 ),
+                style: ElevatedButton.styleFrom(
+                    side: BorderSide(
+                      color: actual.colorScheme.secondary,
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0))),
               ),
             ],
           ),
@@ -153,102 +160,89 @@ class Grupos extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-          height: 190.0,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Scrollbar(
-            child: ListView(
-              padding: EdgeInsets.only(left: 10.0),
-              children: [
-                ListTile(
-                  contentPadding: EdgeInsets.only(right: 60.0),
-
-                  title: Text('Familia'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '1',
-                        style: TextStyle(
-                          color: Colors.black,
+            height: 190.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: actual.colorScheme.secondary,
+              ),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Scrollbar(
+              child: ListView(
+                padding: EdgeInsets.only(left: 10.0),
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.only(right: 60.0),
+                    title: Text('Familia'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '1',
+                          style: TextStyle(color: actual.colorScheme.secondary),
                         ),
-                      ),
-                      Icon(
-                        Icons.group,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
-                ),
-
-                ListTile(
-                  contentPadding: EdgeInsets.only(right: 60.0),
-
-                  title: Text('Colegio'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '18',
-                        style: TextStyle(
-                          color: Colors.black,
+                        Icon(
+                          Icons.group,
+                          color: actual.colorScheme.secondary,
                         ),
-                      ),
-                      Icon(
-                        Icons.group,
-                        color: Colors.black,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(right: 60.0),
-
-                  title: Text('mckdhvudif'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '18334',
-                        style: TextStyle(
-                          color: Colors.black,
+                  ListTile(
+                    contentPadding: EdgeInsets.only(right: 60.0),
+                    title: Text('Colegio'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '18',
+                          style: TextStyle(color: actual.colorScheme.secondary),
                         ),
-                      ),
-                      Icon(
-                        Icons.group,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(right: 60.0),
-
-                  title: Text('Nest'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '12',
-                        style: TextStyle(
-                          color: Colors.black,
+                        Icon(
+                          Icons.group,
+                          color: actual.colorScheme.secondary,
                         ),
-                      ),
-                      Icon(
-                        Icons.group,
-                        color: Colors.black,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  ListTile(
+                    contentPadding: EdgeInsets.only(right: 60.0),
+                    title: Text('mckdhvudif'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '18334',
+                          style: TextStyle(color: actual.colorScheme.secondary),
+                        ),
+                        Icon(
+                          Icons.group,
+                          color: actual.colorScheme.secondary,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.only(right: 60.0),
+                    title: Text('Nest'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '12',
+                        ),
+                        Icon(
+                          Icons.group,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-          ),
       ],
     );
   }
@@ -270,7 +264,7 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: (){
+            onPressed: () {
               Navigator.push(
                 context,
                 PageTransition(
@@ -279,14 +273,17 @@ class BotonCrear extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.groups, color: Colors.white,),
-            label: Text('Crear grupo', style: TextStyle(color: Colors.white),),
+            icon: Icon(
+              Icons.groups,
+            ),
+            label: Text(
+              'Crear grupo',
+            ),
             style: TextButton.styleFrom(
-                backgroundColor: Colors.deepPurpleAccent,
+                backgroundColor: actual.colorScheme.secondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
-                )
-            ),
+                )),
           ),
         ),
       ),
