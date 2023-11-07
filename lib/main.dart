@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
+import 'package:nest_fronted/screens/capsulaAbierta.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
@@ -115,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void openDrawer(){
+  void openDrawer() {
     print('abrir drawer');
     _scaffoldKey.currentState?.openDrawer();
   }
@@ -136,8 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: Border.all(
                       color: actual.colorScheme.onPrimary,
                       width: 2.0,
-                    )
-                ),
+                    )),
                 child: CircleAvatar(
                   backgroundColor: actual.colorScheme.surface,
                   backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
@@ -169,29 +169,29 @@ class _MyHomePageState extends State<MyHomePage> {
         leading: GestureDetector(
           onTap: openDrawer,
           child: CircleAvatar(
-              backgroundColor: Colors.transparent,
-              radius: 18,
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: actual.colorScheme.surface,
-                    border: Border.all(
-                      color: actual.colorScheme.onPrimary,
-                      width: 2.0,
-                    )
-                ),
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/images/PAJAROTOS.png',
-                    width: 40, // Ancho deseado de la imagen
-                    height: 40, // Alto deseado de la imagen
-                    fit: BoxFit.cover, // Puedes ajustar el ajuste de la imagen según tus necesidades
-                  ),
+            backgroundColor: Colors.transparent,
+            radius: 18,
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: actual.colorScheme.surface,
+                  border: Border.all(
+                    color: actual.colorScheme.onPrimary,
+                    width: 2.0,
+                  )),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/PAJAROTOS.png',
+                  width: 40, // Ancho deseado de la imagen
+                  height: 40, // Alto deseado de la imagen
+                  fit: BoxFit
+                      .cover, // Puedes ajustar el ajuste de la imagen según tus necesidades
                 ),
               ),
             ),
           ),
         ),
+      ),
       body: SingleChildScrollView(
         child: _children[_currentIndex], // Mostramos el widget según el índice
       ),
