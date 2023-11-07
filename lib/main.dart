@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
         'amis_grup': (_) => const AmisGrupScreen(),
         'configuracion': (_) => const ConfiguracionScreen(),
       },
-      home: CrearCapsula(),//MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }

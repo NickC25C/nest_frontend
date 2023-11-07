@@ -48,7 +48,7 @@
 
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0),
-                child: BotonIzquierdo(
+                child: EscogerPortada(
                   onImageSelected: _updateImage,
                   selectedImage: _selectedImage,
                 ),
@@ -79,11 +79,11 @@
   }
 
   // Escoger foto de portada
-  class BotonIzquierdo extends StatelessWidget {
+  class EscogerPortada extends StatelessWidget {
     final Function(File) onImageSelected;
     final File? selectedImage;
 
-    const BotonIzquierdo({
+    const EscogerPortada({
       Key? key,
       required this.onImageSelected,
       required this.selectedImage,
