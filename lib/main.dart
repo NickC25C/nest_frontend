@@ -10,10 +10,11 @@ import 'package:nest_fronted/screens/amis_grup.dart';
 import 'package:nest_fronted/screens/configuracion.dart';
 import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/themes/temasClaros.dart';
+import 'package:nest_fronted/screens/crear_capsula.dart';
 
 List<User> usuarios = List.empty();
 ApiService api = ApiService();
-ThemeData actual = cafe;
+ThemeData actual = matcha;
 void main() {
   //Poblar la base de datos con usuarios nuevos
   void poblarUsers() {
@@ -79,7 +80,7 @@ class MyApp extends StatelessWidget {
         'amis_grup': (_) => const AmisGrupScreen(),
         'configuracion': (_) => const ConfiguracionScreen(),
       },
-      home: MyHomePage(),
+      home: CrearCapsula(),//MyHomePage(),
     );
   }
 }

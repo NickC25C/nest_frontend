@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/screens/configuracion.dart';
-
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
