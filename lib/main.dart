@@ -91,6 +91,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0; // índice actual
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Listado de screens o widgets
   final List<Widget> _children = [
@@ -113,17 +114,33 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void openDrawer(){
+    print('abrir drawer');
+    _scaffoldKey.currentState?.openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: Drawer(
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
               accountName: Text('Nombre de usuario'),
               accountEmail: Text('usuario@gmail.com'),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
+              currentAccountPicture: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: actual.colorScheme.onPrimary,
+                      width: 2.0,
+                    )
+                ),
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
+                ),
               ),
             ),
             ListTile(
@@ -148,7 +165,31 @@ class _MyHomePageState extends State<MyHomePage> {
           _nombresitos[_currentIndex],
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-      ),
+        leading: GestureDetector(
+          onTap: openDrawer,
+          child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: 18,
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: actual.colorScheme.onPrimary,
+                      width: 2.0,
+                    )
+                ),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/images/PAJAROTOS.png',
+                    width: 40, // Ancho deseado de la imagen
+                    height: 40, // Alto deseado de la imagen
+                    fit: BoxFit.cover, // Puedes ajustar el ajuste de la imagen según tus necesidades
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       body: SingleChildScrollView(
         child: _children[_currentIndex], // Mostramos el widget según el índice
       ),
