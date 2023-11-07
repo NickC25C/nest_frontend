@@ -9,9 +9,12 @@ import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:nest_fronted/screens/tablon.dart';
 import 'package:nest_fronted/screens/amis_grup.dart';
 import 'package:nest_fronted/screens/configuracion.dart';
+import 'package:nest_fronted/screens/capsulas.dart';
+import 'package:nest_fronted/screens/correo.dart';
 import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/themes/temasClaros.dart';
 import 'package:nest_fronted/screens/crear_capsula.dart';
+import 'package:page_transition/page_transition.dart';
 
 List<User> usuarios = List.empty();
 ApiService api = ApiService();
@@ -80,6 +83,8 @@ class MyApp extends StatelessWidget {
         'crea_grupo': (_) => const CrearGrupos(),
         'amis_grup': (_) => const AmisGrupScreen(),
         'configuracion': (_) => const ConfiguracionScreen(),
+        'correo': (_) => const CorreoScreen(),
+        'capsulas': (_) => const CapsulaScreen(),
       },
       home: MyHomePage(),
     );
@@ -99,15 +104,15 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children = [
     Center(child: TablonScreen()),
     Center(child: BusquedaScreen()),
-    Center(child: AmisGrupScreen()),
-    Center(child: ConfiguracionScreen()),
+    Center(child: CorreoScreen()),
+    Center(child: CapsulaScreen()),
   ];
 
   final List<String> _nombresitos = [
     'MI TABLÓN PERSONAL',
     'BÚSQUEDA',
-    'GRUPETES',
-    'CONFIGURACIÓN',
+    'CORREO',
+    'CÁPSULAS',
   ];
 
   void onTabTapped(int index) {
@@ -117,7 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void openDrawer() {
-    print('abrir drawer');
     _scaffoldKey.currentState?.openDrawer();
   }
 
@@ -148,14 +152,28 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.group),
               title: Text('Amistades y Grupos'),
               onTap: () {
-//Acción chavalin
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: AmisGrupScreen(),
+                    type: PageTransitionType.fade,
+                  ),
+                );
               },
             ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Configuración'),
               onTap: () {
-//Otra acción chavalines
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: ConfiguracionScreen(),
+                    type: PageTransitionType.fade,
+                  ),
+                );
               },
             )
           ],

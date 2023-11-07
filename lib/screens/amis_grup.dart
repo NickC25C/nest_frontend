@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
+import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -12,12 +13,15 @@ class AmisGrupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Solicitudes(),
-        Grupos(),
-        BotonCrear(),
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          BarraPublicar(titulo: tituloScreen),
+          Solicitudes(),
+          Grupos(),
+          BotonCrear(),
+        ],
+      ),
     );
   }
 }

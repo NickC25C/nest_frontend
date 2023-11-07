@@ -13,9 +13,11 @@ class ConfiguracionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: const Column(
-        children: [BotonNotif(), CambiarUser()],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: const Column(
+          children: [BotonNotif(), CambiarUser()],
+        ),
       ),
     );
   }
