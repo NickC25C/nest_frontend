@@ -139,14 +139,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                 ),
                 child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: actual.colorScheme.surface,
                   backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
                 ),
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text('inicio'),
+              leading: Icon(Icons.group),
+              title: Text('Amistades y Grupos'),
               onTap: () {
 //Acción chavalin
               },
@@ -174,6 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
+                    color: actual.colorScheme.surface,
                     border: Border.all(
                       color: actual.colorScheme.onPrimary,
                       width: 2.0,
@@ -215,15 +216,15 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: actual.colorScheme.primary,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.group),
-              activeIcon: Icon(Icons.group_add),
-              label: 'Friends',
+              icon: Icon(Icons.email_outlined),
+              activeIcon: Icon(Icons.email_rounded),
+              label: 'Mail',
               backgroundColor: actual.colorScheme.primary,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              activeIcon: Icon(Icons.settings_applications),
-              label: 'Settings',
+              icon: Icon(Icons.hourglass_top),
+              activeIcon: Icon(Icons.hourglass_bottom),
+              label: 'Capsule',
               backgroundColor: actual.colorScheme.primary,
             ),
           ]),
