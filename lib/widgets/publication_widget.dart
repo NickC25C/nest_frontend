@@ -22,7 +22,7 @@ class PublicationWidget extends StatelessWidget {
           usu: notaPubli.owner.username);
     } else {
       Picture pic = pub as Picture;
-      return Foto(url: pic.url!);
+      return Foto(url: pic.url!, file: pic.image!);
     }
   }
 }

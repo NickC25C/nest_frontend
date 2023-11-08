@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -138,7 +139,10 @@ class TablonState extends State<TablonScreen> {
                 children: [
                   GestureDetector(
                     onTap: () => {_buildContentView()},
-                    child: Foto(url: ('assets/images/rata.png')),
+                    child: Foto(
+                      url: ('assets/images/rata.png'),
+                      file: File(''),
+                    ),
                   ),
                   GestureDetector(
                     onTap: () => {_buildNoteView()},
