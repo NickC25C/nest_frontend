@@ -129,8 +129,8 @@ class TablonState extends State<TablonScreen> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          height: 600,
+          //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          height: 635,
           width: double.infinity,
           child: Stack(
             fit: StackFit.expand,
@@ -170,34 +170,37 @@ class BotonPublicar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BotonExpandible(
-      distance: 112,
-      children: [
-        ActionButton(
-          icon: const Icon(Icons.photo),
-          onPressed: () => {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: PubImagenScreen(),
-                type: PageTransitionType.fade,
-              ),
-            )
-          },
-        ),
-        ActionButton(
-          icon: const Icon(Icons.text_snippet),
-          onPressed: () => {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: PubNotaScreen(),
-                type: PageTransitionType.fade,
-              ),
-            )
-          },
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: BotonExpandible(
+        distance: 112,
+        children: [
+          ActionButton(
+            icon: const Icon(Icons.photo),
+            onPressed: () => {
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: PubImagenScreen(),
+                  type: PageTransitionType.fade,
+                ),
+              )
+            },
+          ),
+          ActionButton(
+            icon: const Icon(Icons.text_snippet),
+            onPressed: () => {
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: PubNotaScreen(),
+                  type: PageTransitionType.fade,
+                ),
+              )
+            },
+          ),
+        ],
+      ),
     );
   }
 }
