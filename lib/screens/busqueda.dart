@@ -8,10 +8,13 @@ class BusquedaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [FormBusqueda()],
+        children: [
+          FormBusqueda(),
+          Solicitudes(),
+        ],
       ),
     );
   }
@@ -118,3 +121,118 @@ class _FormBusquedaState extends State<FormBusqueda> {
     );
   }
 }
+
+class Solicitudes extends StatefulWidget {
+  @override
+  _Solicitudes createState() => _Solicitudes();
+}
+
+//Aceptar o denegar solicitudes
+class _Solicitudes extends State<Solicitudes> {
+  final List<String> listaAuxiliar = [
+    'Guillem_proxeneta69',
+    'Ivan_politoxicomano33',
+    'Magic_Patrisio777',
+    'Pepe_Viyuela'
+  ];
+
+  void _removeItem(int index) {
+    setState(() {
+      listaAuxiliar.removeAt(index);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+          child: Text(
+            'Solicitudes:',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Container(
+            height: 380.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              border: Border.all(color: actual.colorScheme.secondary),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Scrollbar(
+              child: CustomListView(
+                items: listaAuxiliar,
+                onItemRemoved: _removeItem,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CustomListView extends StatelessWidget {
+  final List<String> items;
+  final Function(int) onItemRemoved;
+
+  CustomListView({required this.items, required this.onItemRemoved});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: EdgeInsets.only(top: 0.0),
+      itemCount: items.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(items[index]),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  onItemRemoved(index);
+                },
+                child: Icon(
+                  Icons.check,
+                  color: actual.colorScheme.secondary,
+                ),
+                style: ElevatedButton.styleFrom(
+                    side: BorderSide(
+                      width: 1,
+                      color: actual.colorScheme.secondary,
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0))),
+              ),
+              SizedBox(width: 8.0),
+              ElevatedButton(
+                onPressed: () {
+                  onItemRemoved(index);
+                },
+                child: Icon(
+                  Icons.close,
+                  color: actual.colorScheme.secondary,
+                ),
+                style: ElevatedButton.styleFrom(
+                    side: BorderSide(
+                      color: actual.colorScheme.secondary,
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0))),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
