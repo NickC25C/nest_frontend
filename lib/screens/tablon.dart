@@ -10,6 +10,8 @@ import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:photo_view/photo_view.dart';
 
+import '../main.dart';
+
 const tituloScreen = 'MI TABLÓN PERSONAL';
 int selectedIndex = 0;
 bool open = false;
@@ -57,6 +59,7 @@ class TablonState extends State<TablonScreen> {
   Widget _buildNoteViewContent() {
     return Container(
       padding: EdgeInsets.all(16.0),
+      color: actual.colorScheme.background,
       child: const Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -93,21 +96,25 @@ class TablonState extends State<TablonScreen> {
     var screenSize = MediaQuery.of(context).size;
 
     if (open) {
-      return GestureDetector(
-        onTap: () => {_buildContentView()},
-        child: Container(
-          height: screenSize.height,
-          width: double.infinity,
-          child: _buildPhotoView(),
+      return Card(
+        child: GestureDetector(
+          onTap: () => {_buildContentView()},
+          child: Container(
+            height: 625,
+            width: double.infinity,
+            child: _buildPhotoView(),
+          ),
         ),
       );
     } else if (openNote) {
-      return GestureDetector(
-        onTap: () => {_buildNoteView()},
-        child: Container(
-          height: screenSize.height,
-          width: double.infinity,
-          child: _buildNoteViewContent(),
+      return Card(
+        child: GestureDetector(
+          onTap: () => {_buildNoteView()},
+          child: Container(
+            height: 625,
+            width: double.infinity,
+            child: _buildNoteViewContent(),
+          ),
         ),
       );
     } else {
