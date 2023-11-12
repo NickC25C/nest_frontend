@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
 import 'package:nest_fronted/screens/capsulaAbierta.dart';
+import 'package:nest_fronted/screens/enviar_carta.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
@@ -85,6 +86,7 @@ class MyApp extends StatelessWidget {
         'configuracion': (_) => const ConfiguracionScreen(),
         'correo': (_) => const CorreoScreen(),
         'capsulas': (_) => const CapsulaScreen(),
+        'enviar_correo': (_) => const EnviarCartaScreen(),
       },
       home: MyHomePage(),
     );
