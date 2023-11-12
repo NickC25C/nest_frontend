@@ -87,6 +87,7 @@ class MyApp extends StatelessWidget {
         'correo': (_) => const CorreoScreen(),
         'capsulas': (_) => const CapsulaScreen(),
         'enviar_correo': (_) => const EnviarCartaScreen(),
+        'capsulaAbierta': (_) => const CapsulaAbierta(),
       },
       home: MyHomePage(),
     );

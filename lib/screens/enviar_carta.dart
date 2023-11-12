@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nest_fronted/models/note.dart';
-import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/selector_fecha.dart';
@@ -23,7 +21,7 @@ class EnviarCartaScreen extends StatelessWidget {
           BarraPublicar(titulo: tituloScreen),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: EnviarA(),
+            child: Listado(),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -118,33 +116,5 @@ class BotonCrear extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class EnviarA extends StatelessWidget {
-  const EnviarA({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Container(
-        width: double.infinity,
-        child: TextField(
-          onChanged: (value) => {texto = value},
-          decoration: InputDecoration(
-            labelText: 'Enviar A',
-            border: UnderlineInputBorder(),
-            hintText: 'username',
-          ),
-        ),
-      ),
-    );
-  }
-
-  String darValor() {
-    return texto;
   }
 }

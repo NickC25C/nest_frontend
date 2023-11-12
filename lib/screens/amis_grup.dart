@@ -17,7 +17,7 @@ class AmisGrupScreen extends StatelessWidget {
       body: Column(
         children: [
           BarraPublicar(titulo: tituloScreen),
-          Solicitudes(),
+          TusAmigos(),
           Grupos(),
           BotonCrear(),
         ],
@@ -26,13 +26,13 @@ class AmisGrupScreen extends StatelessWidget {
   }
 }
 
-class Solicitudes extends StatefulWidget {
+class TusAmigos extends StatefulWidget {
   @override
-  _Solicitudes createState() => _Solicitudes();
+  _TusAmigos createState() => _TusAmigos();
 }
 
 //Aceptar o denegar solicitudes
-class _Solicitudes extends State<Solicitudes> {
+class _TusAmigos extends State<TusAmigos> {
   final List<String> listaAuxiliar = [
     'Guillem_proxeneta69',
     'Ivan_politoxicomano33',
@@ -54,7 +54,7 @@ class _Solicitudes extends State<Solicitudes> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Text(
-            'Solicitudes:',
+            'Tus Amigos:',
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
@@ -100,29 +100,13 @@ class CustomListView extends StatelessWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  onItemRemoved(index);
-                },
-                child: Icon(
-                  Icons.check,
-                  color: actual.colorScheme.secondary,
-                ),
-                style: ElevatedButton.styleFrom(
-                    side: BorderSide(
-                      width: 1,
-                      color: actual.colorScheme.secondary,
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0))),
-              ),
               SizedBox(width: 8.0),
               ElevatedButton(
                 onPressed: () {
                   onItemRemoved(index);
                 },
                 child: Icon(
-                  Icons.close,
+                  Icons.delete_forever,
                   color: actual.colorScheme.secondary,
                 ),
                 style: ElevatedButton.styleFrom(
