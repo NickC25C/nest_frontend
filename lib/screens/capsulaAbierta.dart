@@ -6,6 +6,8 @@ import 'package:nest_fronted/widgets/foto.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:photo_view/photo_view.dart';
 
+import '../main.dart';
+
 const tituloScreen = 'Título Capsula';
 bool open = false;
 bool openNote = false;
@@ -20,12 +22,6 @@ class CapsulaAbiertaScreen extends StatefulWidget {
 }
 
 class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
-  void publicar() {
-    setState(() {
-      _opacityLevel = 0.5;
-      _sigmaLevel = 10;
-    });
-  }
 
   _buildContentView() {
     setState(() {
@@ -52,6 +48,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
   Widget _buildNoteViewContent() {
     return Container(
       padding: EdgeInsets.all(16.0),
+      color: actual.colorScheme.background,
       child: const Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -81,6 +78,45 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
         ],
       )),
     );
+  }
+
+  Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+
+    if (open) {
+      return GestureDetector(
+        onTap: () => {_buildContentView()},
+        child: Container(
+          height: screenSize.height,
+          width: double.infinity,
+          child: _buildPhotoView(),
+        ),
+      );
+    } else if (openNote) {
+      return GestureDetector(
+        onTap: () => {_buildNoteView()},
+        child: Container(
+          height: screenSize.height,
+          width: double.infinity,
+          child: _buildNoteViewContent(),
+        ),
+      );
+    } else {
+      return Card(
+        color: actual.colorScheme.background,
+        child: Stack(
+          children: <Widget>[
+            capsula(),
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+              child: Container(
+                color: Colors.black.withOpacity(_opacityLevel),
+              ),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   Widget capsula() {
@@ -117,41 +153,5 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
         ),
       ],
     );
-  }
-
-  Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-
-    if (open) {
-      return GestureDetector(
-        onTap: () => {_buildContentView()},
-        child: Container(
-          height: screenSize.height,
-          width: double.infinity,
-          child: _buildPhotoView(),
-        ),
-      );
-    } else if (openNote) {
-      return GestureDetector(
-        onTap: () => {_buildNoteView()},
-        child: Container(
-          height: screenSize.height,
-          width: double.infinity,
-          child: _buildNoteViewContent(),
-        ),
-      );
-    } else {
-      return Stack(
-        children: <Widget>[
-          capsula(),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-            child: Container(
-              color: Colors.black.withOpacity(_opacityLevel),
-            ),
-          )
-        ],
-      );
-    }
   }
 }

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
+import 'capsulaAbierta.dart';
+import 'capsulaCerrada.dart';
+import 'crear_capsula.dart';
 
 class CapsulaScreen extends StatelessWidget {
   const CapsulaScreen({Key? key});
@@ -12,7 +17,7 @@ class CapsulaScreen extends StatelessWidget {
           SizedBox(height: 16.0),
           CapsulaAbierta(),
           SizedBox(height: 16.0),
-          CrearCapsula(),
+          BotonCrearCapsula(),
         ],
       ),
     );
@@ -36,7 +41,15 @@ class CapsulaCerrada extends StatelessWidget {
         child: Container(
           color: Colors.black,
           child: RawMaterialButton(
-            onPressed: () {   },
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: CapsulaCerradaScreen(),
+                  type: PageTransitionType.fade,
+                ),
+              );
+            },
             elevation: 2.0,
             fillColor: Colors.transparent,
             shape: RoundedRectangleBorder(
@@ -86,7 +99,13 @@ class CapsulaAbierta extends StatelessWidget {
       width: double.infinity,
       child: RawMaterialButton(
         onPressed: () {
-          // fiaun fiaun
+          Navigator.push(
+            context,
+            PageTransition(
+              child: CapsulaAbiertaScreen(),
+              type: PageTransitionType.fade,
+            ),
+          );
         },
         elevation: 2.0,
         fillColor: Colors.transparent,
@@ -136,8 +155,8 @@ class CapsulaAbierta extends StatelessWidget {
   }
 }
 
-class CrearCapsula extends StatelessWidget {
-  const CrearCapsula({Key? key}) : super(key: key);
+class BotonCrearCapsula extends StatelessWidget {
+  const BotonCrearCapsula({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +164,13 @@ class CrearCapsula extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          // Acción cuando se presiona el botón
+          Navigator.push(
+            context,
+            PageTransition(
+              child: CrearCapsula(),
+              type: PageTransitionType.fade,
+            ),
+          );
         },
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
