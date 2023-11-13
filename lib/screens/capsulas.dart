@@ -36,9 +36,7 @@ class CapsulaCerrada extends StatelessWidget {
         child: Container(
           color: Colors.black,
           child: RawMaterialButton(
-            onPressed: () {
-              // Acción cuando se presiona el botón
-            },
+            onPressed: () {   },
             elevation: 2.0,
             fillColor: Colors.transparent,
             shape: RoundedRectangleBorder(
