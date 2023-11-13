@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/screens/cartica.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../main.dart';
 
@@ -12,7 +14,21 @@ class CorreoScreen extends StatelessWidget {
         children: [
           RawMaterialButton(
             onPressed: () {
-              // Acción cuando se presiona el botón
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: CartaScreen(
+                      tituloCarta: 'Almidon',
+                      mensaje: 'La porroflexia es una técnica que consiste en crear formas y estructuras'
+                          ' a partir del liado de porros de marihuana. Esta técnica, que requiere de '
+                          'habilidades manuales y una gran dosis de creatividad, ha evolucionado hasta '
+                          'convertirse en una verdadera forma de arte. A través de la porroflexia, se pueden'
+                          ' crear figuras y formas de todo tipo, desde animales hasta aviones, pasando por personajes '
+                          'de ficción y elementos de la naturaleza.',
+                  usuario: 'Pepe'),
+                  type: PageTransitionType.fade,
+                ),
+              );
             },
             elevation: 2.0, // Altura de la sombra del botón
             fillColor: actual.colorScheme.secondary, // Color de fondo del botón

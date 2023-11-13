@@ -28,6 +28,7 @@ class BarraPublicar extends StatelessWidget {
           Text(
             titulo,
             style: TextStyle(
+                fontSize: 25.0,
                 fontWeight: FontWeight.bold,
                 color: actual.colorScheme.onSurface),
           ),
