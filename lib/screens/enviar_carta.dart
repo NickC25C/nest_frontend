@@ -13,30 +13,34 @@ class EnviarCartaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          //Barra de título
-          BarraPublicar(titulo: tituloScreen),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Listado(),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              //Barra de título
+              BarraPublicar(titulo: tituloScreen),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Listado(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Titulo(),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0),
+                child: FechaApertura(texto: 'Fecha de envío'),
+              ),
+              EscribirNota(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
+                child: BotonCrear(),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Titulo(),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0),
-            child: FechaApertura(texto: 'Fecha de envío'),
-          ),
-          EscribirNota(),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
-            child: BotonCrear(),
-          ),
-        ],
+        ),
       ),
     );
   }
