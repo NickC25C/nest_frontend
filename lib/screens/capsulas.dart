@@ -10,14 +10,27 @@ class CapsulaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
-      child: Column(
+      child: Stack(
         children: [
-          CapsulaCerrada(),
-          SizedBox(height: 16.0),
-          CapsulaAbierta(),
-          SizedBox(height: 16.0),
-          BotonCrearCapsula(),
+          Container(
+            height: screenSize.height,
+              child: ListView(
+                children: [
+                  CapsulaCerrada(),
+                  SizedBox(height: 16.0),
+                  CapsulaAbierta(),
+                  SizedBox(height: 16.0),
+                ],
+            ),
+          ),
+          Positioned(
+              bottom: 170,
+              right: 8.0,
+              child:
+              BotonCrearCapsula(),
+          ),
         ],
       ),
     );
@@ -160,9 +173,7 @@ class BotonCrearCapsula extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
+    return ElevatedButton(
         onPressed: () {
           Navigator.push(
             context,
@@ -187,7 +198,6 @@ class BotonCrearCapsula extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
