@@ -2,12 +2,15 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/note.dart';
+import 'package:nest_fronted/models/picture.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:nest_fronted/widgets/foto.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
+import 'package:nest_fronted/widgets/publication_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -40,7 +43,7 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
-  _buildContentView() {
+  _buildContentView(int index) {
     setState(() {
       open = !open;
       openNote =
@@ -48,7 +51,7 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
-  _buildNoteView() {
+  _buildNoteView(int index) {
     setState(() {
       openNote = !openNote;
       open =
@@ -56,39 +59,57 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
+  ListView _buildTablon(List<Publication> publications) {
+    return ListView.builder(
+        itemCount: publications.length,
+        itemBuilder: (BuildContext context, int index) {
+          if (publications[index].publiType == PublicationType.note) {
+            return GestureDetector(
+              onTap: () => {_buildNoteView(index)},
+              child: PublicationWidget(
+                pub: publications[index],
+              ),
+            );
+          } else {
+            return GestureDetector(
+              onTap: () => {_buildContentView(index)},
+              child: PublicationWidget(
+                pub: publications[index],
+              ),
+            );
+          }
+          ;
+        });
+  }
+
   Widget _buildPhotoView() {
-    return PhotoView(
-      imageProvider: AssetImage('assets/images/rata.png'),
-    );
+    Picture fotita = feed[selectedIndex] as Picture;
+    return PhotoView(imageProvider: FileImage(fotita.image!));
   }
 
   Widget _buildNoteViewContent() {
+    Note notita = feed[selectedIndex] as Note;
     return Container(
+      color: Colors.white,
       padding: EdgeInsets.all(16.0),
-      color: actual.colorScheme.background,
-      child: const Center(
+      child: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'SALUDO',
+            notita.title,
             style: TextStyle(fontWeight: FontWeight.bold),
             textScaleFactor: 2,
           ),
           Text(
-            'La porroflexia es una técnica que consiste en crear formas y estructuras'
-            ' a partir del liado de porros de marihuana. Esta técnica, que requiere de '
-            'habilidades manuales y una gran dosis de creatividad, ha evolucionado hasta '
-            'convertirse en una verdadera forma de arte. A través de la porroflexia, se pueden'
-            ' crear figuras y formas de todo tipo, desde animales hasta aviones, pasando por personajes '
-            'de ficción y elementos de la naturaleza.',
+            notita.message,
             style: TextStyle(fontSize: 18.0),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'De: PEPA',
+                'De: ${notita.owner.username}',
               )
             ],
           )
@@ -105,7 +126,7 @@ class TablonState extends State<TablonScreen> {
     if (open) {
       return Card(
         child: GestureDetector(
-          onTap: () => {_buildContentView()},
+          onTap: () => {_buildContentView(selectedIndex)},
           child: Container(
             height: 625,
             width: double.infinity,
@@ -116,7 +137,7 @@ class TablonState extends State<TablonScreen> {
     } else if (openNote) {
       return Card(
         child: GestureDetector(
-          onTap: () => {_buildNoteView()},
+          onTap: () => {_buildNoteView(selectedIndex)},
           child: Container(
             height: 625,
             width: double.infinity,
@@ -152,14 +173,14 @@ class TablonState extends State<TablonScreen> {
               ListView(
                 children: [
                   GestureDetector(
-                    onTap: () => {_buildContentView()},
+                    onTap: () => {_buildContentView(selectedIndex)},
                     child: Foto(
                       url: ('assets/images/rata.png'),
                       file: File(''),
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => {_buildNoteView()},
+                    onTap: () => {_buildNoteView(selectedIndex)},
                     child: const Nota(
                       tituloNota: 'SALUDO',
                       mensaje: "",
