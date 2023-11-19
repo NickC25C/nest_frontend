@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:nest_fronted/widgets/foto.dart';
@@ -18,6 +19,11 @@ bool open = false;
 bool openNote = false;
 double _opacityLevel = 0;
 double _sigmaLevel = 0;
+List<Publication> feed = List.empty(growable: true);
+
+extractFeed() async {
+  feed = await api.getFeed(api.loggedUser.id);
+}
 
 class TablonScreen extends StatefulWidget {
   const TablonScreen({Key? key}) : super(key: key);
@@ -93,6 +99,7 @@ class TablonState extends State<TablonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    extractFeed();
     var screenSize = MediaQuery.of(context).size;
 
     if (open) {
