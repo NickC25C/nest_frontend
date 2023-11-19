@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/models/picture.dart';
 import 'package:nest_fronted/models/publication.dart';
+import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:nest_fronted/widgets/foto.dart';
@@ -45,6 +46,7 @@ class TablonState extends State<TablonScreen> {
 
   _buildContentView(int index) {
     setState(() {
+      selectedIndex = index;
       open = !open;
       openNote =
           false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
@@ -53,6 +55,7 @@ class TablonState extends State<TablonScreen> {
 
   _buildNoteView(int index) {
     setState(() {
+      selectedIndex = index;
       openNote = !openNote;
       open =
           false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
@@ -163,32 +166,15 @@ class TablonState extends State<TablonScreen> {
   Widget tablon() {
     return Column(
       children: [
+        const BarraTitulo(titulo: tituloScreen),
         Container(
-          //margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          height: 635,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          height: 600,
           width: double.infinity,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              ListView(
-                children: [
-                  GestureDetector(
-                    onTap: () => {_buildContentView(selectedIndex)},
-                    child: Foto(
-                      url: ('assets/images/rata.png'),
-                      file: File(''),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => {_buildNoteView(selectedIndex)},
-                    child: const Nota(
-                      tituloNota: 'SALUDO',
-                      mensaje: "",
-                      usu: 'PEPA',
-                    ),
-                  ),
-                ],
-              ),
+              _buildTablon(feed),
               BotonPublicar(),
             ],
           ),
