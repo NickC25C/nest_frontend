@@ -193,8 +193,16 @@ class ApiService {
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
+      User? us;
+      await getUser(data
+              .map((item) => item['ownerId'])
+              .toString()
+              .replaceAll("(", "")
+              .replaceAll(")", ""))
+          .then((value) => us = value);
+
       List<Publication> feed =
-          data.map((item) => Publication.fromJson(item)).toList();
+          data.map((item) => Publication.fromJson(item, us!)).toList();
       return feed;
     } else {
       throw Exception('Failed to load feed: ${response.statusCode}');
@@ -211,7 +219,16 @@ class ApiService {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      Publication publication = Publication.fromJson(data);
+      User? us;
+      List<dynamic> datas = json.decode(response.body);
+      getUser(datas
+              .map((item) => item['ownerId'])
+              .toString()
+              .replaceAll("(", "")
+              .replaceAll(")", ""))
+          .then((value) => us = value)
+          .whenComplete(() => null);
+      Publication publication = Publication.fromJson(data, us!);
       return publication;
     } else {
       throw Exception('Failed to load publication: ${response.statusCode}');
@@ -229,7 +246,14 @@ class ApiService {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      Note note = Note.fromJson(data);
+      User? us;
+      List<dynamic> datas = json.decode(response.body);
+      getUser(datas
+          .map((item) => item['ownerId'])
+          .toString()
+          .replaceAll("(", "")
+          .replaceAll(")", ""));
+      Note note = Note.fromJson(data, us!);
       return note;
     } else {
       throw Exception('Failed to create note: ${response.statusCode}');

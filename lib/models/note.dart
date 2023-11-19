@@ -13,16 +13,15 @@ class Note extends Publication {
       required this.title,
       required this.message});
 
-  factory Note.fromJson(Map<String, dynamic> json) {
+  factory Note.fromJson(Map<String, dynamic> json, User u) {
     return Note(
         id: json['id'],
-        owner: json['ownerId'],
-        date: json['date'],
-        publiType: json['publiType'],
+        owner: u,
+        date: DateTime.parse(json['date']),
+        publiType: toPubType(json['publiType']),
         title: json['title'],
         message: json['message']);
   }
-
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> m = super.toJson();

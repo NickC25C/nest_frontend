@@ -5,6 +5,14 @@ import 'package:nest_fronted/models/user.dart';
 
 enum PublicationType { note, picture, song }
 
+PublicationType toPubType(String type) {
+  if (type == "Note") {
+    return PublicationType.note;
+  } else {
+    return PublicationType.picture;
+  }
+}
+
 class Publication {
   final String id;
   final User owner;
@@ -17,9 +25,9 @@ class Publication {
       required this.date,
       required this.publiType});
 
-  factory Publication.fromJson(Map<String, dynamic> json) {
+  factory Publication.fromJson(Map<String, dynamic> json, User u) {
     if (json['publiType'] == "Note") {
-      return Note.fromJson(json);
+      return Note.fromJson(json, u);
     } else {
       return Picture.fromJson(json);
     }

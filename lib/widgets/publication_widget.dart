@@ -19,7 +19,7 @@ class PublicationWidget extends StatelessWidget {
       return Nota(
           tituloNota: notaPubli.title,
           mensaje: notaPubli.message,
-          usu: notaPubli.owner.username);
+          usu: notaPubli.owner!.username);
     } else {
       Picture pic = pub as Picture;
       return Foto(url: pic.url!, file: pic.image!);

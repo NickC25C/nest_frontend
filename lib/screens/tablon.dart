@@ -127,7 +127,7 @@ class TablonState extends State<TablonScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'De: ${notita.owner.username}',
+                'De: ${notita.owner!.username}',
               )
             ],
           )
