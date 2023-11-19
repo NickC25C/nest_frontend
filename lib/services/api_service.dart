@@ -192,17 +192,15 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      User? us;
-      await getUser(data
-              .map((item) => item['ownerId'])
-              .toString()
-              .replaceAll("(", "")
-              .replaceAll(")", ""))
-          .then((value) => us = value);
-
-      List<Publication> feed =
-          data.map((item) => Publication.fromJson(item, us!)).toList();
+      List<dynamic> data = await json.decode(response.body);
+      List<Publication> feed = List.empty(growable: true);
+      await Future.wait(data.map((element) async {
+        await getUser(element['ownerId']
+                .toString()
+                .replaceAll("(", "")
+                .replaceAll(")", ""))
+            .then((value) => feed.add(Publication.fromJson(element, value)));
+      }));
       return feed;
     } else {
       throw Exception('Failed to load feed: ${response.statusCode}');
