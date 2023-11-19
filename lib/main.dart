@@ -53,20 +53,22 @@ void main() {
   }
 
   //poblarUsers();
+
   api.getUsers().then((data) {
     usuarios = data;
-  }).whenComplete(() => {
-        api
-            .getUserByUsername('g4net')
-            .then((value) => api.loggedUser = value)
-            .whenComplete(() => null),
-        WidgetsFlutterBinding.ensureInitialized(),
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]),
-        runApp(const MyApp()),
-      });
+  }).whenComplete(
+    () => api
+        .getUserByUsername('g4net')
+        .then((value) => api.loggedUser = value)
+        .whenComplete(() => {
+              WidgetsFlutterBinding.ensureInitialized(),
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.portraitDown,
+              ]),
+              runApp(const MyApp())
+            }),
+  );
 }
 
 class MyApp extends StatelessWidget {

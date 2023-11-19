@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
@@ -23,20 +24,34 @@ bool open = false;
 bool openNote = false;
 double _opacityLevel = 0;
 double _sigmaLevel = 0;
-List<Publication> feed = List.empty(growable: true);
-
-extractFeed() async {
-  feed = await api.getFeed(api.loggedUser.id);
-}
 
 class TablonScreen extends StatefulWidget {
   const TablonScreen({Key? key}) : super(key: key);
-
   @override
   TablonState createState() => TablonState();
 }
 
 class TablonState extends State<TablonScreen> {
+  late List<Publication> publis;
+
+  Future<List<Publication>> initializePublis() async {
+    Completer<List<Publication>> completer = Completer();
+
+    try {
+      publis = await api.getFeed(api.loggedUser.id);
+      completer.complete(publis);
+    } catch (error) {
+      completer.completeError(error);
+    }
+    return completer.future;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initializePublis();
+  }
+
   void publicar() {
     setState(() {
       _opacityLevel = 0.5;
@@ -86,12 +101,12 @@ class TablonState extends State<TablonScreen> {
   }
 
   Widget _buildPhotoView() {
-    Picture fotita = feed[selectedIndex] as Picture;
+    Picture fotita = publis[selectedIndex] as Picture;
     return PhotoView(imageProvider: FileImage(fotita.image!));
   }
 
   Widget _buildNoteViewContent() {
-    Note notita = feed[selectedIndex] as Note;
+    Note notita = publis[selectedIndex] as Note;
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(16.0),
@@ -123,50 +138,58 @@ class TablonState extends State<TablonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    extractFeed();
     var screenSize = MediaQuery.of(context).size;
-
-    if (open) {
-      return Card(
-        child: GestureDetector(
-          onTap: () => {_buildContentView(selectedIndex)},
-          child: Container(
-            height: 625,
-            width: double.infinity,
-            child: _buildPhotoView(),
-          ),
-        ),
-      );
-    } else if (openNote) {
-      return Card(
-        child: GestureDetector(
-          onTap: () => {_buildNoteView(selectedIndex)},
-          child: Container(
-            height: 625,
-            width: double.infinity,
-            child: _buildNoteViewContent(),
-          ),
-        ),
-      );
-    } else {
-      return Stack(
-        children: <Widget>[
-          tablon(),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-            child: Container(
-              color: Colors.black.withOpacity(_opacityLevel),
-            ),
-          )
-        ],
-      );
-    }
+    return FutureBuilder<List<Publication>>(
+        future: initializePublis(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            if (open) {
+              return Card(
+                child: GestureDetector(
+                  onTap: () => {_buildContentView(selectedIndex)},
+                  child: Container(
+                    height: 625,
+                    width: double.infinity,
+                    child: _buildPhotoView(),
+                  ),
+                ),
+              );
+            } else if (openNote) {
+              return Card(
+                child: GestureDetector(
+                  onTap: () => {_buildNoteView(selectedIndex)},
+                  child: Container(
+                    height: 625,
+                    width: double.infinity,
+                    child: _buildNoteViewContent(),
+                  ),
+                ),
+              );
+            } else {
+              return Stack(
+                children: <Widget>[
+                  tablon(),
+                  BackdropFilter(
+                    filter: ImageFilter.blur(
+                        sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+                    child: Container(
+                      color: Colors.black.withOpacity(_opacityLevel),
+                    ),
+                  )
+                ],
+              );
+            }
+          }
+        });
   }
 
   Widget tablon() {
     return Column(
       children: [
-        const BarraTitulo(titulo: tituloScreen),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           height: 600,
@@ -174,7 +197,7 @@ class TablonState extends State<TablonScreen> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              _buildTablon(feed),
+              _buildTablon(publis),
               BotonPublicar(),
             ],
           ),
