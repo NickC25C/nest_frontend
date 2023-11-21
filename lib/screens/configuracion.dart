@@ -28,8 +28,8 @@ class CambiarUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        api.loggedUser = usuarios[1];
+      onPressed: () async {
+        api.loggedUser = await api.getUserByUsername('El_nicoloau');
       },
       child: Text('Cambiar Usuario'),
     );
