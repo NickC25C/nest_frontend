@@ -158,12 +158,18 @@ class ApiService {
   // IMAGE
   //
 
-  Future<void> uploadImage(File image, String description) async {
+  Future<void> uploadImage(File image, String description, List<String> usernames) async {
     final url = Uri.parse("$baseUrl/publications/picture");
     var request = http.MultipartRequest('POST', url);
     request.fields["ownerId"] = loggedUser.id;
     request.fields["description"] = description;
-
+    List<String> watchers = List.empty(growable: true);
+    getUsersByUsername(usernames).then((value) =>
+      {
+        for(User u in value) watchers.add(u.id)
+      }
+    );
+    request.fields["watchers"] = jsonEncode(watchers);
     request.files.add(await http.MultipartFile.fromPath('image', image.path));
 
     var response = await request.send();
@@ -174,6 +180,17 @@ class ApiService {
       print("Image not uploaded, error code: ${response.statusCode} ");
     }
   }
+
+  Future<List<User>> getUsersByUsername(List<String> usernames) async
+  {
+    List<User> users = List.empty(growable: true);
+    for(String username in usernames)
+    {
+      getUserByUsername(username).then((value) => users.add(value));
+    }
+    return users;
+  }
+
 
   Future<List<Publication>> getFeed(String userId) async {
     final response = await http.get(
