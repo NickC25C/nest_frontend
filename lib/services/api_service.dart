@@ -164,7 +164,7 @@ class ApiService {
     request.fields["ownerId"] = loggedUser.id;
     request.fields["description"] = description;
     List<String> watchers = List.empty(growable: true);
-    getUsersByUsername(usernames).then((value) =>
+    await getUsersByUsername(usernames).then((value) =>
       {
         for(User u in value) watchers.add(u.id)
       }
@@ -186,7 +186,7 @@ class ApiService {
     List<User> users = List.empty(growable: true);
     for(String username in usernames)
     {
-      getUserByUsername(username).then((value) => users.add(value));
+      await getUserByUsername(username).then((value) => users.add(value));
     }
     return users;
   }
