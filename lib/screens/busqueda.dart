@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/models/user.dart';
 
 const tituloScreen = 'BÚSQUEDA';
 
@@ -101,12 +102,13 @@ class _FormBusquedaState extends State<FormBusqueda> {
                     )),
                 onPressed: _isButtonDisabled
                     ? null
-                    : () {
+                    : () async {
                         // Validate will return true if the form is valid, or false if
                         // the form is invalid.
-                        if (_formKey.currentState!.validate()) {
-                          // Process data.
-                        }
+                        User u = await api.getUserByUsername(_controller.text);
+                        if (u.id == '') {
+                          await api.postRequest(api.loggedUser.id, u.id);
+                        } else {}
                       },
                 child: Text(
                   'Enviar solicitud',
@@ -129,17 +131,32 @@ class Solicitudes extends StatefulWidget {
 
 //Aceptar o denegar solicitudes
 class _Solicitudes extends State<Solicitudes> {
-  final List<String> listaAuxiliar = [
-    'Guillem_proxeneta69',
-    'Ivan_politoxicomano33',
-    'Magic_Patrisio777',
-    'Pepe_Viyuela'
-  ];
+  late List<User> listaU = List.empty(growable: true);
+  late List<String> listaAuxiliar = List.empty(growable: true);
+
+  Future<void> extractUsers() async {
+    try {
+      List<User> users = await api.getRequests(api.loggedUser.id);
+      setState(() {
+        listaU = users;
+        listaAuxiliar = users.map((user) => user.username).toList();
+      });
+    } catch (e) {
+      // Manejar el error de la solicitud
+      print('Error en la solicitud: $e');
+    }
+  }
 
   void _removeItem(int index) {
     setState(() {
       listaAuxiliar.removeAt(index);
     });
+  }
+
+  @override
+  void initState() {
+    extractUsers();
+    super.initState();
   }
 
   @override
@@ -235,4 +252,3 @@ class CustomListView extends StatelessWidget {
     );
   }
 }
-

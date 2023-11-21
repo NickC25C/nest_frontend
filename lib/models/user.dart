@@ -5,26 +5,25 @@ class User {
   final String username;
   final String password;
   final String mail;
-  bool enableNotifications;
 
-  User(
-      {required this.id,
-      required this.name,
-      required this.lastname,
-      required this.username,
-      required this.password,
-      required this.mail,
-      required this.enableNotifications});
+  User({
+    required this.id,
+    required this.name,
+    required this.lastname,
+    required this.username,
+    required this.password,
+    required this.mail,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        id: json['id'],
-        name: json['name'],
-        lastname: json['lastname'],
-        username: json['username'],
-        password: json['password'],
-        mail: json['mail'],
-        enableNotifications: json['enableNotifications']);
+      id: json['id'],
+      name: json['name'],
+      lastname: json['lastname'],
+      username: json['username'],
+      password: json['password'],
+      mail: json['mail'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -34,7 +33,6 @@ class User {
       'username': username,
       'password': password,
       'mail': mail,
-      'enableNotifications': enableNotifications
     };
   }
 }
