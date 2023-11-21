@@ -15,15 +15,17 @@ PublicationType toPubType(String type) {
 
 class Publication {
   final String id;
-  final User owner;
+  final String owner;
   final DateTime date;
   final PublicationType publiType;
+  final List<String> watchers;
 
   Publication(
       {required this.id,
       required this.owner,
       required this.date,
-      required this.publiType});
+      required this.publiType,
+      required this.watchers});
 
   factory Publication.fromJson(Map<String, dynamic> json, User u) {
     if (json['publiType'] == "Note") {

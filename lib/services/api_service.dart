@@ -160,19 +160,11 @@ class ApiService {
 
   Future<void> uploadImage(File image, String description) async {
     final url = Uri.parse("$baseUrl/publications/picture");
-    Picture picture = Picture(
-        id: 'noid',
-        owner: loggedUser,
-        date: DateTime.now(),
-        publiType: PublicationType.picture,
-        description: description,
-        url: null,
-        image: image);
-
     var request = http.MultipartRequest('POST', url);
-    request.fields.addAll(
-        picture.toJson().map((key, value) => MapEntry(key, value.toString())));
-    request.files.add(await http.MultipartFile.fromPath('file', image.path));
+    request.fields["ownerId"] = loggedUser.id;
+    request.fields["description"] = description;
+
+    request.files.add(await http.MultipartFile.fromPath('image', image.path));
 
     var response = await request.send();
 
