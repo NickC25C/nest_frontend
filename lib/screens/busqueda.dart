@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/user.dart';
@@ -106,9 +108,51 @@ class _FormBusquedaState extends State<FormBusqueda> {
                         // Validate will return true if the form is valid, or false if
                         // the form is invalid.
                         User u = await api.getUserByUsername(_controller.text);
-                        if (u.id == '') {
-                          await api.postRequest(api.loggedUser.id, u.id);
-                        } else {}
+                        if (u.id != api.loggedUser.id) {
+                          if (u.id != '') {
+                            await api.postRequest(api.loggedUser.id, u.id);
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: const Text('Solicitud enviada'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('OK'))
+                                      ],
+                                    ));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: const Text(
+                                          'El usuario introducido no existe'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('OK'))
+                                      ],
+                                    ));
+                          }
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: const Text(
+                                        'No puedes ser tu propio amigo'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('OK'))
+                                    ],
+                                  ));
+                        }
                       },
                 child: Text(
                   'Enviar solicitud',
