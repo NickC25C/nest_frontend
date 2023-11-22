@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
+import 'package:nest_fronted/models/letter.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/note.dart';
@@ -258,9 +259,12 @@ class ApiService {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      User us = await getUser(
-          data['ownerId'].toString().replaceAll("(", "").replaceAll(")", ""));
-      Note note = Note.fromJson(data, us);
+      User? us;
+      if (data['ownerId'] != null) {
+        us = await getUser(
+            data['ownerId'].toString().replaceAll("(", "").replaceAll(")", ""));
+      }
+      Note note = Note.fromJson(data, us!);
       return note;
     } else {
       throw Exception('Failed to create note: ${response.statusCode}');
@@ -292,4 +296,22 @@ class ApiService {
       throw Exception('Error al obtener usuarios');
     }
   }
+
+  Future<Letter> createLetter(Letter letter) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/letter'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(letter.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      return Letter.fromJson(responseData);
+    } else {
+      throw Exception('Failed to create letter');
+    }
+  }
+
 }

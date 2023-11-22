@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nest_fronted/models/user.dart';
+import 'package:nest_fronted/models/letter.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
 import 'package:nest_fronted/screens/capsulaAbierta.dart';
 import 'package:nest_fronted/screens/capsulaCerrada.dart';
@@ -47,7 +48,7 @@ void main() {
     User newUser1 = User(
       id: "",
       name: "Nick",
-      lastname: "Contreras",
+      lastname: "Contrerrrrras",
       username: "El_nicoloau",
       password: "123",
       mail: "ahhrh@hmail.com",
@@ -64,7 +65,23 @@ void main() {
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  //poblarUsers();
+  void crearCarta() {
+    // Crea la carta utilizando la información actual
+    final letter = Letter(
+      id: '',
+      title: 'Título de la carta',  // Puedes ajustar el título según tus necesidades
+      text: 'huss',
+      date: DateTime.now(),
+      opened: false,
+      origin: api.loggedUser,
+      receiver: api.loggedUser,
+    );
+
+    api.createLetter(letter);
+  }
+
+  poblarUsers();
+ // crearCarta();
   // enviarSolicitudAmistad();
 
   api.getUsers().then((data) {
