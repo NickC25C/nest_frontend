@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:nest_fronted/models/diffusionList.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -277,6 +278,52 @@ class ApiService {
       return data.map((user) => User.fromJson(user)).toList();
     } else {
       throw Exception('Error al obtener usuarios');
+    }
+  }
+
+  Future<DiffusionList> createDiffusionList(DiffusionList diffusionList) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/diffusionLists'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(diffusionList.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      return DiffusionList.fromJson(responseData);
+    } else {
+      throw Exception('Failed to create diffusion list');
+    }
+  }
+
+  Future<DiffusionList> updateDiffusionList(String diffusionListId, DiffusionList diffusionList) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/diffusionLists/$diffusionListId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(diffusionList.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      return DiffusionList.fromJson(responseData);
+    } else {
+      throw Exception('Failed to update diffusion list');
+    }
+  }
+
+  Future<void> deleteDiffusionList(String diffusionListId) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/diffusionLists/$diffusionListId'),
+    );
+
+    if (response.statusCode == 204) {
+      return;
+    } else {
+      throw Exception('Failed to delete diffusion list');
     }
   }
 }

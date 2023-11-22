@@ -52,7 +52,7 @@ void main() {
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  //poblarUsers();
+  poblarUsers();
 
   api.getUsers().then((data) {
     usuarios = data;
