@@ -5,12 +5,14 @@ import 'package:nest_fronted/models/user.dart';
 class Note extends Publication {
   final String title;
   final String message;
+  List<String>? watchers;
   Note(
       {required super.id,
       required super.owner,
       required super.date,
       required super.publiType,
       required this.title,
+      this.watchers,
       required this.message});
 
   factory Note.fromJson(Map<String, dynamic> json, User u) {
@@ -24,8 +26,11 @@ class Note extends Publication {
   }
   @override
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> m = super.toJson();
-    m.addAll({'title': title, 'message': message});
-    return m;
+    return {
+      'ownerId': owner.id,
+      'watchers': watchers,
+      'title': title,
+      'message': message,
+    };
   }
 }

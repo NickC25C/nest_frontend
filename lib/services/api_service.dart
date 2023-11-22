@@ -234,25 +234,20 @@ class ApiService {
     }
   }
 
-  Future<Note> createNote(Note note) async {
+  Future<Note> createNote(Note n) async {
     final response = await http.post(
       Uri.parse('$baseUrl/publications/note'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(note.toJson()),
+      body: jsonEncode(n.toJson()),
     );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      User? us;
-      List<dynamic> datas = json.decode(response.body);
-      getUser(datas
-          .map((item) => item['ownerId'])
-          .toString()
-          .replaceAll("(", "")
-          .replaceAll(")", ""));
-      Note note = Note.fromJson(data, us!);
+      User us = await getUser(
+          data['ownerId'].toString().replaceAll("(", "").replaceAll(")", ""));
+      Note note = Note.fromJson(data, us);
       return note;
     } else {
       throw Exception('Failed to create note: ${response.statusCode}');
