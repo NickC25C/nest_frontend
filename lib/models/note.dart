@@ -11,7 +11,7 @@ class Note extends Publication {
       required super.date,
       required super.publiType,
       required this.title,
-      required this.message});
+      required this.message, required super.watchers});
 
   factory Note.fromJson(Map<String, dynamic> json, User u) {
     return Note(
@@ -20,7 +20,7 @@ class Note extends Publication {
         date: DateTime.parse(json['date']),
         publiType: toPubType(json['publiType']),
         title: json['title'],
-        message: json['message']);
+        message: json['message'], watchers: []);
   }
   @override
   Map<String, dynamic> toJson() {

@@ -15,7 +15,7 @@ PublicationType toPubType(String type) {
 
 class Publication {
   final String id;
-  final String owner;
+  final User owner;
   final DateTime date;
   final PublicationType publiType;
   final List<String> watchers;

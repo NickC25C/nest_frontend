@@ -13,7 +13,7 @@ class Picture extends Publication {
       required super.publiType,
       required this.description,
       required this.url,
-      required this.image});
+      required this.image, required super.watchers});
 
   factory Picture.fromJson(Map<String, dynamic> json) {
     return Picture(
@@ -23,7 +23,7 @@ class Picture extends Publication {
         publiType: toPubType(json['publiType']),
         description: json['description'],
         url: json['url'],
-        image: null);
+        image: null, watchers: []);
   }
 
   @override

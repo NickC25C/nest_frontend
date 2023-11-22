@@ -163,7 +163,7 @@ class ApiService {
     var request = http.MultipartRequest('POST', url);
     request.fields["ownerId"] = loggedUser.id;
     request.fields["description"] = description;
-    List<String> watchers = List.empty(growable: true);
+    List<String> watchers = [];
     await getUsersByUsername(usernames).then((value) =>
       {
         for(User u in value) watchers.add(u.id)

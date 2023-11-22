@@ -110,7 +110,7 @@ class BotonCrear extends StatelessWidget {
                   date: DateTime.now(),
                   publiType: PublicationType.note,
                   title: titulin.darValor(),
-                  message: msj);
+                  message: msj, watchers: []);
               api.createNote(n).whenComplete(() => print('¿Nota subida?'));
             },
             icon: Icon(

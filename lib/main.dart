@@ -30,24 +30,21 @@ void main() {
         lastname: "Fornet",
         username: "g4net",
         password: "pass123",
-        mail: "g@g.com",
-        enableNotifications: true);
+        mail: "g@g.com");
     User newUser1 = User(
         id: "",
         name: "Nick",
         lastname: "Contreras",
         username: "El_nicoloau",
         password: "123",
-        mail: "ahhrh@hmail.com",
-        enableNotifications: true);
+        mail: "ahhrh@hmail.com");
     User newUser2 = User(
         id: "",
         name: "Javier",
         lastname: "Lanza",
         username: "Reshulon21",
         password: "123",
-        mail: "ahhsh@hmail.com",
-        enableNotifications: true);
+        mail: "ahhsh@hmail.com");
     api.createUser(newUser).whenComplete(() =>
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
