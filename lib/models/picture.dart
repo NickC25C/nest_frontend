@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:nest_fronted/models/publication.dart';
+import 'package:nest_fronted/models/user.dart';
 
 class Picture extends Publication {
   final String description;
@@ -13,17 +14,19 @@ class Picture extends Publication {
       required super.publiType,
       required this.description,
       required this.url,
-      required this.image});
+      required this.image,
+      required super.watchers});
 
-  factory Picture.fromJson(Map<String, dynamic> json) {
+  factory Picture.fromJson(Map<String, dynamic> json, User u, File f) {
     return Picture(
         id: json['id'],
-        owner: json['owner'],
-        date: json['date'],
+        owner: u,
+        date: DateTime.parse(json['date']),
         publiType: toPubType(json['publiType']),
         description: json['description'],
         url: json['url'],
-        image: null);
+        image: f,
+        watchers: []);
   }
 
   @override

@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class Foto extends StatefulWidget {
-  final String url;
   final File file;
   const Foto({
     super.key,
-    required this.url,
     required this.file,
   });
   @override
@@ -20,7 +18,6 @@ class _FotoState extends State<Foto> {
 
   void initState() {
     super.initState();
-    fotoUrl = widget.url;
     image = widget.file;
   }
 
@@ -33,7 +30,7 @@ class _FotoState extends State<Foto> {
         height: 300,
         width: 300,
         child: Image(
-          image: FileImage(image),
+          image: NetworkImage(image.path),
           fit: BoxFit.cover,
         ));
   }

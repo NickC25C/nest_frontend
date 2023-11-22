@@ -22,7 +22,6 @@ class CapsulaAbiertaScreen extends StatefulWidget {
 }
 
 class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
-
   _buildContentView() {
     setState(() {
       open = !open;
@@ -108,7 +107,8 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
           children: <Widget>[
             capsula(),
             BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+              filter:
+                  ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
               child: Container(
                 color: Colors.black.withOpacity(_opacityLevel),
               ),
@@ -134,7 +134,6 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                   GestureDetector(
                     onTap: () => {_buildContentView()},
                     child: Foto(
-                      url: ('assets/images/rata.png'),
                       file: File(''),
                     ),
                   ),

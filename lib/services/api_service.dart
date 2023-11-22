@@ -160,21 +160,17 @@ class ApiService {
   // IMAGE
   //
 
-  Future<void> uploadImage(File image, String description) async {
+  Future<void> uploadImage(
+      File image, String description, List<String> usernames) async {
     final url = Uri.parse("$baseUrl/publications/picture");
-    Picture picture = Picture(
-        id: 'noid',
-        owner: loggedUser,
-        date: DateTime.now(),
-        publiType: PublicationType.picture,
-        description: description,
-        url: null,
-        image: image);
-
     var request = http.MultipartRequest('POST', url);
-    request.fields.addAll(
-        picture.toJson().map((key, value) => MapEntry(key, value.toString())));
-    request.files.add(await http.MultipartFile.fromPath('file', image.path));
+    request.fields["ownerId"] = loggedUser.id;
+    request.fields["description"] = description;
+    List<String> watchers = List.empty(growable: true);
+    await getUsersByUsername(usernames)
+        .then((value) => {for (User u in value) watchers.add(u.id)});
+    request.fields["watchers"] = jsonEncode(watchers);
+    request.files.add(await http.MultipartFile.fromPath('image', image.path));
 
     var response = await request.send();
 
@@ -183,6 +179,14 @@ class ApiService {
     } else {
       print("Image not uploaded, error code: ${response.statusCode} ");
     }
+  }
+
+  Future<List<User>> getUsersByUsername(List<String> usernames) async {
+    List<User> users = List.empty(growable: true);
+    for (String username in usernames) {
+      await getUserByUsername(username).then((value) => users.add(value));
+    }
+    return users;
   }
 
   Future<List<Publication>> getFeed(String userId) async {
@@ -201,8 +205,17 @@ class ApiService {
                 .toString()
                 .replaceAll("(", "")
                 .replaceAll(")", ""))
-            .then((value) => feed.add(Publication.fromJson(element, value)));
+            .then((value) => {
+                  if (element['publiType'].toString() == 'Note')
+                    {feed.add(Publication.fromJson(element, value, null))}
+                  else
+                    {
+                      feed.add(Publication.fromJson(
+                          element, value, File(element['url'])))
+                    }
+                });
       }));
+
       return feed;
     } else {
       throw Exception('Failed to load feed: ${response.statusCode}');
@@ -228,7 +241,7 @@ class ApiService {
               .replaceAll(")", ""))
           .then((value) => us = value)
           .whenComplete(() => null);
-      Publication publication = Publication.fromJson(data, us!);
+      Publication publication = Publication.fromJson(data, us!, null);
       return publication;
     } else {
       throw Exception('Failed to load publication: ${response.statusCode}');

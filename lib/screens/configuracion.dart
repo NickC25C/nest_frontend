@@ -15,8 +15,14 @@ class ConfiguracionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: const Column(
-          children: [CambiarUser()],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CambiarUser(),
+            ],
+          ),
         ),
       ),
     );
