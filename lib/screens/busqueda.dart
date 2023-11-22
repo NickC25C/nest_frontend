@@ -246,6 +246,15 @@ class CustomListView extends StatelessWidget {
 
   CustomListView({required this.items, required this.onItemRemoved});
 
+  void acceptFriendRequest(String userId, String friendId) async {
+    try {
+      await api.addFriend(userId, friendId);
+      print('si');
+    } catch (error) {
+      print('no: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -258,7 +267,9 @@ class CustomListView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  User aux = await api.getUserByUsername(items[index]);
+                  acceptFriendRequest(api.loggedUser.id, aux.id);
                   onItemRemoved(index);
                 },
                 child: Icon(
@@ -296,3 +307,4 @@ class CustomListView extends StatelessWidget {
     );
   }
 }
+
