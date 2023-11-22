@@ -5,14 +5,13 @@ import 'package:nest_fronted/models/user.dart';
 class Note extends Publication {
   final String title;
   final String message;
-  List<String>? watchers;
   Note(
       {required super.id,
       required super.owner,
       required super.date,
       required super.publiType,
       required this.title,
-      this.watchers,
+      super.watchers,
       required this.message});
 
   factory Note.fromJson(Map<String, dynamic> json, User u) {
