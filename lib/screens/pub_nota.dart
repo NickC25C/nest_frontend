@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/models/publication.dart';
+import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/listado.dart';
@@ -103,14 +104,20 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () {
+            onPressed: () async {
+              List<User> aux = await api.getUsers();
+              List<String> watch = List.empty(growable: true);
+              aux.forEach((element) {
+                watch.add(element.id);
+              });
               Note n = Note(
                   id: '',
                   owner: api.loggedUser,
                   date: DateTime.now(),
                   publiType: PublicationType.note,
                   title: titulin.darValor(),
-                  message: msj, watchers: []);
+                  watchers: watch,
+                  message: msj);
               api.createNote(n).whenComplete(() => print('¿Nota subida?'));
             },
             icon: Icon(

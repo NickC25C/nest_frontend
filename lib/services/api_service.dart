@@ -60,7 +60,8 @@ class ApiService {
     } else if (response.statusCode == 404) {
       throw Exception('User not found');
     } else {
-      throw Exception('Failed to load user by username');
+      return User(
+          id: '', name: '', lastname: '', username: '', password: '', mail: '');
     }
   }
 
@@ -242,28 +243,49 @@ class ApiService {
     }
   }
 
-  Future<Note> createNote(Note note) async {
+  Future<Note> createNote(Note n) async {
     final response = await http.post(
       Uri.parse('$baseUrl/publications/note'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(note.toJson()),
+      body: jsonEncode(n.toJson()),
     );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      User? us;
-      List<dynamic> datas = json.decode(response.body);
-      getUser(datas
-          .map((item) => item['ownerId'])
-          .toString()
-          .replaceAll("(", "")
-          .replaceAll(")", ""));
-      Note note = Note.fromJson(data, us!);
+      User us = await getUser(
+          data['ownerId'].toString().replaceAll("(", "").replaceAll(")", ""));
+      Note note = Note.fromJson(data, us);
       return note;
     } else {
       throw Exception('Failed to create note: ${response.statusCode}');
+    }
+  }
+
+  Future<String> postRequest(String id, String friendId) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/users/$id/friends/request?friendId=$friendId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.toString();
+    } else {
+      throw Exception('Failed to send request: ${response.statusCode}');
+    }
+  }
+
+  Future<List<User>> getRequests(String userId) async {
+    final response =
+        await http.get(Uri.parse('$baseUrl/users/$userId/friends/requests'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((user) => User.fromJson(user)).toList();
+    } else {
+      throw Exception('Error al obtener usuarios');
     }
   }
 }

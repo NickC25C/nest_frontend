@@ -5,13 +5,15 @@ import 'package:nest_fronted/models/user.dart';
 class Note extends Publication {
   final String title;
   final String message;
+  List<String>? watchers;
   Note(
       {required super.id,
       required super.owner,
       required super.date,
       required super.publiType,
       required this.title,
-      required this.message, required super.watchers});
+      this.watchers,
+      required this.message});
 
   factory Note.fromJson(Map<String, dynamic> json, User u) {
     return Note(
@@ -20,12 +22,15 @@ class Note extends Publication {
         date: DateTime.parse(json['date']),
         publiType: toPubType(json['publiType']),
         title: json['title'],
-        message: json['message'], watchers: []);
+        message: json['message']);
   }
   @override
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> m = super.toJson();
-    m.addAll({'title': title, 'message': message});
-    return m;
+    return {
+      'ownerId': owner.id,
+      'watchers': watchers,
+      'title': title,
+      'message': message,
+    };
   }
 }
