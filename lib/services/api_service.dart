@@ -159,21 +159,19 @@ class ApiService {
   // IMAGE
   //
 
-  Future<void> uploadImage(File image, String description) async {
+  Future<void> uploadImage(File image, String description, List<String> usernames) async {
     final url = Uri.parse("$baseUrl/publications/picture");
-    Picture picture = Picture(
-        id: 'noid',
-        owner: loggedUser,
-        date: DateTime.now(),
-        publiType: PublicationType.picture,
-        description: description,
-        url: null,
-        image: image);
-
     var request = http.MultipartRequest('POST', url);
-    request.fields.addAll(
-        picture.toJson().map((key, value) => MapEntry(key, value.toString())));
-    request.files.add(await http.MultipartFile.fromPath('file', image.path));
+    request.fields["ownerId"] = loggedUser.id;
+    request.fields["description"] = description;
+    List<String> watchers = [];
+    await getUsersByUsername(usernames).then((value) =>
+      {
+        for(User u in value) watchers.add(u.id)
+      }
+    );
+    request.fields["watchers"] = jsonEncode(watchers);
+    request.files.add(await http.MultipartFile.fromPath('image', image.path));
 
     var response = await request.send();
 
@@ -183,6 +181,17 @@ class ApiService {
       print("Image not uploaded, error code: ${response.statusCode} ");
     }
   }
+
+  Future<List<User>> getUsersByUsername(List<String> usernames) async
+  {
+    List<User> users = List.empty(growable: true);
+    for(String username in usernames)
+    {
+      await getUserByUsername(username).then((value) => users.add(value));
+    }
+    return users;
+  }
+
 
   Future<List<Publication>> getFeed(String userId) async {
     final response = await http.get(
@@ -234,25 +243,20 @@ class ApiService {
     }
   }
 
-  Future<Note> createNote(Note note) async {
+  Future<Note> createNote(Note n) async {
     final response = await http.post(
       Uri.parse('$baseUrl/publications/note'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(note.toJson()),
+      body: jsonEncode(n.toJson()),
     );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      User? us;
-      List<dynamic> datas = json.decode(response.body);
-      getUser(datas
-          .map((item) => item['ownerId'])
-          .toString()
-          .replaceAll("(", "")
-          .replaceAll(")", ""));
-      Note note = Note.fromJson(data, us!);
+      User us = await getUser(
+          data['ownerId'].toString().replaceAll("(", "").replaceAll(")", ""));
+      Note note = Note.fromJson(data, us);
       return note;
     } else {
       throw Exception('Failed to create note: ${response.statusCode}');

@@ -11,6 +11,7 @@ class Note extends Publication {
       required super.date,
       required super.publiType,
       required this.title,
+      super.watchers,
       required this.message});
 
   factory Note.fromJson(Map<String, dynamic> json, User u) {
@@ -24,8 +25,11 @@ class Note extends Publication {
   }
   @override
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> m = super.toJson();
-    m.addAll({'title': title, 'message': message});
-    return m;
+    return {
+      'ownerId': owner.id,
+      'watchers': watchers,
+      'title': title,
+      'message': message,
+    };
   }
 }
