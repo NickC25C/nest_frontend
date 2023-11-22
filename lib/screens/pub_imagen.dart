@@ -222,8 +222,10 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 170,
           child: TextButton.icon(
-            onPressed: () {
-              api.uploadImage(File(imageToPub!.path), titulete.darValor(), ["g4net"]);
+            onPressed: () async {
+              if(imageToPub != null){
+                await api.uploadImage(imageToPub!, 's', ['g4net']);
+              }
             },
             icon: Icon(
               Icons.image_outlined,
@@ -243,3 +245,5 @@ class BotonCrear extends StatelessWidget {
     );
   }
 }
+
+

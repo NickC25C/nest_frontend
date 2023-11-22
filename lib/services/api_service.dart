@@ -160,11 +160,12 @@ class ApiService {
   //
 
   Future<void> uploadImage(File image, String description, List<String> usernames) async {
+
     final url = Uri.parse("$baseUrl/publications/picture");
     var request = http.MultipartRequest('POST', url);
     request.fields["ownerId"] = loggedUser.id;
     request.fields["description"] = description;
-    List<String> watchers = [];
+    List<String> watchers = List.empty(growable: true);
     await getUsersByUsername(usernames).then((value) =>
       {
         for(User u in value) watchers.add(u.id)
