@@ -159,18 +159,15 @@ class ApiService {
   // IMAGE
   //
 
-  Future<void> uploadImage(File image, String description, List<String> usernames) async {
-
+  Future<void> uploadImage(
+      File image, String description, List<String> usernames) async {
     final url = Uri.parse("$baseUrl/publications/picture");
     var request = http.MultipartRequest('POST', url);
     request.fields["ownerId"] = loggedUser.id;
     request.fields["description"] = description;
     List<String> watchers = List.empty(growable: true);
-    await getUsersByUsername(usernames).then((value) =>
-      {
-        for(User u in value) watchers.add(u.id)
-      }
-    );
+    await getUsersByUsername(usernames)
+        .then((value) => {for (User u in value) watchers.add(u.id)});
     request.fields["watchers"] = jsonEncode(watchers);
     request.files.add(await http.MultipartFile.fromPath('image', image.path));
 
@@ -183,16 +180,13 @@ class ApiService {
     }
   }
 
-  Future<List<User>> getUsersByUsername(List<String> usernames) async
-  {
+  Future<List<User>> getUsersByUsername(List<String> usernames) async {
     List<User> users = List.empty(growable: true);
-    for(String username in usernames)
-    {
+    for (String username in usernames) {
       await getUserByUsername(username).then((value) => users.add(value));
     }
     return users;
   }
-
 
   Future<List<Publication>> getFeed(String userId) async {
     final response = await http.get(
@@ -203,14 +197,30 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
+      bool? esNota;
       List<dynamic> data = await json.decode(response.body);
       List<Publication> feed = List.empty(growable: true);
+      await Future.wait(data.map((element) async {
+        if (element['publiType'] == 'Note') {
+          esNota = true;
+        } else {
+          esNota = false;
+        }
+      }));
       await Future.wait(data.map((element) async {
         await getUser(element['ownerId']
                 .toString()
                 .replaceAll("(", "")
                 .replaceAll(")", ""))
-            .then((value) => feed.add(Publication.fromJson(element, value)));
+            .then((value) => {
+                  if (esNota!)
+                    {feed.add(Publication.fromJson(element, value, null))}
+                  else
+                    {
+                      feed.add(Publication.fromJson(
+                          element, value, File(element['url'])))
+                    }
+                });
       }));
       return feed;
     } else {
@@ -237,7 +247,7 @@ class ApiService {
               .replaceAll(")", ""))
           .then((value) => us = value)
           .whenComplete(() => null);
-      Publication publication = Publication.fromJson(data, us!);
+      Publication publication = Publication.fromJson(data, us!, null);
       return publication;
     } else {
       throw Exception('Failed to load publication: ${response.statusCode}');

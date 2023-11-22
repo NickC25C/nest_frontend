@@ -102,7 +102,7 @@ class TablonState extends State<TablonScreen> {
 
   Widget _buildPhotoView() {
     Picture fotita = publis[selectedIndex] as Picture;
-    return PhotoView(imageProvider: FileImage(fotita.image!));
+    return PhotoView(imageProvider: NetworkImage(fotita.image!.path));
   }
 
   Widget _buildNoteViewContent() {

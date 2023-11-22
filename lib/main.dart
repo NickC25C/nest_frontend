@@ -34,6 +34,7 @@ void main() {
       print('Error al enviar la solicitud de amistad: $e');
     }
   }
+
   void poblarUsers() {
     User newUser = User(
       id: "",
@@ -64,7 +65,7 @@ void main() {
   }
 
   //poblarUsers();
- // enviarSolicitudAmistad();
+  // enviarSolicitudAmistad();
 
   api.getUsers().then((data) {
     usuarios = data;

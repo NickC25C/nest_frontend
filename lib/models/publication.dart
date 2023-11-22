@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/models/picture.dart';
@@ -27,11 +29,11 @@ class Publication {
       required this.publiType,
       this.watchers});
 
-  factory Publication.fromJson(Map<String, dynamic> json, User u) {
+  factory Publication.fromJson(Map<String, dynamic> json, User u, File? f) {
     if (json['publiType'] == "Note") {
       return Note.fromJson(json, u);
     } else {
-      return Picture.fromJson(json);
+      return Picture.fromJson(json, u, f!);
     }
   }
 
