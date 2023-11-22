@@ -4,6 +4,8 @@ import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nest_fronted/models/user.dart';
+
 
 const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
@@ -33,12 +35,28 @@ class TusAmigos extends StatefulWidget {
 
 //Aceptar o denegar solicitudes
 class _TusAmigos extends State<TusAmigos> {
-  final List<String> listaAuxiliar = [
-    'Guillem_proxeneta69',
-    'Ivan_politoxicomano33',
-    'Magic_Patrisio777',
-    'Pepe_Viyuela'
-  ];
+  late List<User> listaAmigos = List.empty(growable: true);
+  late List<String> listaAuxiliar = List.empty(growable: true);
+
+
+  Future<void> extractUsers() async {
+    try {
+      List<User> users = await api.getUserFriends(api.loggedUser.id);
+      setState(() {
+        listaAmigos = users;
+        listaAuxiliar = users.map((user) => user.username).toList();
+      });
+    } catch (e) {
+      // Manejar el error de la solicitud
+      print('Error en la solicitud: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    extractUsers();
+  }
 
   void _removeItem(int index) {
     setState(() {
@@ -102,7 +120,9 @@ class CustomListView extends StatelessWidget {
             children: [
               SizedBox(width: 8.0),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  User aux = await api.getUserByUsername(items[index]);
+                  api.deleteFriend(api.loggedUser.id, aux.id);
                   onItemRemoved(index);
                 },
                 child: Icon(
