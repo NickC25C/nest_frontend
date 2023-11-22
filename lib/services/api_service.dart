@@ -197,23 +197,15 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      bool? esNota;
       List<dynamic> data = await json.decode(response.body);
       List<Publication> feed = List.empty(growable: true);
-      await Future.wait(data.map((element) async {
-        if (element['publiType'] == 'Note') {
-          esNota = true;
-        } else {
-          esNota = false;
-        }
-      }));
       await Future.wait(data.map((element) async {
         await getUser(element['ownerId']
                 .toString()
                 .replaceAll("(", "")
                 .replaceAll(")", ""))
             .then((value) => {
-                  if (esNota!)
+                  if (element['publiType'].toString() == 'Note')
                     {feed.add(Publication.fromJson(element, value, null))}
                   else
                     {
@@ -222,6 +214,7 @@ class ApiService {
                     }
                 });
       }));
+
       return feed;
     } else {
       throw Exception('Failed to load feed: ${response.statusCode}');
