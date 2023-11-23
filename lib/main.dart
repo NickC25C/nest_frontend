@@ -153,8 +153,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text('Nombre de usuario'),
-              accountEmail: Text('usuario@gmail.com'),
+              accountName: Text(api.loggedUser.name),
+              accountEmail: Text(api.loggedUser.username),
               currentAccountPicture: Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,

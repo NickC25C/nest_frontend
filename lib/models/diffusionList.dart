@@ -2,7 +2,7 @@ class DiffusionList {
   final String id;
   final String name;
   final String ownerId;
-  final List<String> friendsIds;
+  final List<dynamic> friendsIds;
 
   DiffusionList({
     required this.id,

@@ -119,6 +119,7 @@ class BotonCrear extends StatelessWidget {
                   watchers: watch,
                   message: msj);
               api.createNote(n).whenComplete(() => print('¿Nota subida?'));
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.sticky_note_2_outlined,

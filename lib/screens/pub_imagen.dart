@@ -227,6 +227,7 @@ class BotonCrear extends StatelessWidget {
                 await api
                     .uploadImage(imageToPub!, titulete.darValor(), ['g4net']);
               }
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.image_outlined,

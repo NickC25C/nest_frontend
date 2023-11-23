@@ -6,6 +6,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nest_fronted/models/user.dart';
 
+import '../models/diffusionList.dart';
+
 
 const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
@@ -16,13 +18,15 @@ class AmisGrupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          BarraPublicar(titulo: tituloScreen),
-          TusAmigos(),
-          Grupos(),
-          BotonCrear(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BarraPublicar(titulo: tituloScreen),
+            TusAmigos(),
+            Grupos(),
+            BotonCrear(),
+          ],
+        ),
       ),
     );
   }
@@ -145,10 +149,32 @@ class CustomListView extends StatelessWidget {
 }
 
 //visualizar los grupos y la contidad de gente de estos
-class Grupos extends StatelessWidget {
-  const Grupos({
-    Key? key,
-  }) : super(key: key);
+class Grupos extends StatefulWidget {
+  @override
+  _Grupos createState() => _Grupos();
+}
+
+class _Grupos extends State<Grupos> {
+  late List<DiffusionList> listaDifusion = List.empty(growable: true);
+
+
+  Future<void> extractDiffusionLists() async {
+    try {
+      List<DiffusionList> diffusionLists = await api.getDiffusionLists(api.loggedUser.id);
+      setState(() {
+        listaDifusion = diffusionLists;
+      });
+    } catch (e) {
+      // Manejar el error de la solicitud
+      print('Error en la solicitud: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    extractDiffusionLists();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +184,7 @@ class Grupos extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Text(
-            'Grupos:',
+            'Tus Grupos:',
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
@@ -168,7 +194,7 @@ class Grupos extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-            height: 190.0,
+            height: 250.0,
             width: double.infinity,
             decoration: BoxDecoration(
               border: Border.all(
@@ -177,81 +203,52 @@ class Grupos extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Scrollbar(
-              child: ListView(
-                padding: EdgeInsets.only(left: 10.0),
-                children: [
-                  ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('Familia'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '1',
-                          style: TextStyle(color: actual.colorScheme.secondary),
-                        ),
-                        Icon(
-                          Icons.group,
-                          color: actual.colorScheme.secondary,
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('Colegio'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '18',
-                          style: TextStyle(color: actual.colorScheme.secondary),
-                        ),
-                        Icon(
-                          Icons.group,
-                          color: actual.colorScheme.secondary,
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('mckdhvudif'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '18334',
-                          style: TextStyle(color: actual.colorScheme.secondary),
-                        ),
-                        Icon(
-                          Icons.group,
-                          color: actual.colorScheme.secondary,
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(right: 60.0),
-                    title: Text('Nest'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '12',
-                        ),
-                        Icon(
-                          Icons.group,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              child: CustomListViewGrupos(
+                items: listaDifusion
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class CustomListViewGrupos extends StatelessWidget {
+  final List<DiffusionList> items;
+
+  CustomListViewGrupos({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: EdgeInsets.only(top: 0.0),
+      itemCount: items.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(
+              items[index].name,
+            style: TextStyle(fontSize: 20.0),
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                items[index].friendsIds.length.toString(),
+                style: TextStyle(fontSize: 20.0, color: actual.colorScheme.secondary),
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Icon(
+                Icons.group,
+                color: actual.colorScheme.secondary,
+                size: 30.0,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
