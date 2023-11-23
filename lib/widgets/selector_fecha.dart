@@ -22,6 +22,7 @@ class _FechaAperturaState extends State<FechaApertura> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(texto),
         SizedBox(width: 10),

@@ -60,7 +60,7 @@ class _CrearCapsulaState extends State<CrearCapsula> {
             ),
 
             Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: FechaApertura(texto: 'Fecha de apertura'),
             ),
 

@@ -30,7 +30,7 @@ class EnviarCartaScreen extends StatelessWidget {
                 child: Titulo(),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0),
+                padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
                 child: FechaApertura(texto: 'Fecha de envío'),
               ),
               EscribirNota(),
