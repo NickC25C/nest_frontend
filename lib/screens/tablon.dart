@@ -96,7 +96,6 @@ class TablonState extends State<TablonScreen> {
               ),
             );
           }
-          ;
         });
   }
 

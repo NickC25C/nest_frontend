@@ -26,8 +26,8 @@ class Letter {
       text: json['text'],
       date: DateTime.parse(json['date']),
       opened: json['opened'],
-      originUserId: json['origin'],
-      receiverUserId: json['receiver'],
+      originUserId: json['originUserId'],
+      receiverUserId: json['receiverUserId'],
     );
   }
 
@@ -36,9 +36,8 @@ class Letter {
       'title': title,
       'text': text,
       'date': date.toIso8601String(),
-      'opened': opened,
-      'origin': originUserId,
-      'receiver': receiverUserId,
+      'originUserId': originUserId,
+      'receiverUserId': receiverUserId,
     };
   }
 }

@@ -10,17 +10,30 @@ class Listado extends StatefulWidget {
 
   @override
   _ListadoState createState() => _ListadoState();
+
+  List<User> selectedUs() {
+    return _ListadoState().getSelected();
+  }
 }
 
 class _ListadoState extends State<Listado> {
   List<User> userFriends = [];
   List<bool> isSelectedList = [];
+  List<User> selectedUsers = [];
   bool isChecked = false;
 
   @override
   void initState() {
     super.initState();
     refreshFriends();
+  }
+
+  List<User> getSelected() {
+    return selectedUsers;
+  }
+
+  void refreshFriends2() async {
+    userFriends = await api.getUserFriends(api.loggedUser.id);
   }
 
   void refreshFriends() async {
@@ -105,7 +118,14 @@ class _ListadoState extends State<Listado> {
                         : null,
                     onTap: () {
                       setState(() {
+                        refreshFriends2();
+                        setState(() {});
                         isSelectedList[index] = !isSelectedList[index];
+                        if (selectedUsers.contains(userFriends[index])) {
+                          selectedUsers.remove(userFriends[index]);
+                        } else {
+                          selectedUsers.add(userFriends[index]);
+                        }
                       });
                     },
                   ),
