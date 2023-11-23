@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/models/diffusionList.dart';
+import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 
 const tituloScreen = 'NUEVO GRUPO';
+Listado listaditoMarianoRajoy = Listado();
+Titulo titulitoPerroShanche = Titulo();
 
 class CrearGrupos extends StatelessWidget {
   const CrearGrupos({super.key});
@@ -19,11 +23,11 @@ class CrearGrupos extends StatelessWidget {
           BarraPublicar(titulo: tituloScreen),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Titulo(),
+            child: titulitoPerroShanche,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Listado(),
+            child: listaditoMarianoRajoy,
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
@@ -50,7 +54,18 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () async {
+              List<User> usuarios = await api.getUserFriends(api.loggedUser.id);
+              List<String> idUsuarios = List.empty(growable: true);
+              for (var element in usuarios) {
+                idUsuarios.add(element.id);
+              }
+              await api.createDiffusionList(DiffusionList(
+                  id: '',
+                  name: titulitoPerroShanche.darValor(),
+                  ownerId: api.loggedUser.id,
+                  friendsIds: idUsuarios));
+            },
             icon: Icon(
               Icons.groups,
             ),
