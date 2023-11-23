@@ -3,6 +3,8 @@ import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
 
+List<String> selectedItems = [];
+
 class Listado extends StatefulWidget {
   const Listado({
     Key? key,
@@ -11,29 +13,21 @@ class Listado extends StatefulWidget {
   @override
   _ListadoState createState() => _ListadoState();
 
-  List<User> selectedUs() {
-    return _ListadoState().getSelected();
+  getSelectedItems(){
+    return selectedItems;
   }
 }
 
 class _ListadoState extends State<Listado> {
   List<User> userFriends = [];
   List<bool> isSelectedList = [];
-  List<User> selectedUsers = [];
   bool isChecked = false;
 
   @override
   void initState() {
     super.initState();
+    selectedItems = [];
     refreshFriends();
-  }
-
-  List<User> getSelected() {
-    return selectedUsers;
-  }
-
-  void refreshFriends2() async {
-    userFriends = await api.getUserFriends(api.loggedUser.id);
   }
 
   void refreshFriends() async {
@@ -117,15 +111,16 @@ class _ListadoState extends State<Listado> {
                         ? actual.colorScheme.primary
                         : null,
                     onTap: () {
+                      if (selectedItems
+                          .contains(userFriends[index].username)) {
+                        selectedItems
+                            .remove(userFriends[index].username);
+                      } else {
+                        selectedItems
+                            .add(userFriends[index].username);
+                      }
                       setState(() {
-                        refreshFriends2();
-                        setState(() {});
                         isSelectedList[index] = !isSelectedList[index];
-                        if (selectedUsers.contains(userFriends[index])) {
-                          selectedUsers.remove(userFriends[index]);
-                        } else {
-                          selectedUsers.add(userFriends[index]);
-                        }
                       });
                     },
                   ),
