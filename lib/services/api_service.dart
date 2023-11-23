@@ -11,7 +11,7 @@ import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =
-      'http://192.168.1.59:8080'; // para el movil es 192.168.1.59; para el emulador 10.0.2.2:8080
+      'http://10.0.2.2:8080'; // para el movil es 192.168.1.59; para el emulador 10.0.2.2:8080
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
@@ -312,7 +312,8 @@ class ApiService {
     }
   }
 
-  Future<DiffusionList> updateDiffusionList(String diffusionListId, DiffusionList diffusionList) async {
+  Future<DiffusionList> updateDiffusionList(
+      String diffusionListId, DiffusionList diffusionList) async {
     final response = await http.put(
       Uri.parse('$baseUrl/diffusionLists/$diffusionListId'),
       headers: <String, String>{
@@ -343,10 +344,12 @@ class ApiService {
 
   Future<List<DiffusionList>> getDiffusionLists(String userId) async {
     final response =
-    await http.get(Uri.parse('$baseUrl/diffusionLists?userId=$userId'));
+        await http.get(Uri.parse('$baseUrl/diffusionLists?userId=$userId'));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      return data.map((diffusionList) => DiffusionList.fromJson(diffusionList)).toList();
+      return data
+          .map((diffusionList) => DiffusionList.fromJson(diffusionList))
+          .toList();
     } else {
       throw Exception('Error getting diffusion List: ${response.statusCode}');
     }
