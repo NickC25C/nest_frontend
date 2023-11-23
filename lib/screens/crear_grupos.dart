@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/models/diffusionList.dart';
 import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 
 const tituloScreen = 'NUEVO GRUPO';
+List<String> coleguillasPalGrupo = List.empty(growable: true);
+Titulo titulete = const Titulo();
 
 class CrearGrupos extends StatelessWidget {
   const CrearGrupos({super.key});
@@ -19,7 +22,7 @@ class CrearGrupos extends StatelessWidget {
           BarraPublicar(titulo: tituloScreen),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Titulo(),
+            child: titulete,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -40,6 +43,10 @@ class BotonCrear extends StatelessWidget {
     super.key,
   });
 
+  void cargarColeguillas(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +57,18 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              if(titulete.darValor() != null && coleguillasPalGrupo.isEmpty){
+                api.createDiffusionList(
+                    DiffusionList(
+                        id: '',
+                        name: titulete.darValor(),
+                        ownerId: api.loggedUser.id,
+                        friendsIds: coleguillasPalGrupo,
+                    )
+                );
+              }
+            },
             icon: Icon(
               Icons.groups,
             ),
