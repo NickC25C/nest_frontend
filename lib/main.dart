@@ -23,6 +23,18 @@ ApiService api = ApiService();
 ThemeData actual = matcha;
 void main() {
   //Poblar la base de datos con usuarios nuevos
+  void enviarSolicitudAmistad() async {
+    User usuarioActual = await api.getUserByUsername('El_nicoloau');
+    User usuarioDestino = await api.getUserByUsername('g4net');
+
+    try {
+      await api.postRequest(usuarioActual.id, usuarioDestino.id);
+      print('Solicitud de amistad enviada exitosamente.');
+    } catch (e) {
+      print('Error al enviar la solicitud de amistad: $e');
+    }
+  }
+
   void poblarUsers() {
     User newUser = User(
       id: "",
@@ -53,6 +65,7 @@ void main() {
   }
 
   //poblarUsers();
+  // enviarSolicitudAmistad();
 
   api.getUsers().then((data) {
     usuarios = data;
