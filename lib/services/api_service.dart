@@ -5,6 +5,7 @@ import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/letter.dart';
 import '../models/note.dart';
 import '../models/picture.dart';
 
@@ -348,6 +349,62 @@ class ApiService {
       return data.map((diffusionList) => DiffusionList.fromJson(diffusionList)).toList();
     } else {
       throw Exception('Error getting diffusion List: ${response.statusCode}');
+    }
+  }
+
+  Future<Letter> createLetter(Letter letter) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/letter'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(letter.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      return Letter.fromJson(responseData);
+    } else {
+      throw Exception('Failed to create letter');
+    }
+  }
+
+  Future<Letter> getLetter(String letterId) async {
+    final response = await http.get(Uri.parse('$baseUrl/letter/$letterId'));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userData = json.decode(response.body);
+      return Letter.fromJson(userData);
+    } else {
+      throw Exception('Failed to load letter');
+    }
+  }
+
+  Future<Letter> getLetterByUserId(String userId) async {
+    final response = await http.get(Uri.parse('$baseUrl/letter/user/$userId'));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userData = json.decode(response.body);
+      return Letter.fromJson(userData);
+    } else {
+      throw Exception('Failed to load letter');
+    }
+  }
+
+  Future<Letter> updateLetter(String letterId, Letter letter) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/letter/open/$letterId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(letter.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      return Letter.fromJson(responseData);
+    } else {
+      throw Exception('Failed to update user');
     }
   }
 }

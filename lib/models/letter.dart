@@ -6,8 +6,8 @@ class Letter {
   final String text;
   final DateTime date;
   final bool opened;
-  final User origin;
-  final User receiver;
+  final String originUserId;
+  final String receiverUserId;
 
   Letter({
     required this.id,
@@ -15,8 +15,8 @@ class Letter {
     required this.text,
     required this.date,
     required this.opened,
-    required this.origin,
-    required this.receiver,
+    required this.originUserId,
+    required this.receiverUserId,
   });
 
   factory Letter.fromJson(Map<String, dynamic> json) {
@@ -26,8 +26,8 @@ class Letter {
       text: json['text'],
       date: DateTime.parse(json['date']),
       opened: json['opened'],
-      origin: User.fromJson(json['origin']),
-      receiver: User.fromJson(json['receiver']),
+      originUserId: json['origin'],
+      receiverUserId: json['receiver'],
     );
   }
 
@@ -37,8 +37,8 @@ class Letter {
       'text': text,
       'date': date.toIso8601String(),
       'opened': opened,
-      'origin': origin.toJson(),
-      'receiver': receiver.toJson(),
+      'origin': originUserId,
+      'receiver': receiverUserId,
     };
   }
 }
