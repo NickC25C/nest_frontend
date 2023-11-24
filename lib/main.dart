@@ -36,6 +36,10 @@ void main() {
     }
   }
 
+  void tuPropioAmigo(User u1, User u2) async {
+    await api.addFriend(u1.id, u2.id);
+  }
+
   void crearCarta() {
     Letter cartita = Letter(
       id: "",
@@ -84,6 +88,7 @@ void main() {
 
   // crearCarta();
   // enviarSolicitudAmistad();
+  //tuPropioAmigo(api.loggedUser, api.loggedUser);
 
   api.getUsers().then((data) {
     usuarios = data;
