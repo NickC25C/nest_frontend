@@ -36,7 +36,7 @@ void main() {
     }
   }
 
-  void crearCarta(){
+  void crearCarta() {
     Letter cartita = Letter(
       id: "",
       title: "saludo",
@@ -80,9 +80,9 @@ void main() {
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  poblarUsers();
+  //poblarUsers();
 
- // crearCarta();
+  // crearCarta();
   // enviarSolicitudAmistad();
 
   api.getUsers().then((data) {
@@ -100,9 +100,7 @@ void main() {
               crearCarta(),
               runApp(const MyApp())
             }),
-
   );
-
 }
 
 class MyApp extends StatelessWidget {

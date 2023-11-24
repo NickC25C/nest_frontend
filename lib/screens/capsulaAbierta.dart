@@ -135,6 +135,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                     onTap: () => {_buildContentView()},
                     child: Foto(
                       file: File(''),
+                      username: '',
                     ),
                   ),
                   GestureDetector(
