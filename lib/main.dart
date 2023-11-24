@@ -44,7 +44,7 @@ void main() {
     Letter cartita = Letter(
       id: "",
       title: "saludo",
-      text: "kien se ha follao a tu bitch?",
+      text: "seko boy",
       date: "2002-12-12",
       originUserId: api.loggedUser.id,
       receiverUserId: api.loggedUser.id,
@@ -84,9 +84,9 @@ void main() {
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  //poblarUsers();
+  poblarUsers();
 
-  // crearCarta();
+
   // enviarSolicitudAmistad();
   //tuPropioAmigo(api.loggedUser, api.loggedUser);
 
@@ -124,7 +124,7 @@ class MyApp extends StatelessWidget {
         'crea_grupo': (_) => const CrearGrupos(),
         'amis_grup': (_) => const AmisGrupScreen(),
         'configuracion': (_) => const ConfiguracionScreen(),
-        'correo': (_) => const CorreoScreen(),
+        'correo': (_) =>  CorreoScreen(),
         'capsulas': (_) => const CapsulaScreen(),
         'enviar_correo': (_) => const EnviarCartaScreen(),
         'capsulaAbierta': (_) => const CapsulaAbierta(),

@@ -383,12 +383,12 @@ class ApiService {
     }
   }
 
-  Future<Letter> getLetterByUserId(String userId) async {
+  Future<List<Letter>> getLetterByUserId(String userId) async {
     final response = await http.get(Uri.parse('$baseUrl/letter/user/$userId'));
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> userData = json.decode(response.body);
-      return Letter.fromJson(userData);
+      List<dynamic> data = json.decode(response.body);
+      return data.map((letters) => Letter.fromJson(letters)).toList();
     } else {
       throw Exception('Failed to load letter');
     }
