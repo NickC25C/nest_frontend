@@ -4,7 +4,7 @@ class Letter {
   final String id;
   final String title;
   final String text;
-  final DateTime date;
+  final String date;
   final bool opened;
   final String originUserId;
   final String receiverUserId;
@@ -24,7 +24,7 @@ class Letter {
       id: json['id'],
       title: json['title'],
       text: json['text'],
-      date: DateTime.parse(json['date']),
+      date: json['date'],
       opened: json['opened'],
       originUserId: json['originUserId'],
       receiverUserId: json['receiverUserId'],
@@ -35,7 +35,7 @@ class Letter {
     return {
       'title': title,
       'text': text,
-      'date': date.toIso8601String(),
+      'date': date,
       'originUserId': originUserId,
       'receiverUserId': receiverUserId,
     };

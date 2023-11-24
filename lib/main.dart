@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
+import 'package:nest_fronted/models/letter.dart';
 import 'package:nest_fronted/screens/capsulaAbierta.dart';
 import 'package:nest_fronted/screens/capsulaCerrada.dart';
 import 'package:nest_fronted/screens/enviar_carta.dart';
@@ -35,10 +36,24 @@ void main() {
     }
   }
 
+  void crearCarta(){
+    Letter cartita = Letter(
+      id: "",
+      title: "saludo",
+      text: "kien se ha follao a tu bitch?",
+      date: "2002-12-12",
+      originUserId: api.loggedUser.id,
+      receiverUserId: api.loggedUser.id,
+      opened: true,
+    );
+    print('adios');
+    api.createLetter(cartita);
+  }
+
   void poblarUsers() {
     User newUser = User(
       id: "",
-      name: "Guillem",
+      name: "Guillemon",
       lastname: "Fornet",
       username: "g4net",
       password: "pass123",
@@ -60,11 +75,14 @@ void main() {
       password: "123",
       mail: "ahhsh@hmail.com",
     );
+    print('hola');
     api.createUser(newUser).whenComplete(() =>
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  //poblarUsers();
+  poblarUsers();
+
+ // crearCarta();
   // enviarSolicitudAmistad();
 
   api.getUsers().then((data) {
@@ -79,9 +97,12 @@ void main() {
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.portraitDown,
               ]),
+              crearCarta(),
               runApp(const MyApp())
             }),
+
   );
+
 }
 
 class MyApp extends StatelessWidget {

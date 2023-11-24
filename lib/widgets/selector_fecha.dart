@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+String fecha= '';
 class FechaApertura extends StatefulWidget {
   final String texto;
-  const FechaApertura({Key? key, required this.texto}) : super(key: key);
+  const FechaApertura({Key? key, required this.texto, }) : super(key: key);
 
   @override
   _FechaAperturaState createState() => _FechaAperturaState();
@@ -54,7 +55,12 @@ class _FechaAperturaState extends State<FechaApertura> {
       setState(() {
         _selectedDate = picked;
         // Puedes realizar acciones adicionales con la fecha seleccionada si lo deseas
+        fecha = '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}';
       });
     }
+  }
+
+  String darValor(){
+    return fecha;
   }
 }

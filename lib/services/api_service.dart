@@ -11,7 +11,7 @@ import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =
-      'http://192.168.1.59:8080'; // para el movil desde casa es 192.168.1.59; para el emulador 10.0.2.2:8080; para el movil con los datos 192.168.108.97
+      'http://10.0.2.2:8080'; // para el movil desde casa es 192.168.1.59; para el emulador 10.0.2.2:8080; para el movil con los datos 192.168.108.97
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
@@ -359,7 +359,10 @@ class ApiService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(letter.toJson()),
+
     );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
@@ -400,7 +403,11 @@ class ApiService {
       body: jsonEncode(letter.toJson()),
     );
 
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
     if (response.statusCode == 200) {
+      print('33');
       Map<String, dynamic> responseData = json.decode(response.body);
       return Letter.fromJson(responseData);
     } else {

@@ -4,6 +4,8 @@ import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/selector_fecha.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/models/letter.dart';
+import 'package:nest_fronted/services/api_service.dart';
 
 const tituloScreen = 'ENVIAR CARTA';
 Titulo titulin = Titulo();
@@ -103,7 +105,10 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              crearCarta();
+              print('putoooo');
+            },
             icon: Icon(
               Icons.send,
             ),
@@ -120,5 +125,20 @@ class BotonCrear extends StatelessWidget {
         ),
       ),
     );
+  }
+  void crearCarta(){
+
+    Letter cartita = Letter(
+      id: "",
+      title: titulin.darValor(),
+      text: msj,
+      date: fecha,
+      originUserId: api.loggedUser.id,
+      receiverUserId: api.loggedUser.id,
+      opened: false,
+    );
+
+    api.createLetter(cartita);
+
   }
 }
