@@ -49,6 +49,13 @@ class _ListadoState extends State<ListadoCreacion> {
       if(!selectedItems.contains(usu.username)){
         selectedItems.add(usu.username);
         selectedItemsPruebas.add(usu.username);
+      }else{
+        int indexFriend = getIndexFriend(usu.username);
+        if(isSelectedList[indexFriend]){
+          setState(() {
+            isSelectedList[indexFriend] = !isSelectedList[indexFriend];
+          });
+        }
       }
     }
   }
