@@ -11,7 +11,7 @@ import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =
-      'http://192.168.108.97:8080'; // para el movil desde casa es 192.168.1.59; para el emulador 10.0.2.2:8080; para el movil con los datos 192.168.108.97
+      'http://192.168.1.59:8080'; // para el movil desde casa es 192.168.1.59; para el emulador 10.0.2.2:8080; para el movil con los datos 192.168.108.97
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
