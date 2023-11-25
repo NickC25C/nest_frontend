@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/models/diffusionList.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
 
@@ -19,7 +20,8 @@ class ListadoCreacion extends StatefulWidget {
 }
 
 class _ListadoState extends State<ListadoCreacion> {
-  List<User> userFriendsAndDiffusionLists = [];
+  List<User> userFriends = [];
+  List<DiffusionList> diffusionList = [];
   List<bool> isSelectedList = [];
   bool isChecked = false;
 
@@ -31,8 +33,9 @@ class _ListadoState extends State<ListadoCreacion> {
   }
 
   void refreshFriends() async {
-    userFriendsAndDiffusionLists = await api.getUserFriends(api.loggedUser.id);
-    isSelectedList = List.generate(userFriendsAndDiffusionLists.length, (index) => false);
+    userFriends = await api.getUserFriends(api.loggedUser.id);
+    diffusionList = await api.getDiffusionLists(api.loggedUser.id);
+    isSelectedList = List.generate(userFriends.length + diffusionList.length, (index) => false);
     setState(() {});
   }
 
@@ -73,12 +76,12 @@ class _ListadoState extends State<ListadoCreacion> {
                         isChecked = value!;
                         if (isChecked) {
                           isSelectedList = List.generate(
-                            userFriendsAndDiffusionLists.length,
+                            userFriends.length,
                                 (index) => true,
                           );
                         } else {
                           isSelectedList = List.generate(
-                            userFriendsAndDiffusionLists.length,
+                            userFriends.length,
                                 (index) => false,
                           );
                         }
@@ -100,24 +103,47 @@ class _ListadoState extends State<ListadoCreacion> {
           child: ListView.builder(
             clipBehavior: Clip.hardEdge,
             padding: EdgeInsets.all(0.0),
-            itemCount: userFriendsAndDiffusionLists.length,
+            itemCount: userFriends.length + diffusionList.length,
             itemBuilder: (BuildContext context, int index) {
-              if (index < userFriendsAndDiffusionLists.length) {
+              if (index < diffusionList.length) {
                 // Amigos
                 return Material(
                   child: ListTile(
-                    title: Text(userFriendsAndDiffusionLists[index].username),
+                    title: Text(diffusionList[index].name),
                     tileColor: isSelectedList[index]
                         ? actual.colorScheme.primary
                         : null,
                     onTap: () {
                       if (selectedItems
-                          .contains(userFriendsAndDiffusionLists[index].username)) {
+                          .contains(diffusionList[index].name)) {
                         selectedItems
-                            .remove(userFriendsAndDiffusionLists[index].username);
+                            .remove(diffusionList[index].name);
                       } else {
                         selectedItems
-                            .add(userFriendsAndDiffusionLists[index].username);
+                            .add(diffusionList[index].name);
+                      }
+                      setState(() {
+                        isSelectedList[index] = !isSelectedList[index];
+                      });
+                    },
+                  ),
+                );
+              }else{
+                // Amiguetes
+                final friendIndex = index - diffusionList.length;
+                return Material(
+                  child: ListTile(
+                    title: Text(userFriends[friendIndex].username),
+
+                    tileColor: isSelectedList[index] ? actual.colorScheme.surface : null,
+                    onTap: () {
+                      if (selectedItems
+                          .contains(userFriends[index].username)) {
+                        selectedItems
+                            .remove(userFriends[index].username);
+                      } else {
+                        selectedItems
+                            .add(userFriends[index].username);
                       }
                       setState(() {
                         isSelectedList[index] = !isSelectedList[index];
