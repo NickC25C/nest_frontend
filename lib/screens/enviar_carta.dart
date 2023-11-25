@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/listado.dart';
+import 'package:nest_fronted/models/user.dart';
+import 'package:nest_fronted/widgets/listado_unico.dart';
 import 'package:nest_fronted/widgets/selector_fecha.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
@@ -8,9 +10,10 @@ import 'package:nest_fronted/models/letter.dart';
 
 const tituloScreen = 'ENVIAR CARTA';
 Titulo titulin = Titulo();
+ListadoUnico listadoUnico = ListadoUnico();
 
 class EnviarCartaScreen extends StatelessWidget {
-  const EnviarCartaScreen({super.key});
+  const EnviarCartaScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class EnviarCartaScreen extends StatelessWidget {
               BarraPublicar(titulo: tituloScreen),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Listado(),
+                child: ListadoUnico(),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -127,6 +130,8 @@ class BotonCrear extends StatelessWidget {
   }
 
   void crearCarta() {
+    User receiverUser = listadoUnico.getSelectedItem();
+    print(receiverUser.username);
 
     Letter cartita = Letter(
       id: "",
@@ -134,7 +139,7 @@ class BotonCrear extends StatelessWidget {
       text: msj,
       date: fecha,
       originUserId: api.loggedUser.id,
-      receiverUserId: api.loggedUser.id,
+      receiverUserId: receiverUser.id,
       opened: false,
     );
 
