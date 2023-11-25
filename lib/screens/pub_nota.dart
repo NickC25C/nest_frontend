@@ -4,12 +4,14 @@ import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/listado.dart';
+import 'package:nest_fronted/widgets/listadoMarianoRajoy.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
 
 const tituloScreen = 'PUBLICAR NOTA';
 int selectedIndex = 0;
 Titulo titulin = Titulo();
+ListadoCreacion listado = ListadoCreacion();
 
 class PubNotaScreen extends StatelessWidget {
   const PubNotaScreen({super.key});
@@ -33,7 +35,7 @@ class PubNotaScreen extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Listado(),
+              child: listado,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
@@ -93,6 +95,15 @@ class BotonCrear extends StatelessWidget {
     super.key,
   });
 
+  Future<List<String>> getIds(List<String> listita) async {
+    List<String> ids = [];
+    for (int i = 0; i < listita.length; i++) {
+      User usu = await api.getUserByUsername(listita[i]);
+      ids.add(usu.id);
+    }
+    return ids;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -104,18 +115,13 @@ class BotonCrear extends StatelessWidget {
           width: 150,
           child: TextButton.icon(
             onPressed: () async {
-              List<User> aux = await api.getUsers();
-              List<String> watch = List.empty(growable: true);
-              aux.forEach((element) {
-                watch.add(element.id);
-              });
               Note n = Note(
                   id: '',
                   owner: api.loggedUser,
                   date: DateTime.now(),
                   publiType: PublicationType.note,
                   title: titulin.darValor(),
-                  watchers: watch,
+                  watchers: await getIds(listado.getSelectedItems()),
                   message: msj);
               api.createNote(n).whenComplete(() => print('¿Nota subida?'));
               Navigator.pop(context);

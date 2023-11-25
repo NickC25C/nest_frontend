@@ -90,40 +90,6 @@ class _ListadoState extends State<ListadoCreacion> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Row(
-                children: [
-                  Container(
-                    width: 104.0,
-                    child: Text(
-                      'Enviar a todos',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 0.1),
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value!;
-                        if (isChecked) {
-                          isSelectedList = List.generate(
-                            listaNombres.length,
-                                (index) => true,
-                          );
-                        } else {
-                          isSelectedList = List.generate(
-                            listaNombres.length,
-                                (index) => false,
-                          );
-                        }
-                      });
-                    },
-                  ),
-                ],
-              ),
             ],
           ),
         ),
@@ -181,7 +147,21 @@ class _ListadoState extends State<ListadoCreacion> {
                             isSelectedList[index] = !isSelectedList[index];
                           });
                           print(selectedItems.length);
+                        }else{
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Tu coleguilla ' + listaNombres[index] + ' ya está en una de las listas seleccionadas.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('OK'))
+                                ],
+                              ));
                         }
+
                       } else {
                           selectedItems.add(listaNombres[index]);
                           selectedItemsPruebas.add(listaNombres[index]);

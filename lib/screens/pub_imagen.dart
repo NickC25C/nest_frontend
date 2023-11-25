@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 const tituloScreen = 'PUBLICAR IMAGEN';
 Titulo titulete = const Titulo();
-Listado listadito = Listado();
+ListadoCreacion listadito = ListadoCreacion();
 
 class PubImagenScreen extends StatelessWidget {
   const PubImagenScreen({super.key});
@@ -225,7 +225,7 @@ class BotonCrear extends StatelessWidget {
             onPressed: () async {
               if (imageToPub != null) {
                 await api
-                    .uploadImage(imageToPub!, titulete.darValor(), ['g4net']);
+                    .uploadImage(imageToPub!, titulete.darValor(), listadito.getSelectedItems());
               }
               Navigator.pop(context);
             },
