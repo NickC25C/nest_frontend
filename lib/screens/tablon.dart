@@ -122,7 +122,7 @@ class TablonState extends State<TablonScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'De: ${notita.owner!.username}',
+                'De: ${notita.owner.username}',
               )
             ],
           )
@@ -133,7 +133,6 @@ class TablonState extends State<TablonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
     return FutureBuilder<List<Publication>>(
         future: initializePublis(),
         builder: (context, snapshot) {

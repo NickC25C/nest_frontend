@@ -66,8 +66,7 @@ class BotonCrear extends StatelessWidget {
           width: 150,
           child: TextButton.icon(
             onPressed: () async {
-              if (titulete.darValor() != null &&
-                  !listado.getSelectedItems().isEmpty) {
+              if (!listado.getSelectedItems().isEmpty) {
                 try {
                   print(listado.getSelectedItems());
                   DiffusionList diff = DiffusionList(

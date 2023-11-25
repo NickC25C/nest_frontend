@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/models/picture.dart';
 import 'package:nest_fronted/models/user.dart';

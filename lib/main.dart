@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
 import 'package:nest_fronted/models/letter.dart';
-import 'package:nest_fronted/screens/capsulaAbierta.dart';
 import 'package:nest_fronted/screens/capsulaCerrada.dart';
 import 'package:nest_fronted/screens/enviar_carta.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
@@ -16,7 +15,6 @@ import 'package:nest_fronted/screens/capsulas.dart';
 import 'package:nest_fronted/screens/correo.dart';
 import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/themes/temasClaros.dart';
-import 'package:nest_fronted/screens/crear_capsula.dart';
 import 'package:page_transition/page_transition.dart';
 
 List<User> usuarios = List.empty();
