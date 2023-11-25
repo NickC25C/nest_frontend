@@ -2,11 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:nest_fronted/screens/cartica.dart';
 import 'package:nest_fronted/screens/enviar_carta.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:nest_fronted/models/letter.dart';
 
 import '../main.dart';
 
 class CorreoScreen extends StatelessWidget {
-  const CorreoScreen({super.key});
+  CorreoScreen({super.key});
+
+  List<Letter> cartitas = [];
+  List<Letter> cartasRecibidas = [];
+  void obtenerCartasRecibidas() async {
+    try {
+
+      cartasRecibidas = await api.getLetterByUserId(api.loggedUser.id);
+     // cartitas = cartasRecibidas;
+      print('hasta luegi');
+    } catch (error) {
+
+      print("Error al obtener las cartas: $error");
+
+    }
+  }
+
+  Widget buildCartasList() {
+    obtenerCartasRecibidas();
+    return ListView.builder(
+      itemCount: cartasRecibidas.length,
+      itemBuilder: (context, index) {
+        return Cartas(
+          carta: cartasRecibidas[index],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,25 +44,7 @@ class CorreoScreen extends StatelessWidget {
           children: [
             Container(
               height: screenSize.height,
-              child: ListView(
-                children: [
-                  Column(
-                    children: [
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                      Cartas(),
-                    ],
-                  ),
-                ]
-              ),
+              child: buildCartasList(),
             ),
             Positioned(
               bottom: 170,
@@ -49,28 +59,29 @@ class CorreoScreen extends StatelessWidget {
 }
 
 class Cartas extends StatelessWidget {
+  final Letter carta;
+
+  Cartas({required this.carta});
+
   @override
   Widget build(BuildContext context) {
-    return   RawMaterialButton(
+    return RawMaterialButton(
       onPressed: () {
         Navigator.push(
           context,
           PageTransition(
             child: CartaScreen(
-                tituloCarta: 'Almidon',
-                mensaje: 'La porroflexia es una técnica que consiste en crear formas y estructuras'
-                    ' a partir del liado de porros de marihuana. Esta técnica, que requiere de '
-                    'habilidades manuales y una gran dosis de creatividad, ha evolucionado hasta '
-                    'convertirse en una verdadera forma de arte. A través de la porroflexia, se pueden'
-                    ' crear figuras y formas de todo tipo, desde animales hasta aviones, pasando por personajes '
-                    'de ficción y elementos de la naturaleza.',
+                tituloCarta: '',
+                mensaje: '',
                 usuario: 'Pepe'),
             type: PageTransitionType.fade,
           ),
         );
       },
-      elevation: 2.0, // Altura de la sombra del botón
-      fillColor: actual.colorScheme.secondary, // Color de fondo del botón
+      elevation: 2.0,
+      // Altura de la sombra del botón
+      fillColor: actual.colorScheme.secondary,
+      // Color de fondo del botón
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0), // Bordes redondeados
         side: BorderSide(color: Colors.white), // Borde blanco
@@ -94,14 +105,17 @@ class Cartas extends StatelessWidget {
               children: [
                 Text(
                   'Nombre_Usuario',
-                  style: TextStyle(color: actual.colorScheme.onSecondary, fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: actual.colorScheme.onSecondary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 16.0,
                 ),
                 Text(
                   'Almidon',
-                  style: TextStyle(color: actual.colorScheme.onSecondary, fontSize: 14,),
+                  style: TextStyle(
+                    color: actual.colorScheme.onSecondary, fontSize: 14,),
                 ),
               ],
             ),
@@ -119,8 +133,9 @@ class Cartas extends StatelessWidget {
       ),
     );
   }
-
 }
+
+
 class BotonEnviarCarta extends StatelessWidget {
   const BotonEnviarCarta({
     super.key,
