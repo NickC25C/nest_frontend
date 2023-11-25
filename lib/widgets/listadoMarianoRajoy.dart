@@ -22,6 +22,7 @@ class ListadoCreacion extends StatefulWidget {
 class _ListadoState extends State<ListadoCreacion> {
   List<User> userFriends = [];
   List<DiffusionList> diffusionList = [];
+  List<String> listaNombres = [];
   List<bool> isSelectedList = [];
   bool isChecked = false;
 
@@ -35,7 +36,8 @@ class _ListadoState extends State<ListadoCreacion> {
   void refreshFriends() async {
     userFriends = await api.getUserFriends(api.loggedUser.id);
     diffusionList = await api.getDiffusionLists(api.loggedUser.id);
-    isSelectedList = List.generate(userFriends.length + diffusionList.length, (index) => false);
+    listaNombres = [...diffusionList.map((diffusionList) => diffusionList.name).toList(), ...userFriends.map((user) => user.username).toList()];
+    isSelectedList = List.generate(listaNombres.length, (index) => false);
     setState(() {});
   }
 
@@ -76,12 +78,12 @@ class _ListadoState extends State<ListadoCreacion> {
                         isChecked = value!;
                         if (isChecked) {
                           isSelectedList = List.generate(
-                            userFriends.length,
+                            listaNombres.length,
                                 (index) => true,
                           );
                         } else {
                           isSelectedList = List.generate(
-                            userFriends.length,
+                            listaNombres.length,
                                 (index) => false,
                           );
                         }
@@ -103,24 +105,24 @@ class _ListadoState extends State<ListadoCreacion> {
           child: ListView.builder(
             clipBehavior: Clip.hardEdge,
             padding: EdgeInsets.all(0.0),
-            itemCount: userFriends.length + diffusionList.length,
+            itemCount: listaNombres.length,
             itemBuilder: (BuildContext context, int index) {
               if (index < diffusionList.length) {
                 // Amigos
                 return Material(
                   child: ListTile(
-                    title: Text(diffusionList[index].name),
+                    title: Text(listaNombres[index]),
                     tileColor: isSelectedList[index]
                         ? actual.colorScheme.primary
                         : null,
                     onTap: () {
                       if (selectedItems
-                          .contains(diffusionList[index].name)) {
+                          .contains(listaNombres[index])) {
                         selectedItems
-                            .remove(diffusionList[index].name);
+                            .remove(listaNombres[index]);
                       } else {
                         selectedItems
-                            .add(diffusionList[index].name);
+                            .add(listaNombres[index]);
                       }
                       setState(() {
                         isSelectedList[index] = !isSelectedList[index];
@@ -130,20 +132,19 @@ class _ListadoState extends State<ListadoCreacion> {
                 );
               }else{
                 // Amiguetes
-                final friendIndex = index - diffusionList.length;
                 return Material(
                   child: ListTile(
-                    title: Text(userFriends[friendIndex].username),
+                    title: Text(listaNombres[index]),
 
                     tileColor: isSelectedList[index] ? actual.colorScheme.surface : null,
                     onTap: () {
                       if (selectedItems
-                          .contains(userFriends[index].username)) {
+                          .contains(listaNombres[index])) {
                         selectedItems
-                            .remove(userFriends[index].username);
+                            .remove(listaNombres[index]);
                       } else {
                         selectedItems
-                            .add(userFriends[index].username);
+                            .add(listaNombres[index]);
                       }
                       setState(() {
                         isSelectedList[index] = !isSelectedList[index];
