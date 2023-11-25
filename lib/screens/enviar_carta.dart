@@ -127,6 +127,7 @@ class BotonCrear extends StatelessWidget {
   }
 
   void crearCarta() {
+
     Letter cartita = Letter(
       id: "",
       title: titulin.darValor(),

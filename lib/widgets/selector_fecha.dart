@@ -15,8 +15,8 @@ class _FechaAperturaState extends State<FechaApertura> {
   @override
   void initState() {
     super.initState();
-    // Inicializa la fecha seleccionada con la fecha actual
     _selectedDate = DateTime.now();
+    fecha = '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}';
     texto = widget.texto;
   }
 
@@ -54,7 +54,6 @@ class _FechaAperturaState extends State<FechaApertura> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        // Puedes realizar acciones adicionales con la fecha seleccionada si lo deseas
         fecha = '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}';
       });
     }
