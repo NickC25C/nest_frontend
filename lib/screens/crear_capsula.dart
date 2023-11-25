@@ -1,8 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:nest_fronted/models/note.dart';
-import 'package:nest_fronted/models/publication.dart';
-import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/selector_fecha.dart';

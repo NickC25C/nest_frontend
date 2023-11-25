@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
 import 'package:nest_fronted/models/letter.dart';
-import 'package:nest_fronted/screens/capsulaAbierta.dart';
 import 'package:nest_fronted/screens/capsulaCerrada.dart';
 import 'package:nest_fronted/screens/enviar_carta.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
@@ -16,7 +15,6 @@ import 'package:nest_fronted/screens/capsulas.dart';
 import 'package:nest_fronted/screens/correo.dart';
 import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/themes/temasClaros.dart';
-import 'package:nest_fronted/screens/crear_capsula.dart';
 import 'package:page_transition/page_transition.dart';
 
 List<User> usuarios = List.empty();
@@ -84,11 +82,9 @@ void main() {
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  poblarUsers();
-
+  //poblarUsers();
 
   // enviarSolicitudAmistad();
-  //tuPropioAmigo(api.loggedUser, api.loggedUser);
 
   api.getUsers().then((data) {
     usuarios = data;
@@ -97,12 +93,13 @@ void main() {
         .getUserByUsername('g4net')
         .then((value) => api.loggedUser = value)
         .whenComplete(() => {
+              tuPropioAmigo(api.loggedUser, api.loggedUser),
               WidgetsFlutterBinding.ensureInitialized(),
               SystemChrome.setPreferredOrientations([
                 DeviceOrientation.portraitUp,
                 DeviceOrientation.portraitDown,
               ]),
-              crearCarta(),
+              //crearCarta(),
               runApp(const MyApp())
             }),
   );
@@ -124,7 +121,7 @@ class MyApp extends StatelessWidget {
         'crea_grupo': (_) => const CrearGrupos(),
         'amis_grup': (_) => const AmisGrupScreen(),
         'configuracion': (_) => const ConfiguracionScreen(),
-        'correo': (_) =>  CorreoScreen(),
+        'correo': (_) => CorreoScreen(),
         'capsulas': (_) => const CapsulaScreen(),
         'enviar_correo': (_) => const EnviarCartaScreen(),
         'capsulaAbierta': (_) => const CapsulaAbierta(),

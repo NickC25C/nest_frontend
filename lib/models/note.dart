@@ -1,4 +1,3 @@
-import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
 

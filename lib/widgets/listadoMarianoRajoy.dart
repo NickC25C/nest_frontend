@@ -22,7 +22,6 @@ class ListadoCreacion extends StatefulWidget {
 class _ListadoState extends State<ListadoCreacion> {
   List<User> userFriends = [];
   List<DiffusionList> diffusionList = [];
-  List<String> listaConcatenada = [];
   List<bool> isSelectedList = [];
   bool isChecked = false;
 
@@ -36,13 +35,7 @@ class _ListadoState extends State<ListadoCreacion> {
   void refreshFriends() async {
     userFriends = await api.getUserFriends(api.loggedUser.id);
     diffusionList = await api.getDiffusionLists(api.loggedUser.id);
-    for(int i = 0; i < diffusionList.length; i++){
-      listaConcatenada.add(diffusionList[i].name);
-    }
-    for(int j = 0; j < userFriends.length; j++){
-      listaConcatenada.add(userFriends[j].username);
-    }
-    isSelectedList = List.generate(listaConcatenada.length, (index) => false);
+    isSelectedList = List.generate(userFriends.length + diffusionList.length, (index) => false);
     setState(() {});
   }
 
@@ -110,7 +103,7 @@ class _ListadoState extends State<ListadoCreacion> {
           child: ListView.builder(
             clipBehavior: Clip.hardEdge,
             padding: EdgeInsets.all(0.0),
-            itemCount: listaConcatenada.length,
+            itemCount: userFriends.length + diffusionList.length,
             itemBuilder: (BuildContext context, int index) {
               if (index < diffusionList.length) {
                 // Amigos
@@ -137,9 +130,10 @@ class _ListadoState extends State<ListadoCreacion> {
                 );
               }else{
                 // Amiguetes
+                final friendIndex = index - diffusionList.length;
                 return Material(
                   child: ListTile(
-                    title: Text(listaConcatenada[index]),
+                    title: Text(userFriends[friendIndex].username),
 
                     tileColor: isSelectedList[index] ? actual.colorScheme.surface : null,
                     onTap: () {

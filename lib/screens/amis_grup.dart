@@ -3,11 +3,9 @@ import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nest_fronted/models/user.dart';
 
 import '../models/diffusionList.dart';
-
 
 const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
@@ -41,7 +39,6 @@ class TusAmigos extends StatefulWidget {
 class _TusAmigos extends State<TusAmigos> {
   late List<User> listaAmigos = List.empty(growable: true);
   late List<String> listaAuxiliar = List.empty(growable: true);
-
 
   Future<void> extractUsers() async {
     try {
@@ -157,10 +154,10 @@ class Grupos extends StatefulWidget {
 class _Grupos extends State<Grupos> {
   late List<DiffusionList> listaDifusion = List.empty(growable: true);
 
-
   Future<void> extractDiffusionLists() async {
     try {
-      List<DiffusionList> diffusionLists = await api.getDiffusionLists(api.loggedUser.id);
+      List<DiffusionList> diffusionLists =
+          await api.getDiffusionLists(api.loggedUser.id);
       setState(() {
         listaDifusion = diffusionLists;
       });
@@ -203,9 +200,7 @@ class _Grupos extends State<Grupos> {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Scrollbar(
-              child: CustomListViewGrupos(
-                items: listaDifusion
-              ),
+              child: CustomListViewGrupos(items: listaDifusion),
             ),
           ),
         ),
@@ -227,7 +222,7 @@ class CustomListViewGrupos extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
           title: Text(
-              items[index].name,
+            items[index].name,
             style: TextStyle(fontSize: 20.0),
           ),
           trailing: Row(
@@ -235,7 +230,8 @@ class CustomListViewGrupos extends StatelessWidget {
             children: [
               Text(
                 items[index].friendsIds.length.toString(),
-                style: TextStyle(fontSize: 20.0, color: actual.colorScheme.secondary),
+                style: TextStyle(
+                    fontSize: 20.0, color: actual.colorScheme.secondary),
               ),
               SizedBox(
                 width: 10.0,

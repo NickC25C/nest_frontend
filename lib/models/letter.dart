@@ -1,5 +1,3 @@
-import 'package:nest_fronted/models/user.dart';
-
 class Letter {
   final String id;
   final String title;

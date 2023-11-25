@@ -46,9 +46,9 @@ class BotonCrear extends StatelessWidget {
     super.key,
   });
 
-  Future<List<String>> getIds (List<String> listita) async {
+  Future<List<String>> getIds(List<String> listita) async {
     List<String> ids = [];
-    for(int i = 0; i < listita.length; i++){
+    for (int i = 0; i < listita.length; i++) {
       User usu = await api.getUserByUsername(listita[i]);
       ids.add(usu.id);
     }
@@ -65,9 +65,9 @@ class BotonCrear extends StatelessWidget {
           height: 50,
           width: 150,
           child: TextButton.icon(
-            onPressed: () async{
-              if(titulete.darValor() != null && !listado.getSelectedItems().isEmpty){
-                try{
+            onPressed: () async {
+              if (!listado.getSelectedItems().isEmpty) {
+                try {
                   print(listado.getSelectedItems());
                   DiffusionList diff = DiffusionList(
                     id: '',
@@ -77,11 +77,9 @@ class BotonCrear extends StatelessWidget {
                   );
                   print(diff.name);
                   api.createDiffusionList(diff);
-                }
-                catch(e){
+                } catch (e) {
                   print('Error del tipo: $e');
                 }
-
               }
               Navigator.pop(context);
             },

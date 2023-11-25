@@ -6,62 +6,78 @@ import 'package:nest_fronted/models/letter.dart';
 
 import '../main.dart';
 
-class CorreoScreen extends StatelessWidget {
+class CorreoScreen extends StatefulWidget {
   CorreoScreen({super.key});
 
-  List<Letter> cartitas = [];
-  List<Letter> cartasRecibidas = [];
-  void obtenerCartasRecibidas() async {
-    try {
+  @override
+  _CorreoScreenState createState() => _CorreoScreenState();
+}
 
-      cartasRecibidas = await api.getLetterByUserId(api.loggedUser.id);
-     // cartitas = cartasRecibidas;
-      print('hasta luegi');
-    } catch (error) {
+class _CorreoScreenState extends State<CorreoScreen> {
+  late Future<List<Letter>> _cartasRecibidasFuture;
 
-      print("Error al obtener las cartas: $error");
-
-    }
-  }
-
-  Widget buildCartasList() {
-    obtenerCartasRecibidas();
-    return ListView.builder(
-      itemCount: cartasRecibidas.length,
-      itemBuilder: (context, index) {
-        return Cartas(
-          carta: cartasRecibidas[index],
-        );
-      },
-    );
+  @override
+  void initState() {
+    super.initState();
+    _cartasRecibidasFuture = api.getLetterByUserId(api.loggedUser.id);
   }
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+
     return SingleChildScrollView(
       child: Stack(
-          children: [
-            Container(
-              height: screenSize.height,
-              child: buildCartasList(),
-            ),
-            Positioned(
-              bottom: 170,
-              right: 8.0,
-              child:
-              BotonEnviarCarta(),
-            ),
-          ],
-        ),
+        children: [
+          FutureBuilder<List<Letter>>(
+            future: _cartasRecibidasFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Mientras se carga, puedes mostrar un indicador de carga.
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                // En caso de error, muestra un mensaje de error.
+                return Text('Error: ${snapshot.error}');
+              } else {
+                // Si la operación es exitosa, construye el ListView.
+                List<Letter> cartasRecibidas = snapshot.data ?? [];
+                return Container(
+                  height: screenSize.height,
+                  child: ListView.builder(
+                    itemCount: cartasRecibidas.length,
+                    itemBuilder: (context, index) {
+                      if (cartasRecibidas[index].opened) {
+                        return CartasAbiertas(
+                          carta: cartasRecibidas[index],
+                        );
+                      } else {
+                        return CartasCerradas(
+                          carta: cartasRecibidas[index],
+                        );
+                      }
+                    },
+                  ),
+                );
+              }
+            },
+          ),
+          Positioned(
+            bottom: 170,
+            right: 8.0,
+            child: BotonEnviarCarta(),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class Cartas extends StatelessWidget {
+class CartasAbiertas extends StatelessWidget {
   final Letter carta;
 
-  Cartas({required this.carta});
+  CartasAbiertas({
+    required this.carta,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +87,11 @@ class Cartas extends StatelessWidget {
           context,
           PageTransition(
             child: CartaScreen(
-                tituloCarta: '',
-                mensaje: '',
-                usuario: 'Pepe'),
+                tituloCarta: carta.title,
+                mensaje: carta.text,
+                usuario: usuarios
+                    .firstWhere((element) => element.id == carta.originUserId)
+                    .username),
             type: PageTransitionType.fade,
           ),
         );
@@ -104,8 +122,11 @@ class Cartas extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Nombre_Usuario',
-                  style: TextStyle(color: actual.colorScheme.onSecondary,
+                  usuarios
+                      .firstWhere((element) => element.id == carta.originUserId)
+                      .username,
+                  style: TextStyle(
+                      color: actual.colorScheme.onSecondary,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
@@ -113,9 +134,11 @@ class Cartas extends StatelessWidget {
                   height: 16.0,
                 ),
                 Text(
-                  'Almidon',
+                  carta.title,
                   style: TextStyle(
-                    color: actual.colorScheme.onSecondary, fontSize: 14,),
+                    color: actual.colorScheme.onSecondary,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
@@ -124,8 +147,13 @@ class Cartas extends StatelessWidget {
             ),
             Column(
               children: [
-                SizedBox(height: 30,),
-                Icon(Icons.star, color: actual.colorScheme.onSecondary,)
+                SizedBox(
+                  height: 30,
+                ),
+                Icon(
+                  Icons.star,
+                  color: actual.colorScheme.onSecondary,
+                )
               ],
             )
           ],
@@ -135,6 +163,96 @@ class Cartas extends StatelessWidget {
   }
 }
 
+class CartasCerradas extends StatelessWidget {
+  final Letter carta;
+
+  CartasCerradas({
+    required this.carta,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          PageTransition(
+            child: CartaScreen(
+                tituloCarta: carta.title,
+                mensaje: carta.text,
+                usuario: usuarios
+                    .firstWhere((element) => element.id == carta.originUserId)
+                    .username),
+            type: PageTransitionType.fade,
+          ),
+        );
+      },
+      elevation: 2.0,
+      // Altura de la sombra del botón
+      fillColor: actual.colorScheme.secondary,
+      // Color de fondo del botón
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0), // Bordes redondeados
+        side: BorderSide(color: Colors.white), // Borde blanco
+      ),
+      constraints: BoxConstraints(
+        minWidth: double.infinity, // Ancho mínimo
+        minHeight: 100.0, // Altura mínima
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            CircleAvatar(
+              backgroundColor: actual.colorScheme.onSecondary,
+              radius: 35,
+              backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  usuarios
+                      .firstWhere((element) => element.id == carta.originUserId)
+                      .username,
+                  style: TextStyle(
+                      color: actual.colorScheme.onSecondary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  carta.title,
+                  style: TextStyle(
+                    color: actual.colorScheme.onSecondary,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              width: 80,
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Icon(
+                  Icons.star,
+                  color: actual.colorScheme.onSecondary,
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class BotonEnviarCarta extends StatelessWidget {
   const BotonEnviarCarta({
@@ -170,8 +288,8 @@ class BotonEnviarCarta extends StatelessWidget {
                   width: 10.0,
                 ),
                 Text(
-                'Enviar Carta',
-                style: TextStyle(color: actual.colorScheme.onPrimary),
+                  'Enviar Carta',
+                  style: TextStyle(color: actual.colorScheme.onPrimary),
                 )
               ],
             ),
