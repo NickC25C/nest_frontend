@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/user.dart';
-import 'package:nest_fronted/screens/crear_grupos.dart';
 
 List<String> selectedItems = [];
 
@@ -13,7 +12,7 @@ class Listado extends StatefulWidget {
   @override
   _ListadoState createState() => _ListadoState();
 
-  getSelectedItems(){
+  getSelectedItems() {
     return selectedItems;
   }
 }
@@ -100,6 +99,7 @@ class _ListadoState extends State<Listado> {
             clipBehavior: Clip.hardEdge,
             padding: EdgeInsets.all(0.0),
             itemCount: userFriends.length,
+            // ignore: body_might_complete_normally_nullable
             itemBuilder: (BuildContext context, int index) {
               if (index < userFriends.length) {
                 // Amigos
@@ -110,13 +110,10 @@ class _ListadoState extends State<Listado> {
                         ? actual.colorScheme.primary
                         : null,
                     onTap: () {
-                      if (selectedItems
-                          .contains(userFriends[index].username)) {
-                        selectedItems
-                            .remove(userFriends[index].username);
+                      if (selectedItems.contains(userFriends[index].username)) {
+                        selectedItems.remove(userFriends[index].username);
                       } else {
-                        selectedItems
-                            .add(userFriends[index].username);
+                        selectedItems.add(userFriends[index].username);
                       }
                       setState(() {
                         isSelectedList[index] = !isSelectedList[index];

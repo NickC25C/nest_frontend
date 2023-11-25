@@ -5,7 +5,6 @@ import 'package:nest_fronted/widgets/selector_fecha.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/letter.dart';
-import 'package:nest_fronted/services/api_service.dart';
 
 const tituloScreen = 'ENVIAR CARTA';
 Titulo titulin = Titulo();
@@ -126,8 +125,8 @@ class BotonCrear extends StatelessWidget {
       ),
     );
   }
-  void crearCarta(){
 
+  void crearCarta() {
     Letter cartita = Letter(
       id: "",
       title: titulin.darValor(),
@@ -139,6 +138,5 @@ class BotonCrear extends StatelessWidget {
     );
 
     api.createLetter(cartita);
-
   }
 }

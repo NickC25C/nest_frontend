@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/cartica.dart';
 import 'package:nest_fronted/screens/enviar_carta.dart';
 import 'package:page_transition/page_transition.dart';

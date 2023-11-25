@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/diffusionList.dart';
 import 'package:nest_fronted/models/user.dart';
-import 'package:nest_fronted/screens/crear_grupos.dart';
 
 List<String> selectedItems = [];
 
@@ -14,7 +13,7 @@ class ListadoCreacion extends StatefulWidget {
   @override
   _ListadoState createState() => _ListadoState();
 
-  getSelectedItems(){
+  getSelectedItems() {
     return selectedItems;
   }
 }
@@ -35,7 +34,8 @@ class _ListadoState extends State<ListadoCreacion> {
   void refreshFriends() async {
     userFriends = await api.getUserFriends(api.loggedUser.id);
     diffusionList = await api.getDiffusionLists(api.loggedUser.id);
-    isSelectedList = List.generate(userFriends.length + diffusionList.length, (index) => false);
+    isSelectedList = List.generate(
+        userFriends.length + diffusionList.length, (index) => false);
     setState(() {});
   }
 
@@ -77,12 +77,12 @@ class _ListadoState extends State<ListadoCreacion> {
                         if (isChecked) {
                           isSelectedList = List.generate(
                             userFriends.length,
-                                (index) => true,
+                            (index) => true,
                           );
                         } else {
                           isSelectedList = List.generate(
                             userFriends.length,
-                                (index) => false,
+                            (index) => false,
                           );
                         }
                       });
@@ -114,13 +114,10 @@ class _ListadoState extends State<ListadoCreacion> {
                         ? actual.colorScheme.primary
                         : null,
                     onTap: () {
-                      if (selectedItems
-                          .contains(diffusionList[index].name)) {
-                        selectedItems
-                            .remove(diffusionList[index].name);
+                      if (selectedItems.contains(diffusionList[index].name)) {
+                        selectedItems.remove(diffusionList[index].name);
                       } else {
-                        selectedItems
-                            .add(diffusionList[index].name);
+                        selectedItems.add(diffusionList[index].name);
                       }
                       setState(() {
                         isSelectedList[index] = !isSelectedList[index];
@@ -128,22 +125,20 @@ class _ListadoState extends State<ListadoCreacion> {
                     },
                   ),
                 );
-              }else{
+              } else {
                 // Amiguetes
                 final friendIndex = index - diffusionList.length;
                 return Material(
                   child: ListTile(
                     title: Text(userFriends[friendIndex].username),
-
-                    tileColor: isSelectedList[index] ? actual.colorScheme.surface : null,
+                    tileColor: isSelectedList[index]
+                        ? actual.colorScheme.surface
+                        : null,
                     onTap: () {
-                      if (selectedItems
-                          .contains(userFriends[index].username)) {
-                        selectedItems
-                            .remove(userFriends[index].username);
+                      if (selectedItems.contains(userFriends[index].username)) {
+                        selectedItems.remove(userFriends[index].username);
                       } else {
-                        selectedItems
-                            .add(userFriends[index].username);
+                        selectedItems.add(userFriends[index].username);
                       }
                       setState(() {
                         isSelectedList[index] = !isSelectedList[index];

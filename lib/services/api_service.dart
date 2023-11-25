@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 import '../models/letter.dart';
 import '../models/note.dart';
-import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =

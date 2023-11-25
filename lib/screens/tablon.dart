@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/models/picture.dart';
 import 'package:nest_fronted/models/publication.dart';
-import 'package:nest_fronted/widgets/barra_titulo.dart';
 import 'package:nest_fronted/widgets/boton_expandible.dart';
-import 'package:nest_fronted/widgets/nota.dart';
-import 'package:nest_fronted/widgets/foto.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
 import 'package:nest_fronted/widgets/publication_widget.dart';
