@@ -29,12 +29,19 @@ class TablonScreen extends StatefulWidget {
 
 class TablonState extends State<TablonScreen> {
   late List<Publication> publis;
+  List<Publication> notitas = [];
+  List<Publication> imagensitas = [];
 
   Future<List<Publication>> initializePublis() async {
     Completer<List<Publication>> completer = Completer();
 
     try {
       publis = await api.getFeed(api.loggedUser.id);
+
+      // Separar las publicaciones en listas de notas y fotos
+      notitas = publis.where((pub) => pub.publiType == PublicationType.note).toList();
+      imagensitas = publis.where((pub) => pub.publiType == PublicationType.picture).toList();
+
       completer.complete(publis);
     } catch (error) {
       completer.completeError(error);
@@ -60,7 +67,7 @@ class TablonState extends State<TablonScreen> {
       selectedIndex = index;
       open = !open;
       openNote =
-          false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
+      false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
     });
   }
 
@@ -69,7 +76,7 @@ class TablonState extends State<TablonScreen> {
       selectedIndex = index;
       openNote = !openNote;
       open =
-          false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
+      false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
     });
   }
 
@@ -95,6 +102,31 @@ class TablonState extends State<TablonScreen> {
         });
   }
 
+  Widget _buildNotas() {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: notitas.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+          onTap: () => _buildContentView(publis.indexOf(notitas[index])),
+          child: PublicationWidget(pub: notitas[index]),
+        );
+      },
+    );
+  }
+
+  Widget _buildImagenes() {
+    return ListView.builder(
+      itemCount: imagensitas.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+          onTap: () => _buildContentView(publis.indexOf(imagensitas[index])),
+          child: PublicationWidget(pub: imagensitas[index]),
+        );
+      },
+    );
+  }
+
   Widget _buildPhotoView() {
     Picture fotita = publis[selectedIndex] as Picture;
     return PhotoView(imageProvider: NetworkImage(fotita.image!.path));
@@ -107,27 +139,27 @@ class TablonState extends State<TablonScreen> {
       padding: EdgeInsets.all(16.0),
       child: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            notita.title,
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textScaleFactor: 2,
-          ),
-          Text(
-            notita.message,
-            style: TextStyle(fontSize: 18.0),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'De: ${notita.owner.username}',
+                notita.title,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textScaleFactor: 2,
+              ),
+              Text(
+                notita.message,
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'De: ${notita.owner.username}',
+                  )
+                ],
               )
             ],
-          )
-        ],
-      )),
+          )),
     );
   }
 
@@ -185,13 +217,19 @@ class TablonState extends State<TablonScreen> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          height: 600,
+          margin: const EdgeInsets.symmetric(vertical: 20),
+          height: 200,
+          width: double.infinity,
+          child: _buildNotas(),
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 20),
+          height: 373,
           width: double.infinity,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              _buildTablon(publis),
+              _buildImagenes(),
               BotonPublicar(),
             ],
           ),
