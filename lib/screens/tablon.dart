@@ -80,28 +80,6 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
-  ListView _buildTablon(List<Publication> publications) {
-    return ListView.builder(
-        itemCount: publications.length,
-        itemBuilder: (BuildContext context, int index) {
-          if (publications[index].publiType == PublicationType.note) {
-            return GestureDetector(
-              onTap: () => {_buildNoteView(index)},
-              child: PublicationWidget(
-                pub: publications[index],
-              ),
-            );
-          } else {
-            return GestureDetector(
-              onTap: () => {_buildContentView(index)},
-              child: PublicationWidget(
-                pub: publications[index],
-              ),
-            );
-          }
-        });
-  }
-
   Widget _buildNotas() {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -214,25 +192,50 @@ class TablonState extends State<TablonScreen> {
   }
 
   Widget tablon() {
-    return Column(
+    return Stack(
       children: [
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 20),
-          height: 200,
-          width: double.infinity,
-          child: _buildNotas(),
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 20),
-          height: 373,
-          width: double.infinity,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              _buildImagenes(),
-              BotonPublicar(),
-            ],
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
+              child: Text(
+                  'Notitas:',
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                  ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 20),
+              height: 165,
+              width: double.infinity,
+              child: _buildNotas(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
+              child: Text(
+                'Imagensitas:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+              height: 350,
+              width: double.infinity,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  _buildImagenes(),
+                  BotonPublicar(),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );

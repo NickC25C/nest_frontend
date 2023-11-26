@@ -28,46 +28,46 @@ class _CorreoScreenState extends State<CorreoScreen> {
 
     return SingleChildScrollView(
       child: Stack(
-        children: [
-          FutureBuilder<List<Letter>>(
-            future: _cartasRecibidasFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Mientras se carga, puedes mostrar un indicador de carga.
-                return CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                // En caso de error, muestra un mensaje de error.
-                return Text('Error: ${snapshot.error}');
-              } else {
-                // Si la operación es exitosa, construye el ListView.
-                List<Letter> cartasRecibidas = snapshot.data ?? [];
-                return Container(
-                  height: screenSize.height,
-                  child: ListView.builder(
-                    itemCount: cartasRecibidas.length,
-                    itemBuilder: (context, index) {
-                      if (cartasRecibidas[index].opened) {
-                        return CartasAbiertas(
-                          carta: cartasRecibidas[index],
-                        );
-                      } else {
-                        return CartasCerradas(
-                          carta: cartasRecibidas[index],
-                        );
-                      }
-                    },
-                  ),
-                );
-              }
-            },
-          ),
-          Positioned(
-            bottom: 170,
-            right: 8.0,
-            child: BotonEnviarCarta(),
-          ),
-        ],
-      ),
+          children: [
+            FutureBuilder<List<Letter>>(
+              future: _cartasRecibidasFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Mientras se carga, puedes mostrar un indicador de carga.
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  // En caso de error, muestra un mensaje de error.
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  // Si la operación es exitosa, construye el ListView.
+                  List<Letter> cartasRecibidas = snapshot.data ?? [];
+                  return Container(
+                    height: screenSize.height - 150,
+                    child: ListView.builder(
+                      itemCount: cartasRecibidas.length,
+                      itemBuilder: (context, index) {
+                        if (cartasRecibidas[index].opened) {
+                          return CartasAbiertas(
+                            carta: cartasRecibidas[index],
+                          );
+                        } else {
+                          return CartasCerradas(
+                            carta: cartasRecibidas[index],
+                          );
+                        }
+                      },
+                    ),
+                  );
+                }
+              },
+            ),
+            Positioned(
+              bottom: 20,
+              right: 8.0,
+              child: BotonEnviarCarta(),
+            ),
+          ],
+        ),
     );
   }
 }
