@@ -15,9 +15,6 @@ import 'package:photo_view/photo_view.dart';
 import '../main.dart';
 
 const tituloScreen = 'MI TABLÓN PERSONAL';
-int selectedIndex = 0;
-bool open = false;
-bool openNote = false;
 double _opacityLevel = 0;
 double _sigmaLevel = 0;
 
@@ -31,6 +28,10 @@ class TablonState extends State<TablonScreen> {
   late List<Publication> publis;
   List<Publication> notitas = [];
   List<Publication> imagensitas = [];
+  int selectedIndexImage = 0;
+  int selectedIndexNote = 0;
+  bool open = false;
+  bool openNote = false;
 
   Future<List<Publication>> initializePublis() async {
     Completer<List<Publication>> completer = Completer();
@@ -62,18 +63,16 @@ class TablonState extends State<TablonScreen> {
     });
   }
 
-  _buildContentView(int index) {
+  _buildContentView() {
     setState(() {
-      selectedIndex = index;
       open = !open;
       openNote =
       false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
     });
   }
 
-  _buildNoteView(int index) {
+  _buildNoteView() {
     setState(() {
-      selectedIndex = index;
       openNote = !openNote;
       open =
       false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
@@ -86,7 +85,10 @@ class TablonState extends State<TablonScreen> {
       itemCount: notitas.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: () => _buildContentView(publis.indexOf(notitas[index])),
+          onTap: () {
+            _buildNoteView();
+            selectedIndexNote = index;
+          },
           child: PublicationWidget(pub: notitas[index]),
         );
       },
@@ -98,7 +100,10 @@ class TablonState extends State<TablonScreen> {
       itemCount: imagensitas.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: () => _buildContentView(publis.indexOf(imagensitas[index])),
+          onTap: () {
+            _buildContentView();
+            selectedIndexImage = index;
+          },
           child: PublicationWidget(pub: imagensitas[index]),
         );
       },
@@ -106,12 +111,12 @@ class TablonState extends State<TablonScreen> {
   }
 
   Widget _buildPhotoView() {
-    Picture fotita = publis[selectedIndex] as Picture;
+    Picture fotita = imagensitas[selectedIndexImage] as Picture;
     return PhotoView(imageProvider: NetworkImage(fotita.image!.path));
   }
 
   Widget _buildNoteViewContent() {
-    Note notita = publis[selectedIndex] as Note;
+    Note notita = notitas[selectedIndexNote] as Note;
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(16.0),
@@ -154,7 +159,7 @@ class TablonState extends State<TablonScreen> {
             if (open) {
               return Card(
                 child: GestureDetector(
-                  onTap: () => {_buildContentView(selectedIndex)},
+                  onTap: () => {_buildContentView()},
                   child: Container(
                     height: 625,
                     width: double.infinity,
@@ -165,7 +170,7 @@ class TablonState extends State<TablonScreen> {
             } else if (openNote) {
               return Card(
                 child: GestureDetector(
-                  onTap: () => {_buildNoteView(selectedIndex)},
+                  onTap: () => {_buildNoteView()},
                   child: Container(
                     height: 625,
                     width: double.infinity,
