@@ -40,9 +40,12 @@ class TablonState extends State<TablonScreen> {
       publis = await api.getFeed(api.loggedUser.id);
 
       // Separar las publicaciones en listas de notas y fotos
-      notitas = publis.where((pub) => pub.publiType == PublicationType.note).toList();
-      imagensitas = publis.where((pub) => pub.publiType == PublicationType.picture).toList();
-
+      if(notitas.isEmpty){
+        notitas = publis.where((pub) => pub.publiType == PublicationType.note).toList();
+      }
+      if(imagensitas.isEmpty){
+        imagensitas = publis.where((pub) => pub.publiType == PublicationType.picture).toList();
+      }
       completer.complete(publis);
     } catch (error) {
       completer.completeError(error);
