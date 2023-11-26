@@ -17,7 +17,7 @@ class Picture extends Publication {
       required this.image,
       required super.watchers});
 
-  factory Picture.fromJson(Map<String, dynamic> json, User u, File f) {
+  factory Picture.fromJson(Map<String, dynamic> json, User u, File? f) {
     return Picture(
         id: json['id'],
         owner: u,

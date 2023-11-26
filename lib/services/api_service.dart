@@ -5,8 +5,10 @@ import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/user.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/capsule.dart';
 import '../models/letter.dart';
 import '../models/note.dart';
+import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =
@@ -160,8 +162,8 @@ class ApiService {
   // IMAGE
   //
 
-  Future<void> uploadImage(
-      File image, String description, List<String> usernames) async {
+  Future<Picture?> uploadImage(
+      File? image, String description, List<String> usernames) async {
     final url = Uri.parse("$baseUrl/publications/picture");
     var request = http.MultipartRequest('POST', url);
     request.fields["ownerId"] = loggedUser.id;
@@ -170,14 +172,20 @@ class ApiService {
     await getUsersByUsername(usernames)
         .then((value) => {for (User u in value) watchers.add(u.id)});
     request.fields["watchers"] = jsonEncode(watchers);
-    request.files.add(await http.MultipartFile.fromPath('image', image.path));
+    request.files.add(await http.MultipartFile.fromPath('image', image!.path));
 
-    var response = await request.send();
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
 
     if (response.statusCode == 200) {
-      print("Image uploaded successfully");
+      Map<String, dynamic> data = json.decode(response.body);
+      User us = await getUser(
+          data['ownerId'].toString().replaceAll("(", "").replaceAll(")", ""));
+      Picture picture = Picture.fromJson(data, us, null);
+      return picture;
     } else {
       print("Image not uploaded, error code: ${response.statusCode} ");
+      return null;
     }
   }
 
@@ -415,4 +423,104 @@ class ApiService {
       throw Exception('Failed to update user');
     }
   }
+
+
+  //
+  // Capsules
+  //
+
+  Future<List<Capsule>> getCapsulesByUserId(String userId) async {
+    final response = await http.get(Uri.parse('$baseUrl/capsules/user/$userId'));
+    if (response.statusCode == 200) {
+      List<dynamic> capsulesJson = jsonDecode(response.body);
+      return capsulesJson.map((json) => Capsule.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load capsules');
+    }
+  }
+
+  Future<Capsule> getCapsuleById(String capsuleId) async {
+    final response = await http.get(Uri.parse('$baseUrl/capsules/$capsuleId'));
+    if (response.statusCode == 200) {
+      return Capsule.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load capsule');
+    }
+  }
+
+  Future<List<Publication>> getPublications(String capsuleId) async {
+    final response = await http.get(Uri.parse('$baseUrl/capsules/$capsuleId/publications'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = await json.decode(response.body);
+      List<Publication> feed = List.empty(growable: true);
+      await Future.wait(data.map((element) async {
+        await getUser(element['ownerId']
+            .toString()
+            .replaceAll("(", "")
+            .replaceAll(")", ""))
+            .then((value) => {
+          if (element['publiType'].toString() == 'Note')
+            {feed.add(Publication.fromJson(element, value, null))}
+          else
+            {
+              feed.add(Publication.fromJson(
+                  element, value, File(element['url'])))
+            }
+        });
+      }));
+
+      return feed;
+    } else {
+      throw Exception('Failed to load publications');
+    }
+  }
+
+  Future<void> addPictureToCapsule(Picture picture, String capsuleId) async
+  {
+    Picture? p;
+    await uploadImage(picture.image, picture.description, []).then((value) => p = value);
+    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'publicationId': p?.id}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to add publication to capsule');
+    }
+  }
+
+  Future<void> addNoteToCapsule(Note note, String capsuleId) async
+  {
+    Note? p;
+    await createNote(note).then((value) => p = value);
+    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'publicationId': p?.id}),
+    );
+
+
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to add publication to capsule');
+    }
+  }
+
+  Future<Capsule> createCapsule(Capsule capsule, List<String> memberIds) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/capsules'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(capsule.toJson()..addAll({'members': memberIds})),
+    );
+    if (response.statusCode == 200) {
+      return Capsule.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to create capsule');
+    }
+  }
+
 }
