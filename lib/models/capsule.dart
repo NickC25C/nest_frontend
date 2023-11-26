@@ -7,7 +7,6 @@ class Capsule {
   String title;
   String description;
   String openDate;
-  String imageURL;
   List<String> members;
 
   Capsule({
@@ -15,7 +14,6 @@ class Capsule {
     required this.title,
     required this.description,
     required this.openDate,
-    required this.imageURL,
     required this.members
   });
 
@@ -25,7 +23,6 @@ class Capsule {
       title: json['title'],
       description: json['description'],
       openDate: json['openDate'],
-      imageURL: json['imageURL'],
       members: List<String>.from(json['members'])
     );
   }
@@ -36,7 +33,6 @@ class Capsule {
       'title': title,
       'description': description,
       'openDate': openDate,
-      'imageURL': imageURL,
       'members': members
     };
   }

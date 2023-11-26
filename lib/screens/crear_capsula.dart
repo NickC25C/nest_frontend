@@ -4,6 +4,8 @@ import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/selector_fecha.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
+import 'package:nest_fronted/models/capsule.dart';
+import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -184,6 +186,7 @@ class BotonCrearCapsula extends StatelessWidget {
           width: 170,
           child: TextButton.icon(
             onPressed: () {
+              crearCapsula();
               //cositas
             },
             icon: Icon(
@@ -202,5 +205,20 @@ class BotonCrearCapsula extends StatelessWidget {
         ),
       ),
     );
+  }
+  void crearCapsula() {
+    List<String> usersMembers = listadito.getSelectedItems();
+    print(usersMembers);
+
+    Capsule capsulita = Capsule(
+      id: "",
+      title: titulin.darValor(),
+      description: 'hola',
+      openDate: '2002-05-08',
+      members: usersMembers,
+    );
+
+    api.createCapsule(capsulita, usersMembers);
+    print(capsulita);
   }
 }

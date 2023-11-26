@@ -82,7 +82,7 @@ void main() {
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  //poblarUsers();
+  poblarUsers();
 
   // enviarSolicitudAmistad();
 
@@ -90,7 +90,7 @@ void main() {
     usuarios = data;
   }).whenComplete(
     () => api
-        .getUserByUsername('g4net')
+        .getUserByUsername('El_nicoloau')
         .then((value) => api.loggedUser = value)
         .whenComplete(() => {
               tuPropioAmigo(api.loggedUser, api.loggedUser),
