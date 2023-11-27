@@ -261,7 +261,7 @@ class BotonCrear extends StatelessWidget {
               Icons.image_outlined,
             ),
             label: Text(
-              'Publicar imagen',
+              'Subir imagen',
               style: TextStyle(),
             ),
             style: TextButton.styleFrom(
