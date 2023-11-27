@@ -481,11 +481,10 @@ class ApiService {
     Picture? p;
     await uploadImage(picture.image, picture.description, [])
         .then((value) => p = value);
-    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications');
+    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications?publicationId=${p!.id}');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'publicationId': p?.id}),
     );
 
     if (response.statusCode != 200) {
@@ -493,14 +492,14 @@ class ApiService {
     }
   }
 
-  Future<void> addNoteToCapsule(Note note, String capsuleId) async {
+  Future<void> addNoteToCapsule(Note note, String capsuleId) async
+  {
     Note? p;
     await createNote(note).then((value) => p = value);
-    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications');
+    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications?publicationId=${p!.id}');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'publicationId': p?.id}),
     );
 
     if (response.statusCode != 200) {
