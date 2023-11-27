@@ -187,6 +187,7 @@ class BotonCrearCapsula extends StatelessWidget {
           child: TextButton.icon(
             onPressed: () {
               crearCapsula();
+              print('pimpampum');
               //cositas
             },
             icon: Icon(
@@ -206,19 +207,17 @@ class BotonCrearCapsula extends StatelessWidget {
       ),
     );
   }
-  void crearCapsula() {
-    List<String> usersMembers = listadito.getSelectedItems();
-    print(usersMembers);
+  void crearCapsula() async {
+
+    await listadito.getIds();
 
     Capsule capsulita = Capsule(
       id: "",
       title: titulin.darValor(),
-      description: 'hola',
-      openDate: '2002-05-08',
-      members: usersMembers,
+      description: descripcion,
+      openDate: fecha,
+      members: ids,
     );
-
-    api.createCapsule(capsulita, usersMembers);
-    print(capsulita);
+    api.createCapsule(capsulita, ids);
   }
 }

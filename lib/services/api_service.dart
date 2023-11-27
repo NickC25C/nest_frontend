@@ -516,6 +516,9 @@ class ApiService {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(capsule.toJson()..addAll({'members': memberIds})),
     );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
     if (response.statusCode == 200) {
       return Capsule.fromJson(jsonDecode(response.body));
     } else {

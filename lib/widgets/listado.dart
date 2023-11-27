@@ -3,6 +3,7 @@ import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/user.dart';
 
 List<String> selectedItems = [];
+List<String> ids = [];
 
 class Listado extends StatefulWidget {
   const Listado({
@@ -15,6 +16,24 @@ class Listado extends StatefulWidget {
   getSelectedItems() {
     return selectedItems;
   }
+  Future<List<String>> getIds() async {
+    await Ids();
+    return ids;
+  }
+
+  Future<List<String>> Ids() async {
+    List<User> usuariosSeleccionados = [];
+
+    for (String username in selectedItems) {
+      User user = await api.getUserByUsername(username);
+      usuariosSeleccionados.add(user);
+    }
+    print(usuariosSeleccionados);
+    print('holisa');
+
+    ids = usuariosSeleccionados.map((user) => user.id).toList();
+    return ids;
+  }
 }
 
 class _ListadoState extends State<Listado> {
@@ -26,6 +45,7 @@ class _ListadoState extends State<Listado> {
   void initState() {
     super.initState();
     selectedItems = [];
+    ids = [];
     refreshFriends();
   }
 
@@ -34,6 +54,21 @@ class _ListadoState extends State<Listado> {
     isSelectedList = List.generate(userFriends.length, (index) => false);
     setState(() {});
   }
+
+  Future<List<String>> Ids() async {
+    List<User> usuariosSeleccionados = [];
+
+    for (String username in selectedItems) {
+      User user = await api.getUserByUsername(username);
+      usuariosSeleccionados.add(user);
+    }
+    print(usuariosSeleccionados);
+    print('holi');
+
+    ids = usuariosSeleccionados.map((user) => user.id).toList();
+    return ids;
+  }
+
 
   @override
   Widget build(BuildContext context) {
