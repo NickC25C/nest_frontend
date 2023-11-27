@@ -1,35 +1,78 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../main.dart';
+import '../models/capsule.dart';
 import 'capsulaAbierta.dart';
 import 'capsulaCerrada.dart';
 import 'crear_capsula.dart';
 
-class CapsulaScreen extends StatelessWidget {
-  const CapsulaScreen({Key? key});
+class CapsulaScreen extends StatefulWidget {
+  CapsulaScreen({super.key});
+
+  @override
+  _CapsulaScreenState createState() => _CapsulaScreenState();
+}
+
+class _CapsulaScreenState extends State<CapsulaScreen> {
+  late List<Capsule> _cartasRecibidasFuture;
+
+  Future<List<Capsule>> initializeCapsules() async {
+    Completer<List<Capsule>> completer = Completer();
+
+    try {
+      _cartasRecibidasFuture = await api.getCapsulesByUserId(api.loggedUser.id);
+
+      completer.complete(_cartasRecibidasFuture);
+    } catch (error) {
+      completer.completeError(error);
+    }
+    return completer.future;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initializeCapsules();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+
     return SingleChildScrollView(
       child: Stack(
         children: [
-          Container(
-            height: screenSize.height,
-              child: ListView(
-                children: [
-                  CapsulaCerrada(),
-                  SizedBox(height: 16.0),
-                  CapsulaAbierta(),
-                  SizedBox(height: 16.0),
-                ],
-            ),
+          FutureBuilder<List<Capsule>>(
+            future: initializeCapsules(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Mientras se carga, puedes mostrar un indicador de carga.
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                // En caso de error, muestra un mensaje de error.
+                return Text('Error: ${snapshot.error}');
+              } else {
+                // Si la operación es exitosa, construye el ListView.
+                List<Capsule> cartasRecibidas = snapshot.data ?? [];
+                return Container(
+                  height: screenSize.height,
+                  child: ListView.builder(
+                    itemCount: cartasRecibidas.length,
+                    itemBuilder: (context, index) {
+                      return CapsulaCerrada();
+                    },
+                  ),
+                );
+              }
+            },
           ),
           Positioned(
-              bottom: 170,
-              right: 8.0,
-              child:
-              BotonCrearCapsula(),
+            bottom: 170,
+            right: 8.0,
+            child: BotonCrearCapsula(),
           ),
         ],
       ),

@@ -122,7 +122,7 @@ class MyApp extends StatelessWidget {
         'amis_grup': (_) => const AmisGrupScreen(),
         'configuracion': (_) => const ConfiguracionScreen(),
         'correo': (_) => CorreoScreen(),
-        'capsulas': (_) => const CapsulaScreen(),
+        'capsulas': (_) => CapsulaScreen(),
         'enviar_correo': (_) => const EnviarCartaScreen(),
         'capsulaAbierta': (_) => const CapsulaAbierta(),
         'capsulaCerrada': (_) => const CapsulaCerradaScreen(),
