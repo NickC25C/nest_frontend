@@ -176,6 +176,9 @@ class ApiService {
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
+    print('de imagen');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
@@ -486,6 +489,12 @@ class ApiService {
       url,
       headers: {'Content-Type': 'application/json'},
     );
+    print('aqui');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    print('File uploaded ${p?.id}...');
+    print('Response from uploadImage: $p');
+    print('son cosas');
 
     if (response.statusCode != 200) {
       throw Exception('Failed to add publication to capsule');

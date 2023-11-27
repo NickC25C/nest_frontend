@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/capsule.dart';
+import 'package:nest_fronted/screens/pub_imagen_cap.dart';
 import 'package:nest_fronted/screens/pub_nota_capsula.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -141,13 +142,19 @@ class BotonAnyadir extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
+          MaterialPageRoute(
+            builder: (context) => PubImagenCapScreen(),
+          ),
+        );
+        /*Navigator.push(
+          context,
           PageTransition(
             child: PubNotaCapsula(
               capsula: capsula,
             ),
             type: PageTransitionType.fade,
           ),
-        );
+        );*/
       },
       child: Icon(Icons.text_snippet),
     );
