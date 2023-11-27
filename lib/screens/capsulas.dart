@@ -17,74 +17,92 @@ class CapsulaScreen extends StatefulWidget {
 }
 
 class _CapsulaScreenState extends State<CapsulaScreen> {
-  late List<Capsule> _cartasRecibidasFuture;
-
-  Future<List<Capsule>> initializeCapsules() async {
-    Completer<List<Capsule>> completer = Completer();
-
-    try {
-      _cartasRecibidasFuture = await api.getCapsulesByUserId(api.loggedUser.id);
-
-      completer.complete(_cartasRecibidasFuture);
-    } catch (error) {
-      completer.completeError(error);
-    }
-    return completer.future;
-  }
+  late List<Capsule> _cartasRecibidas;
+  late StreamController<List<Capsule>> _cartasRecibidasController;
 
   @override
   void initState() {
     super.initState();
-    initializeCapsules();
+    _cartasRecibidas = [];
+    _cartasRecibidasController = StreamController<List<Capsule>>.broadcast();
+    _initializeCapsules();
+
+    // Iniciar un temporizador para actualizar la lista cada 30 segundos
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      _updateCapsules();
+    });
+  }
+
+  Future<void> _initializeCapsules() async {
+    try {
+      _cartasRecibidas = await api.getCapsulesByUserId(api.loggedUser.id);
+      _cartasRecibidasController.add(_cartasRecibidas);
+    } catch (error) {
+      print('Error al cargar las cápsulas: $error');
+    }
+  }
+
+  Future<void> _updateCapsules() async {
+    try {
+      List<Capsule> nuevasCapsulas =
+          await api.getCapsulesByUserId(api.loggedUser.id);
+
+      if (_cartasRecibidas != nuevasCapsulas) {
+        setState(() {
+          _cartasRecibidas = nuevasCapsulas;
+        });
+
+        // Agregar las nuevas cápsulas al stream
+        _cartasRecibidasController.add(_cartasRecibidas);
+      }
+    } catch (error) {
+      print('Error al cargar las cápsulas: $error');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    return SingleChildScrollView(
-      child: Stack(
-        children: [
-          FutureBuilder<List<Capsule>>(
-            future: initializeCapsules(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Mientras se carga, puedes mostrar un indicador de carga.
-                return CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                // En caso de error, muestra un mensaje de error.
-                return Text('Error: ${snapshot.error}');
-              } else {
-                // Si la operación es exitosa, construye el ListView.
-                List<Capsule> cartasRecibidas = snapshot.data ?? [];
-                return Container(
-                  height: screenSize.height,
-                  child: ListView.builder(
-                    itemCount: cartasRecibidas.length,
-                    itemBuilder: (context, index) {
-                      if (cartasRecibidas[index]
-                          .openDate
-                          .isAfter(DateTime.now())) {
-                        return CapsulaCerrada(
-                          capsula: cartasRecibidas[index],
-                        );
-                      } else {
-                        return CapsulaAbierta(capsula: cartasRecibidas[index]);
-                      }
-                    },
-                  ),
-                );
-              }
-            },
+    return StreamBuilder<List<Capsule>>(
+      stream: _cartasRecibidasController.stream,
+      initialData: _cartasRecibidas,
+      builder: (context, snapshot) {
+        return SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                height: screenSize.height,
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    if (snapshot.data![index].openDate
+                        .isAfter(DateTime.now())) {
+                      return CapsulaCerrada(
+                        capsula: snapshot.data![index],
+                      );
+                    } else {
+                      return CapsulaAbierta(capsula: snapshot.data![index]);
+                    }
+                  },
+                ),
+              ),
+              Positioned(
+                bottom: 170,
+                right: 8.0,
+                child: BotonCrearCapsula(),
+              ),
+            ],
           ),
-          Positioned(
-            bottom: 170,
-            right: 8.0,
-            child: BotonCrearCapsula(),
-          ),
-        ],
-      ),
+        );
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    _cartasRecibidasController.close();
+    super.dispose();
   }
 }
 
