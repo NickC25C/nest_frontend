@@ -1,13 +1,19 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/capsule.dart';
+import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:nest_fronted/widgets/foto.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../main.dart';
+import '../models/note.dart';
+import '../models/picture.dart';
+import '../models/publication.dart';
+import '../widgets/publication_widget.dart';
 
 const tituloScreen = 'Título Capsula';
 bool open = false;
@@ -25,6 +31,30 @@ class CapsulaAbiertaScreen extends StatefulWidget {
 }
 
 class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
+  late List<Publication> publis = [];
+  int selectedIndex = 0;
+
+  Future<List<Publication>> initializePublis() async {
+    Completer<List<Publication>> completer = Completer();
+
+    try {
+      if(publis.isEmpty){
+        publis = await api.getPublications(widget.capsula.id);
+      }
+
+      completer.complete(publis);
+    } catch (error) {
+      completer.completeError(error);
+    }
+    return completer.future;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initializePublis();
+  }
+
   _buildContentView() {
     setState(() {
       open = !open;
@@ -42,89 +72,108 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
   }
 
   Widget _buildPhotoView() {
-    return PhotoView(
-      imageProvider: AssetImage('assets/images/rata.png'),
-    );
+    Picture fotita = publis[selectedIndex] as Picture;
+    return PhotoView(imageProvider: NetworkImage(fotita.image!.path));
   }
 
   Widget _buildNoteViewContent() {
+    Note notita = publis[selectedIndex] as Note;
     return Container(
+      color: Colors.white,
       padding: EdgeInsets.all(16.0),
-      color: actual.colorScheme.background,
-      child: const Center(
+      child: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'SALUDO',
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textScaleFactor: 2,
-          ),
-          Text(
-            'La porroflexia es una técnica que consiste en crear formas y estructuras'
-            ' a partir del liado de porros de marihuana. Esta técnica, que requiere de '
-            'habilidades manuales y una gran dosis de creatividad, ha evolucionado hasta '
-            'convertirse en una verdadera forma de arte. A través de la porroflexia, se pueden'
-            ' crear figuras y formas de todo tipo, desde animales hasta aviones, pasando por personajes '
-            'de ficción y elementos de la naturaleza.',
-            style: TextStyle(fontSize: 18.0),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'De: PEPA',
+                notita.title,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textScaleFactor: 2,
+              ),
+              Text(
+                notita.message,
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'De: ${notita.owner.username}',
+                  )
+                ],
               )
             ],
-          )
-        ],
-      )),
+          )),
     );
   }
 
+  @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-
-    if (open) {
-      return GestureDetector(
-        onTap: () => {_buildContentView()},
-        child: Container(
-          height: screenSize.height,
-          width: double.infinity,
-          child: _buildPhotoView(),
-        ),
-      );
-    } else if (openNote) {
-      return GestureDetector(
-        onTap: () => {_buildNoteView()},
-        child: Container(
-          height: screenSize.height,
-          width: double.infinity,
-          child: _buildNoteViewContent(),
-        ),
-      );
-    } else {
-      return Card(
-        color: actual.colorScheme.background,
-        child: Stack(
-          children: <Widget>[
-            capsula(),
-            BackdropFilter(
-              filter:
-                  ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-              child: Container(
-                color: Colors.black.withOpacity(_opacityLevel),
-              ),
-            )
-          ],
-        ),
-      );
-    }
+    return FutureBuilder<List<Publication>>(
+        future: initializePublis(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            if (open) {
+              return Card(
+                child: GestureDetector(
+                  onTap: () => {_buildContentView()},
+                  child: Container(
+                    height: 625,
+                    width: double.infinity,
+                    child: _buildPhotoView(),
+                  ),
+                ),
+              );
+            } else if (openNote) {
+              return Card(
+                child: GestureDetector(
+                  onTap: () => {_buildNoteView()},
+                  child: Container(
+                    height: 625,
+                    width: double.infinity,
+                    child: _buildNoteViewContent(),
+                  ),
+                ),
+              );
+            } else {
+              return Scaffold(
+                body: SingleChildScrollView(
+                  child: Stack(
+                    children: <Widget>[
+                      capsula(),
+                      BackdropFilter(
+                        filter:
+                        ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+                        child: Container(
+                          color: Colors.black.withOpacity(_opacityLevel),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+          }
+        });
   }
 
   Widget capsula() {
     return Column(
       children: [
+        BarraPublicar(titulo: widget.capsula.title),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+            widget.capsula.description,
+            style: TextStyle(
+                fontSize: 18.0,
+            ),
+          ),
+        ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           height: 600,
@@ -132,24 +181,28 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              ListView(
-                children: [
-                  GestureDetector(
-                    onTap: () => {_buildContentView()},
-                    child: Foto(
-                      file: File(''),
-                      username: '',
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => {_buildNoteView()},
-                    child: const Nota(
-                      tituloNota: 'SALUDO',
-                      mensaje: "",
-                      usu: 'PEPA',
-                    ),
-                  ),
-                ],
+              ListView.builder(
+                itemCount: publis.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if(publis[index].publiType == PublicationType.note){
+                    return GestureDetector(
+                      onTap: () {
+                        _buildNoteView();
+                        selectedIndex = index;
+                      },
+                      child: PublicationWidget(pub: publis[index]),
+                    );
+                  }
+                  else{
+                    return GestureDetector(
+                      onTap: () {
+                        _buildContentView();
+                        selectedIndex = index;
+                      },
+                      child: PublicationWidget(pub: publis[index]),
+                    );
+                  }
+                },
               ),
             ],
           ),

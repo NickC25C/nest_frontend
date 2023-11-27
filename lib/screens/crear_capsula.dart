@@ -45,14 +45,6 @@ class _CrearCapsulaState extends State<CrearCapsula> {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Titulo(),
             ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0),
-              child: EscogerPortada(
-                onImageSelected: _updateImage,
-                selectedImage: _selectedImage,
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: EscribirDescripcion(),
@@ -74,55 +66,6 @@ class _CrearCapsulaState extends State<CrearCapsula> {
           ],
         ),
       ),
-    );
-  }
-}
-
-// Escoger foto de portada
-class EscogerPortada extends StatelessWidget {
-  final Function(File) onImageSelected;
-  final File? selectedImage;
-
-  const EscogerPortada({
-    Key? key,
-    required this.onImageSelected,
-    required this.selectedImage,
-  }) : super(key: key);
-
-  Future<void> _pickImage(BuildContext context) async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      onImageSelected(File(image.path));
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ElevatedButton.icon(
-          onPressed: () async {
-            await _pickImage(context);
-          },
-          icon: Icon(Icons.photo),
-          label: Text('Añadir foto'),
-        ),
-        SizedBox(width: 16),
-        //mostrar la fotito
-        selectedImage != null
-            ? Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Image.file(selectedImage!),
-              )
-            : Container(),
-      ],
     );
   }
 }

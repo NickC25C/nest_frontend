@@ -17,14 +17,14 @@ class CapsulaScreen extends StatefulWidget {
 }
 
 class _CapsulaScreenState extends State<CapsulaScreen> {
-  late List<Capsule> _cartasRecibidas;
-  late StreamController<List<Capsule>> _cartasRecibidasController;
+  late List<Capsule> _capsulasRecibidas;
+  late StreamController<List<Capsule>> _capsulasRecibidasController;
 
   @override
   void initState() {
     super.initState();
-    _cartasRecibidas = [];
-    _cartasRecibidasController = StreamController<List<Capsule>>.broadcast();
+    _capsulasRecibidas = [];
+    _capsulasRecibidasController = StreamController<List<Capsule>>.broadcast();
     _initializeCapsules();
 
     // Iniciar un temporizador para actualizar la lista cada 30 segundos
@@ -35,8 +35,8 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
 
   Future<void> _initializeCapsules() async {
     try {
-      _cartasRecibidas = await api.getCapsulesByUserId(api.loggedUser.id);
-      _cartasRecibidasController.add(_cartasRecibidas);
+      _capsulasRecibidas = await api.getCapsulesByUserId(api.loggedUser.id);
+      _capsulasRecibidasController.add(_capsulasRecibidas);
     } catch (error) {
       print('Error al cargar las cápsulas: $error');
     }
@@ -47,13 +47,13 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
       List<Capsule> nuevasCapsulas =
           await api.getCapsulesByUserId(api.loggedUser.id);
 
-      if (_cartasRecibidas != nuevasCapsulas) {
+      if (_capsulasRecibidas != nuevasCapsulas) {
         setState(() {
-          _cartasRecibidas = nuevasCapsulas;
+          _capsulasRecibidas = nuevasCapsulas;
         });
 
         // Agregar las nuevas cápsulas al stream
-        _cartasRecibidasController.add(_cartasRecibidas);
+        _capsulasRecibidasController.add(_capsulasRecibidas);
       }
     } catch (error) {
       print('Error al cargar las cápsulas: $error');
@@ -65,14 +65,14 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
     Size screenSize = MediaQuery.of(context).size;
 
     return StreamBuilder<List<Capsule>>(
-      stream: _cartasRecibidasController.stream,
-      initialData: _cartasRecibidas,
+      stream: _capsulasRecibidasController.stream,
+      initialData: _capsulasRecibidas,
       builder: (context, snapshot) {
         return SingleChildScrollView(
           child: Stack(
             children: [
               Container(
-                height: screenSize.height - 135,
+                height: screenSize.height - 160,
                 child: ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
@@ -101,7 +101,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
 
   @override
   void dispose() {
-    _cartasRecibidasController.close();
+    _capsulasRecibidasController.close();
     super.dispose();
   }
 }
