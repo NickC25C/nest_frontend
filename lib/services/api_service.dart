@@ -484,28 +484,23 @@ class ApiService {
     Picture? p;
     await uploadImage(picture.image, picture.description, [])
         .then((value) => p = value);
-    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications?publicationId=${p!.id}');
+    final url = Uri.parse(
+        '$baseUrl/capsules/$capsuleId/publications?publicationId=${p!.id}');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
     );
-    print('aqui');
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    print('File uploaded ${p?.id}...');
-    print('Response from uploadImage: $p');
-    print('son cosas');
 
     if (response.statusCode != 200) {
       throw Exception('Failed to add publication to capsule');
     }
   }
 
-  Future<void> addNoteToCapsule(Note note, String capsuleId) async
-  {
+  Future<void> addNoteToCapsule(Note note, String capsuleId) async {
     Note? p;
     await createNote(note).then((value) => p = value);
-    final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications?publicationId=${p!.id}');
+    final url = Uri.parse(
+        '$baseUrl/capsules/$capsuleId/publications?publicationId=${p!.id}');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

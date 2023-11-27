@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/models/capsule.dart';
 import 'package:nest_fronted/screens/pub_imagen_cap.dart';
 import 'package:nest_fronted/screens/pub_nota_capsula.dart';
@@ -39,33 +40,39 @@ class CapsulaCerradaScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              BotonAnyadirFoto(
-                  capsula: capsula
-              ),
-              BotonAnyadirNota(
+              BotonAnyadir(
                 capsula: capsula,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      child: PubNotaCapsula(
+                        capsula: capsula,
+                      ),
+                      type: PageTransitionType.fade,
+                    ),
+                  );
+                },
+                icon: Icon(Icons.text_snippet),
+              ),
+              BotonAnyadir(
+                capsula: capsula,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      child: PubImagenCapScreen(
+                        capsula: capsula,
+                      ),
+                      type: PageTransitionType.fade,
+                    ),
+                  );
+                },
+                icon: Icon(Icons.photo),
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class Foteque extends StatelessWidget {
-  const Foteque({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height:
-          MediaQuery.of(context).size.height / 4, // ocupa 1/4 de la pantalla
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/rata.png'),
-          fit: BoxFit.cover,
-        ),
       ),
     );
   }
@@ -78,7 +85,9 @@ class BotonAtras extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.arrow_circle_left, size: 30),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
   }
 }
@@ -135,45 +144,29 @@ class BarraDivisoria extends StatelessWidget {
   }
 }
 
-class BotonAnyadirNota extends StatelessWidget {
+class BotonAnyadir extends StatelessWidget {
   final Capsule capsula;
-  const BotonAnyadirNota({Key? key, required this.capsula}) : super(key: key);
+  final Function() onPressed;
+  final Icon icon;
+  const BotonAnyadir(
+      {Key? key,
+      required this.capsula,
+      required this.onPressed,
+      required this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          PageTransition(
-            child: PubNotaCapsula(
-              capsula: capsula,
-            ),
-            type: PageTransitionType.fade,
-          ),
-        );
-      },
-      child: Icon(Icons.text_snippet),
-    );
-  }
-}
-
-class BotonAnyadirFoto extends StatelessWidget {
-  final Capsule capsula;
-  const BotonAnyadirFoto({Key? key, required this.capsula}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PubImagenCapScreen(),
-          ),
-        );
-      },
-      child: Icon(Icons.image_outlined),
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: actual.colorScheme.secondary, // Color del círculo de fondo
+      ),
+      child: IconButton(
+        icon: icon,
+        color: actual.colorScheme.onSecondary,
+        onPressed: onPressed,
+      ),
     );
   }
 }

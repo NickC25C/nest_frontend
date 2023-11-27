@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/models/capsule.dart';
 import 'package:nest_fronted/models/picture.dart';
 import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
@@ -11,14 +12,19 @@ const tituloScreen = 'PUBLICAR IMAGEN';
 Titulo titulete = const Titulo();
 
 class PubImagenCapScreen extends StatelessWidget {
-  const PubImagenCapScreen({super.key});
+  final Capsule capsula;
+  const PubImagenCapScreen({super.key, required this.capsula});
   @override
   Widget build(BuildContext context) {
-    return ImagenScreen();
+    return ImagenScreen(
+      capsula: capsula,
+    );
   }
 }
 
 class ImagenScreen extends StatefulWidget {
+  final Capsule capsula;
+  const ImagenScreen({super.key, required this.capsula});
   @override
   _ImagenScreen createState() => _ImagenScreen();
 }
@@ -69,6 +75,7 @@ class _ImagenScreen extends State<ImagenScreen> {
               padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
               child: BotonCrear(
                 imageToPub: _selectedImagen,
+                capsula: widget.capsula,
               ),
             ),
           ],
@@ -213,10 +220,12 @@ class AnyadirImagen extends StatelessWidget {
 }
 
 class BotonCrear extends StatelessWidget {
+  final Capsule capsula;
   final File? imageToPub;
   const BotonCrear({
     super.key,
     this.imageToPub,
+    required this.capsula,
   });
 
   @override
@@ -243,7 +252,7 @@ class BotonCrear extends StatelessWidget {
                     image: imageToPub!,
                     watchers: [],
                   ),
-                  '9470c3e3-7a06-43b5-88de-27fb16fda592',
+                  capsula.id,
                 );
               }
               Navigator.pop(context);
