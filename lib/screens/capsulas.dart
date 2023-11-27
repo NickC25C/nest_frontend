@@ -65,7 +65,9 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                       if (cartasRecibidas[index]
                           .openDate
                           .isAfter(DateTime.now())) {
-                        return CapsulaCerrada();
+                        return CapsulaCerrada(
+                          capsula: cartasRecibidas[index],
+                        );
                       } else {
                         return CapsulaAbierta();
                       }
@@ -86,8 +88,51 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
   }
 }
 
-class CapsulaCerrada extends StatelessWidget {
-  const CapsulaCerrada({super.key});
+class CapsulaCerrada extends StatefulWidget {
+  final Capsule capsula;
+
+  const CapsulaCerrada({Key? key, required this.capsula}) : super(key: key);
+
+  @override
+  _CapsulaCerradaState createState() => _CapsulaCerradaState();
+}
+
+class _CapsulaCerradaState extends State<CapsulaCerrada> {
+  late StreamController<Duration> _durationController;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _durationController = StreamController<Duration>();
+    _updateDuration();
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      _updateDuration();
+    });
+  }
+
+  String _formatDuration(Duration duration) {
+    // Obtener las horas, minutos y segundos de la duración
+    int hours = duration.inHours;
+    int minutes = (duration.inMinutes % 60);
+    int seconds = (duration.inSeconds % 60);
+    String formattedDuration =
+        '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+
+    return formattedDuration;
+  }
+
+  @override
+  void dispose() {
+    _durationController.close();
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _updateDuration() {
+    Duration difference = widget.capsula.openDate.difference(DateTime.now());
+    _durationController.add(difference);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +171,7 @@ class CapsulaCerrada extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Títulin',
+                  widget.capsula.title,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -134,12 +179,21 @@ class CapsulaCerrada extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                Text(
-                  'CUENTA ATRAS',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
+                StreamBuilder<Duration>(
+                  stream: _durationController.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        _formatDuration(snapshot.data!),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      );
+                    } else {
+                      return Container(); // Puedes mostrar un indicador de carga aquí si lo deseas
+                    }
+                  },
                 ),
               ],
             ),
