@@ -28,46 +28,46 @@ class _CorreoScreenState extends State<CorreoScreen> {
 
     return SingleChildScrollView(
       child: Stack(
-          children: [
-            FutureBuilder<List<Letter>>(
-              future: _cartasRecibidasFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  // Mientras se carga, puedes mostrar un indicador de carga.
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  // En caso de error, muestra un mensaje de error.
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  // Si la operación es exitosa, construye el ListView.
-                  List<Letter> cartasRecibidas = snapshot.data ?? [];
-                  return Container(
-                    height: screenSize.height - 150,
-                    child: ListView.builder(
-                      itemCount: cartasRecibidas.length,
-                      itemBuilder: (context, index) {
-                        if (cartasRecibidas[index].opened) {
-                          return CartasAbiertas(
-                            carta: cartasRecibidas[index],
-                          );
-                        } else {
-                          return CartasCerradas(
-                            carta: cartasRecibidas[index],
-                          );
-                        }
-                      },
-                    ),
-                  );
-                }
-              },
-            ),
-            Positioned(
-              bottom: 20,
-              right: 8.0,
-              child: BotonEnviarCarta(),
-            ),
-          ],
-        ),
+        children: [
+          FutureBuilder<List<Letter>>(
+            future: _cartasRecibidasFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Mientras se carga, puedes mostrar un indicador de carga.
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                // En caso de error, muestra un mensaje de error.
+                return Text('Error: ${snapshot.error}');
+              } else {
+                // Si la operación es exitosa, construye el ListView.
+                List<Letter> cartasRecibidas = snapshot.data ?? [];
+                return Container(
+                  height: screenSize.height - 150,
+                  child: ListView.builder(
+                    itemCount: cartasRecibidas.length,
+                    itemBuilder: (context, index) {
+                      if (cartasRecibidas[index].opened) {
+                        return CartasAbiertas(
+                          carta: cartasRecibidas[index],
+                        );
+                      } else {
+                        return CartasCerradas(
+                          carta: cartasRecibidas[index],
+                        );
+                      }
+                    },
+                  ),
+                );
+              }
+            },
+          ),
+          Positioned(
+            bottom: 20,
+            right: 8.0,
+            child: BotonEnviarCarta(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -98,7 +98,7 @@ class CartasAbiertas extends StatelessWidget {
       },
       elevation: 2.0,
       // Altura de la sombra del botón
-      fillColor: actual.colorScheme.secondary,
+      fillColor: actual.colorScheme.primary,
       // Color de fondo del botón
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0), // Bordes redondeados
@@ -114,7 +114,7 @@ class CartasAbiertas extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             CircleAvatar(
-              backgroundColor: actual.colorScheme.onSecondary,
+              backgroundColor: actual.colorScheme.secondary,
               radius: 35,
               backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
             ),
@@ -126,7 +126,7 @@ class CartasAbiertas extends StatelessWidget {
                       .firstWhere((element) => element.id == carta.originUserId)
                       .username,
                   style: TextStyle(
-                      color: actual.colorScheme.onSecondary,
+                      color: actual.colorScheme.onPrimary,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
@@ -136,7 +136,7 @@ class CartasAbiertas extends StatelessWidget {
                 Text(
                   carta.title,
                   style: TextStyle(
-                    color: actual.colorScheme.onSecondary,
+                    color: actual.colorScheme.secondary,
                     fontSize: 14,
                   ),
                 ),
@@ -173,7 +173,9 @@ class CartasCerradas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: () {
+      onPressed: () async {
+        await api.updateLetter(carta.id, carta);
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           PageTransition(
