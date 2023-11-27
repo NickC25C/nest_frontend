@@ -207,15 +207,15 @@ class BotonCrearCapsula extends StatelessWidget {
       ),
     );
   }
-  void crearCapsula() async {
 
+  void crearCapsula() async {
     await listadito.getIds();
 
     Capsule capsulita = Capsule(
       id: "",
       title: titulin.darValor(),
       description: descripcion,
-      openDate: fecha,
+      openDate: DateTime.parse(fecha),
       members: ids,
     );
     api.createCapsule(capsulita, ids);

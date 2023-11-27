@@ -62,7 +62,13 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                   child: ListView.builder(
                     itemCount: cartasRecibidas.length,
                     itemBuilder: (context, index) {
-                      return CapsulaCerrada();
+                      if (cartasRecibidas[index]
+                          .openDate
+                          .isAfter(DateTime.now())) {
+                        return CapsulaCerrada();
+                      } else {
+                        return CapsulaAbierta();
+                      }
                     },
                   ),
                 );
@@ -217,30 +223,30 @@ class BotonCrearCapsula extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            PageTransition(
-              child: CrearCapsula(),
-              type: PageTransitionType.fade,
-            ),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
+      onPressed: () {
+        Navigator.push(
+          context,
+          PageTransition(
+            child: CrearCapsula(),
+            type: PageTransitionType.fade,
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
+          'Crear Cápsula',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            'Crear Cápsula',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+      ),
     );
   }
 }

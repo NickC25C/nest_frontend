@@ -12,7 +12,7 @@ import '../models/picture.dart';
 
 class ApiService {
   final String baseUrl =
-      'http://192.168.1.59:8080'; // para el movil desde casa es 192.168.1.59; para el emulador 10.0.2.2:8080; para el movil con los datos 192.168.108.97
+      'http://10.0.2.2:8080'; // para el movil desde casa es 192.168.1.59; para el emulador 10.0.2.2:8080; para el movil con los datos 192.168.108.97
   late User loggedUser;
 
   static final ApiService _instance = ApiService._internal();
@@ -424,13 +424,13 @@ class ApiService {
     }
   }
 
-
   //
   // Capsules
   //
 
   Future<List<Capsule>> getCapsulesByUserId(String userId) async {
-    final response = await http.get(Uri.parse('$baseUrl/capsules/user/$userId'));
+    final response =
+        await http.get(Uri.parse('$baseUrl/capsules/user/$userId'));
     if (response.statusCode == 200) {
       List<dynamic> capsulesJson = jsonDecode(response.body);
       return capsulesJson.map((json) => Capsule.fromJson(json)).toList();
@@ -449,25 +449,26 @@ class ApiService {
   }
 
   Future<List<Publication>> getPublications(String capsuleId) async {
-    final response = await http.get(Uri.parse('$baseUrl/capsules/$capsuleId/publications'));
+    final response =
+        await http.get(Uri.parse('$baseUrl/capsules/$capsuleId/publications'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = await json.decode(response.body);
       List<Publication> feed = List.empty(growable: true);
       await Future.wait(data.map((element) async {
         await getUser(element['ownerId']
-            .toString()
-            .replaceAll("(", "")
-            .replaceAll(")", ""))
+                .toString()
+                .replaceAll("(", "")
+                .replaceAll(")", ""))
             .then((value) => {
-          if (element['publiType'].toString() == 'Note')
-            {feed.add(Publication.fromJson(element, value, null))}
-          else
-            {
-              feed.add(Publication.fromJson(
-                  element, value, File(element['url'])))
-            }
-        });
+                  if (element['publiType'].toString() == 'Note')
+                    {feed.add(Publication.fromJson(element, value, null))}
+                  else
+                    {
+                      feed.add(Publication.fromJson(
+                          element, value, File(element['url'])))
+                    }
+                });
       }));
 
       return feed;
@@ -476,10 +477,10 @@ class ApiService {
     }
   }
 
-  Future<void> addPictureToCapsule(Picture picture, String capsuleId) async
-  {
+  Future<void> addPictureToCapsule(Picture picture, String capsuleId) async {
     Picture? p;
-    await uploadImage(picture.image, picture.description, []).then((value) => p = value);
+    await uploadImage(picture.image, picture.description, [])
+        .then((value) => p = value);
     final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications');
     final response = await http.post(
       url,
@@ -492,8 +493,7 @@ class ApiService {
     }
   }
 
-  Future<void> addNoteToCapsule(Note note, String capsuleId) async
-  {
+  Future<void> addNoteToCapsule(Note note, String capsuleId) async {
     Note? p;
     await createNote(note).then((value) => p = value);
     final url = Uri.parse('$baseUrl/capsules/$capsuleId/publications');
@@ -502,8 +502,6 @@ class ApiService {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'publicationId': p?.id}),
     );
-
-
 
     if (response.statusCode != 200) {
       throw Exception('Failed to add publication to capsule');
@@ -525,5 +523,4 @@ class ApiService {
       throw Exception('Failed to create capsule');
     }
   }
-
 }
