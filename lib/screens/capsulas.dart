@@ -72,7 +72,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
           child: Stack(
             children: [
               Container(
-                height: screenSize.height,
+                height: screenSize.height - 135,
                 child: ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
@@ -88,7 +88,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                 ),
               ),
               Positioned(
-                bottom: 170,
+                bottom: 0,
                 right: 8.0,
                 child: BotonCrearCapsula(),
               ),
