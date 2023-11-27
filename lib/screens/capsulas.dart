@@ -69,7 +69,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                           capsula: cartasRecibidas[index],
                         );
                       } else {
-                        return CapsulaAbierta();
+                        return CapsulaAbierta(capsula: cartasRecibidas[index]);
                       }
                     },
                   ),
@@ -137,12 +137,7 @@ class _CapsulaCerradaState extends State<CapsulaCerrada> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/rata.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
+      decoration: BoxDecoration(),
       child: Opacity(
         opacity: 0.6,
         child: Container(
@@ -152,7 +147,9 @@ class _CapsulaCerradaState extends State<CapsulaCerrada> {
               Navigator.push(
                 context,
                 PageTransition(
-                  child: CapsulaCerradaScreen(),
+                  child: CapsulaCerradaScreen(
+                    capsula: widget.capsula,
+                  ),
                   type: PageTransitionType.fade,
                 ),
               );
@@ -205,11 +202,17 @@ class _CapsulaCerradaState extends State<CapsulaCerrada> {
 }
 
 class CapsulaAbierta extends StatelessWidget {
-  const CapsulaAbierta({Key? key}) : super(key: key);
+  final Capsule capsula;
+  const CapsulaAbierta({Key? key, required this.capsula}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double anchoImagen = 150.0;
+    String txt;
+    if (capsula.description.length <= 40) {
+      txt = capsula.description;
+    } else {
+      txt = '${capsula.description.substring(0, 39)}...';
+    }
     return Container(
       height: 150.0,
       width: double.infinity,
@@ -218,7 +221,9 @@ class CapsulaAbierta extends StatelessWidget {
           Navigator.push(
             context,
             PageTransition(
-              child: CapsulaAbiertaScreen(),
+              child: CapsulaAbiertaScreen(
+                capsula: capsula,
+              ),
               type: PageTransitionType.fade,
             ),
           );
@@ -232,30 +237,24 @@ class CapsulaAbierta extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset(
-              'assets/images/rata.png',
-              fit: BoxFit.cover,
-              width: anchoImagen,
-              height: double.infinity,
-            ),
             SizedBox(width: 16.0),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 8.0),
                   Text(
-                    'Títulin Titulon',
+                    capsula.title,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 19,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  SizedBox(height: 30.0),
                   Text(
-                    'Las pirámides, son grandes y puntiagudas',
+                    txt,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 17,

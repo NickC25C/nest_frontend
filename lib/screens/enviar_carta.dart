@@ -110,6 +110,7 @@ class BotonCrear extends StatelessWidget {
             onPressed: () {
               crearCarta();
               print('putoooo');
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.send,

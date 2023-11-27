@@ -188,6 +188,7 @@ class BotonCrearCapsula extends StatelessWidget {
             onPressed: () {
               crearCapsula();
               print('pimpampum');
+              Navigator.pop(context);
               //cositas
             },
             icon: Icon(
@@ -218,6 +219,6 @@ class BotonCrearCapsula extends StatelessWidget {
       openDate: DateTime.parse(fecha),
       members: ids,
     );
-    api.createCapsule(capsulita, ids);
+    await api.createCapsule(capsulita, ids);
   }
 }

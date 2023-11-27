@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:nest_fronted/models/capsule.dart';
 import 'package:nest_fronted/widgets/foto.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 import 'package:photo_view/photo_view.dart';
@@ -15,7 +16,9 @@ double _opacityLevel = 0;
 double _sigmaLevel = 0;
 
 class CapsulaAbiertaScreen extends StatefulWidget {
-  const CapsulaAbiertaScreen({Key? key}) : super(key: key);
+  final Capsule capsula;
+  const CapsulaAbiertaScreen({Key? key, required this.capsula})
+      : super(key: key);
 
   @override
   CapsulaAbiertaState createState() => CapsulaAbiertaState();
