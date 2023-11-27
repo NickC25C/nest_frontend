@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/capsule.dart';
+import 'package:nest_fronted/screens/pub_nota_capsula.dart';
+import 'package:page_transition/page_transition.dart';
 
 class CapsulaCerradaScreen extends StatelessWidget {
   final Capsule capsula;
@@ -15,12 +17,7 @@ class CapsulaCerradaScreen extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Foteque(),
-              Positioned(
-                top: 0,
-                left: 16,
-                child: BotonAtras(),
-              ),
+              BotonAtras(),
             ],
           ),
           Titulo(
@@ -41,7 +38,9 @@ class CapsulaCerradaScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              BotonAnyadir(),
+              BotonAnyadir(
+                capsula: capsula,
+              ),
             ],
           ),
         ],
@@ -133,13 +132,24 @@ class BarraDivisoria extends StatelessWidget {
 }
 
 class BotonAnyadir extends StatelessWidget {
-  const BotonAnyadir({Key? key}) : super(key: key);
+  final Capsule capsula;
+  const BotonAnyadir({Key? key, required this.capsula}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
-      child: Icon(Icons.add),
+      onPressed: () {
+        Navigator.push(
+          context,
+          PageTransition(
+            child: PubNotaCapsula(
+              capsula: capsula,
+            ),
+            type: PageTransitionType.fade,
+          ),
+        );
+      },
+      child: Icon(Icons.text_snippet),
     );
   }
 }
