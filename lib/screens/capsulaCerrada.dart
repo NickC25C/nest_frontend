@@ -37,9 +37,12 @@ class CapsulaCerradaScreen extends StatelessWidget {
           BarraDivisoria(),
           SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              BotonAnyadir(
+              BotonAnyadirFoto(
+                  capsula: capsula
+              ),
+              BotonAnyadirNota(
                 capsula: capsula,
               ),
             ],
@@ -132,9 +135,32 @@ class BarraDivisoria extends StatelessWidget {
   }
 }
 
-class BotonAnyadir extends StatelessWidget {
+class BotonAnyadirNota extends StatelessWidget {
   final Capsule capsula;
-  const BotonAnyadir({Key? key, required this.capsula}) : super(key: key);
+  const BotonAnyadirNota({Key? key, required this.capsula}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          PageTransition(
+            child: PubNotaCapsula(
+              capsula: capsula,
+            ),
+            type: PageTransitionType.fade,
+          ),
+        );
+      },
+      child: Icon(Icons.text_snippet),
+    );
+  }
+}
+
+class BotonAnyadirFoto extends StatelessWidget {
+  final Capsule capsula;
+  const BotonAnyadirFoto({Key? key, required this.capsula}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,17 +172,8 @@ class BotonAnyadir extends StatelessWidget {
             builder: (context) => PubImagenCapScreen(),
           ),
         );
-        /*Navigator.push(
-          context,
-          PageTransition(
-            child: PubNotaCapsula(
-              capsula: capsula,
-            ),
-            type: PageTransitionType.fade,
-          ),
-        );*/
       },
-      child: Icon(Icons.text_snippet),
+      child: Icon(Icons.image_outlined),
     );
   }
 }
