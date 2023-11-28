@@ -15,22 +15,64 @@ class ConfiguracionScreen extends StatelessWidget {
           SizedBox(
             height: 250.0,
           ),
-          CambiarUser(),
+          CambiarUser1(),
+          CambiarUser2(),
+          CambiarUser3(),
+          CambiarUser4(),
         ]),
       ),
     );
   }
 }
 
-class CambiarUser extends StatelessWidget {
-  const CambiarUser({Key? key}) : super(key: key);
+class CambiarUser1 extends StatelessWidget {
+  const CambiarUser1({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        api.loggedUser = await api.getUserByUsername('g4net');
+      },
+      child: Text('Cambiar Guillem'),
+    );
+  }
+}
+
+class CambiarUser2 extends StatelessWidget {
+  const CambiarUser2({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
         api.loggedUser = await api.getUserByUsername('El_nicoloau');
       },
-      child: Text('Cambiar Usuario'),
+      child: Text('Cambiar Nick'),
+    );
+  }
+}
+
+class CambiarUser3 extends StatelessWidget {
+  const CambiarUser3({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        api.loggedUser = await api.getUserByUsername('LaBeas');
+      },
+      child: Text('Cambiar Bea'),
+    );
+  }
+}
+
+class CambiarUser4 extends StatelessWidget {
+  const CambiarUser4({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        api.loggedUser = await api.getUserByUsername('Reshulon21');
+      },
+      child: Text('Cambiar Lanza'),
     );
   }
 }
