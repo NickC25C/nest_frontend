@@ -8,7 +8,7 @@ import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 
-const tituloScreen = 'PUBLICAR IMAGEN';
+const tituloScreen = 'SUBIR IMAGEN';
 Titulo titulete = const Titulo();
 
 class PubImagenCapScreen extends StatelessWidget {
@@ -72,7 +72,7 @@ class _ImagenScreen extends State<ImagenScreen> {
               child: titulete,
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+              padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
               child: BotonCrear(
                 imageToPub: _selectedImagen,
                 capsula: widget.capsula,

@@ -37,40 +37,43 @@ class CapsulaCerradaScreen extends StatelessWidget {
           SizedBox(height: 16),
           BarraDivisoria(),
           SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              BotonAnyadir(
-                capsula: capsula,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      child: PubNotaCapsula(
-                        capsula: capsula,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                BotonAnyadir(
+                  capsula: capsula,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: PubNotaCapsula(
+                          capsula: capsula,
+                        ),
+                        type: PageTransitionType.fade,
                       ),
-                      type: PageTransitionType.fade,
-                    ),
-                  );
-                },
-                icon: Icon(Icons.text_snippet),
-              ),
-              BotonAnyadir(
-                capsula: capsula,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      child: PubImagenCapScreen(
-                        capsula: capsula,
+                    );
+                  },
+                  icon: Icon(Icons.text_snippet),
+                ),
+                BotonAnyadir(
+                  capsula: capsula,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: PubImagenCapScreen(
+                          capsula: capsula,
+                        ),
+                        type: PageTransitionType.fade,
                       ),
-                      type: PageTransitionType.fade,
-                    ),
-                  );
-                },
-                icon: Icon(Icons.photo),
-              ),
-            ],
+                    );
+                  },
+                  icon: Icon(Icons.photo),
+                ),
+              ],
+            ),
           ),
         ],
       ),

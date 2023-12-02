@@ -9,7 +9,7 @@ import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:image_picker/image_picker.dart';
 
-const tituloScreen = 'Crear Cápkkksula';
+const tituloScreen = 'CREAR CÁPSULA';
 int selectedIndex = 0;
 Titulo titulin = Titulo();
 Listado listadito = Listado();
