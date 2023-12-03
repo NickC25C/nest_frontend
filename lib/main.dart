@@ -218,37 +218,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      appBar: AppBar(
-        title: Text(
-          _nombresitos[_currentIndex],
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        leading: GestureDetector(
-          onTap: openDrawer,
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: 18,
-            child: Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: actual.colorScheme.surface,
-                  border: Border.all(
-                    color: actual.colorScheme.onPrimary,
-                    width: 2.0,
-                  )),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/PAJAROTOS.png',
-                  width: 40, // Ancho deseado de la imagen
-                  height: 40, // Alto deseado de la imagen
-                  fit: BoxFit
-                      .cover, // Puedes ajustar el ajuste de la imagen según tus necesidades
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: _children[_currentIndex], // Mostramos el widget según el índice
       ),
@@ -256,33 +225,34 @@ class _MyHomePageState extends State<MyHomePage> {
           type: BottomNavigationBarType.shifting,
           currentIndex: _currentIndex,
           onTap: onTabTapped,
-          elevation: 0,
+          elevation: 16,
           selectedItemColor: actual.colorScheme.primary,
           unselectedItemColor: actual.colorScheme.onPrimary,
+
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               activeIcon: Icon(Icons.home_filled, color: actual.colorScheme.primary),
               label: 'Home',
-              backgroundColor: actual.colorScheme.background,
+              backgroundColor: actual.colorScheme.surface,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
               activeIcon: Icon(Icons.saved_search, color: actual.colorScheme.primary),
               label: 'Search',
-              backgroundColor: actual.colorScheme.background,
+              backgroundColor: actual.colorScheme.surface,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.email_outlined),
               activeIcon: Icon(Icons.email_rounded, color: actual.colorScheme.primary),
               label: 'Mail',
-              backgroundColor: actual.colorScheme.background,
+              backgroundColor: actual.colorScheme.surface,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.hourglass_top),
               activeIcon: Icon(Icons.hourglass_bottom, color: actual.colorScheme.primary),
               label: 'Capsule',
-              backgroundColor: actual.colorScheme.background,
+              backgroundColor: actual.colorScheme.surface,
             ),
           ]),
     );

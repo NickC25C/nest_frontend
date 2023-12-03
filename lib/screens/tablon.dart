@@ -182,21 +182,54 @@ class TablonState extends State<TablonScreen> {
                 ),
               );
             } else {
-              return Stack(
-                children: <Widget>[
-                  tablon(),
-                  BackdropFilter(
-                    filter: ImageFilter.blur(
-                        sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-                    child: Container(
-                      color: Colors.black.withOpacity(_opacityLevel),
-                    ),
-                  )
-                ],
+              return SingleChildScrollView(
+                child: Stack(
+                  children: <Widget>[
+                    tablon(),
+                    BackdropFilter(
+                      filter: ImageFilter.blur(
+                          sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+                      child: Container(
+                        color: Colors.black.withOpacity(_opacityLevel),
+                      ),
+                    )
+                  ],
+                ),
               );
             }
           }
         });
+  }
+
+  String monthNumberToString(int month) {
+    switch (month) {
+      case 1:
+        return 'enero';
+      case 2:
+        return 'febrero';
+      case 3:
+        return 'marzo';
+      case 4:
+        return 'abril';
+      case 5:
+        return 'mayo';
+      case 6:
+        return 'junio';
+      case 7:
+        return 'julio';
+      case 8:
+        return 'agosto';
+      case 9:
+        return 'septiembre';
+      case 10:
+        return 'octubre';
+      case 11:
+        return 'noviembre';
+      case 12:
+        return 'diciembre';
+      default:
+        return 'mes no válido';
+    }
   }
 
   Widget tablon() {
@@ -205,6 +238,53 @@ class TablonState extends State<TablonScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Container(
+                        width: 150.0,
+                        child: Text(
+                          '¡Hola ' + api.loggedUser.name + '!',
+                          style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 180.0,
+                    width: 180.0,
+                    child: Image.asset('assets/images/pollo_deportivo.png')
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      'Tu tablón',
+                      style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 7.0
+                      ),
+                      Text(
+                          'Hoy, ' + DateTime.now().day.toString() + ' de ' + monthNumberToString(DateTime.now().month),
+                        style: TextStyle(fontSize: 16.0,),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
               child: Text(
