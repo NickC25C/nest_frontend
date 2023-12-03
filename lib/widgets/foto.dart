@@ -26,21 +26,26 @@ class _FotoState extends State<Foto> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text(
-        ownerName,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: SingleChildScrollView(
+        child: Column(children: [
+          Text(
+            ownerName,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          height: 300,
-          width: 300,
-          child: Image(
-            image: NetworkImage(image.path),
-            fit: BoxFit.cover,
-          ))
-    ]);
+          Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+              ),
+              height: 300,
+              width: 300,
+              child: Image(
+                image: NetworkImage(image.path),
+                fit: BoxFit.cover,
+              ))
+        ]),
+      ),
+    );
   }
 }

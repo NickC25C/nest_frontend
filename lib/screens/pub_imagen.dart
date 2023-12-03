@@ -121,7 +121,7 @@ class BotonIzquierdo extends StatelessWidget {
             ],
           ),
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
+            padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
             backgroundColor: actual.colorScheme.secondary,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -175,7 +175,7 @@ class BotonDerecho extends StatelessWidget {
           ],
         ),
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
+          padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
           backgroundColor: actual.colorScheme.secondary,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
