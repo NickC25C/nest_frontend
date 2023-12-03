@@ -19,7 +19,7 @@ import 'package:page_transition/page_transition.dart';
 
 List<User> usuarios = List.empty();
 ApiService api = ApiService();
-ThemeData actual = matcha;
+ThemeData actual = bellasArtes;
 void main() {
   //Poblar la base de datos con usuarios nuevos
   void enviarSolicitudAmistad() async {
@@ -257,32 +257,32 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _currentIndex,
           onTap: onTabTapped,
           elevation: 0,
-          selectedItemColor: actual.colorScheme.onPrimary,
+          selectedItemColor: actual.colorScheme.primary,
           unselectedItemColor: actual.colorScheme.onPrimary,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              activeIcon: Icon(Icons.home_filled),
+              activeIcon: Icon(Icons.home_filled, color: actual.colorScheme.primary),
               label: 'Home',
-              backgroundColor: actual.colorScheme.primary,
+              backgroundColor: actual.colorScheme.background,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              activeIcon: Icon(Icons.saved_search),
+              activeIcon: Icon(Icons.saved_search, color: actual.colorScheme.primary),
               label: 'Search',
-              backgroundColor: actual.colorScheme.primary,
+              backgroundColor: actual.colorScheme.background,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.email_outlined),
-              activeIcon: Icon(Icons.email_rounded),
+              activeIcon: Icon(Icons.email_rounded, color: actual.colorScheme.primary),
               label: 'Mail',
-              backgroundColor: actual.colorScheme.primary,
+              backgroundColor: actual.colorScheme.background,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.hourglass_top),
-              activeIcon: Icon(Icons.hourglass_bottom),
+              activeIcon: Icon(Icons.hourglass_bottom, color: actual.colorScheme.primary),
               label: 'Capsule',
-              backgroundColor: actual.colorScheme.primary,
+              backgroundColor: actual.colorScheme.background,
             ),
           ]),
     );

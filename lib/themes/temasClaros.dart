@@ -29,3 +29,18 @@ ThemeData matcha = ThemeData.from(
   surface: Color(0xff8CA26F),
   onSurface: Colors.black,
 ));
+
+ThemeData bellasArtes = ThemeData.from(
+    colorScheme: const ColorScheme(
+      brightness: Brightness.light,
+      primary: Color(0xffAE93FF),
+      onPrimary: Color(0xff080E00),
+      secondary: Color(0xff8574EE),
+      onSecondary: Color(0xffF9F9F9),
+      error: Colors.white,
+      onError: Colors.redAccent,
+      background: Color(0xffF9F9F9),
+      onBackground: Colors.black,
+      surface: Color(0xffffffff),
+      onSurface: Colors.black,
+    ));
