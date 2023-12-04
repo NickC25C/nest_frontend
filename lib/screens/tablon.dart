@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
-
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/models/picture.dart';
@@ -40,11 +40,15 @@ class TablonState extends State<TablonScreen> {
       publis = await api.getFeed(api.loggedUser.id);
 
       // Separar las publicaciones en listas de notas y fotos
-      if(notitas.isEmpty){
-        notitas = publis.where((pub) => pub.publiType == PublicationType.note).toList();
+      if (notitas.isEmpty) {
+        notitas = publis
+            .where((pub) => pub.publiType == PublicationType.note)
+            .toList();
       }
-      if(imagensitas.isEmpty){
-        imagensitas = publis.where((pub) => pub.publiType == PublicationType.picture).toList();
+      if (imagensitas.isEmpty) {
+        imagensitas = publis
+            .where((pub) => pub.publiType == PublicationType.picture)
+            .toList();
       }
       completer.complete(publis);
     } catch (error) {
@@ -57,6 +61,8 @@ class TablonState extends State<TablonScreen> {
   void initState() {
     super.initState();
     initializePublis();
+    _opacityLevel = 0.2;
+    _sigmaLevel = 10;
   }
 
   void publicar() {
@@ -70,7 +76,7 @@ class TablonState extends State<TablonScreen> {
     setState(() {
       open = !open;
       openNote =
-      false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
+          false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
     });
   }
 
@@ -78,7 +84,7 @@ class TablonState extends State<TablonScreen> {
     setState(() {
       openNote = !openNote;
       open =
-      false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
+          false; // Pa asegurarse de que la imagen esté cerrada al abrir la nota
     });
   }
 
@@ -115,7 +121,13 @@ class TablonState extends State<TablonScreen> {
 
   Widget _buildPhotoView() {
     Picture fotita = imagensitas[selectedIndexImage] as Picture;
-    return PhotoView(imageProvider: NetworkImage(fotita.image!.path));
+    return PhotoView(
+      imageProvider: NetworkImage(fotita.image!.path),
+      minScale: PhotoViewComputedScale.contained * 0.8,
+      maxScale: PhotoViewComputedScale.covered * 2,
+      initialScale: PhotoViewComputedScale.contained * 0.8,
+      backgroundDecoration: BoxDecoration(color: Colors.transparent),
+    );
   }
 
   Widget _buildNoteViewContent() {
@@ -125,28 +137,123 @@ class TablonState extends State<TablonScreen> {
       padding: EdgeInsets.all(16.0),
       child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            notita.title,
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textScaleFactor: 2,
+          ),
+          Text(
+            notita.message,
+            style: TextStyle(fontSize: 18.0),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                notita.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textScaleFactor: 2,
-              ),
-              Text(
-                notita.message,
-                style: TextStyle(fontSize: 18.0),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'De: ${notita.owner.username}',
-                  )
-                ],
+                'De: ${notita.owner.username}',
               )
             ],
-          )),
+          )
+        ],
+      )),
     );
+  }
+
+  Widget fotoAbierta() {
+    Picture fotita = imagensitas[selectedIndexImage] as Picture;
+    return Container(
+      width: 310,
+      height: 551,
+      child: Column(children: [
+        Row(
+          children: [
+            Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/bobby_formulario.png'),
+                      fit: BoxFit.fitWidth),
+                )),
+            Text(
+              '@' + fotita.owner.username,
+              textAlign: TextAlign.left,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        Container(
+          width: 310,
+          height: 491,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.1),
+                  offset: Offset(0, 1),
+                  blurRadius: 13)
+            ],
+            color: Color.fromRGBO(255, 255, 255, 1),
+          ),
+          child: Column(children: <Widget>[
+            Container(
+              width: 300,
+              height: 430,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: _buildPhotoView(),
+            ),
+            Text(
+              fotita.description,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 15, height: 1.5),
+            ),
+          ]),
+        )
+      ]),
+    );
+  }
+
+  Widget _building() {
+    if (open) {
+      return GestureDetector(
+          onTap: () => {_buildContentView()},
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              BackdropFilter(
+                filter:
+                    ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+              fotoAbierta()
+            ],
+          ));
+    } else if (openNote) {
+      return Card(
+        child: GestureDetector(
+          onTap: () => {_buildNoteView()},
+          child: Container(
+            height: 625,
+            width: double.infinity,
+            child: Stack(
+              children: [_buildNoteViewContent()],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Stack();
+    }
   }
 
   @override
@@ -159,44 +266,14 @@ class TablonState extends State<TablonScreen> {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            if (open) {
-              return Card(
-                child: GestureDetector(
-                  onTap: () => {_buildContentView()},
-                  child: Container(
-                    height: 625,
-                    width: double.infinity,
-                    child: _buildPhotoView(),
-                  ),
-                ),
-              );
-            } else if (openNote) {
-              return Card(
-                child: GestureDetector(
-                  onTap: () => {_buildNoteView()},
-                  child: Container(
-                    height: 625,
-                    width: double.infinity,
-                    child: _buildNoteViewContent(),
-                  ),
-                ),
-              );
-            } else {
-              return SingleChildScrollView(
-                child: Stack(
-                  children: <Widget>[
-                    tablon(),
-                    BackdropFilter(
-                      filter: ImageFilter.blur(
-                          sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-                      child: Container(
-                        color: Colors.black.withOpacity(_opacityLevel),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
+            return SingleChildScrollView(
+              child: Stack(
+                children: <Widget>[
+                  tablon(),
+                  _building(),
+                ],
+              ),
+            );
           }
         });
   }
@@ -239,7 +316,8 @@ class TablonState extends State<TablonScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
               child: Row(
                 children: [
                   Column(
@@ -251,15 +329,16 @@ class TablonState extends State<TablonScreen> {
                         width: 150.0,
                         child: Text(
                           '¡Hola ' + api.loggedUser.name + '!',
-                          style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),),
+                          style: TextStyle(
+                              fontSize: 28.0, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
                   Container(
-                    height: 180.0,
-                    width: 180.0,
-                    child: Image.asset('assets/images/pollo_deportivo.png')
-                  ),
+                      height: 180.0,
+                      width: 180.0,
+                      child: Image.asset('assets/images/pollo_deportivo.png')),
                 ],
               ),
             ),
@@ -269,16 +348,21 @@ class TablonState extends State<TablonScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                      'Tu tablón',
-                      style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),),
+                    'Tu tablón',
+                    style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                  ),
                   Column(
                     children: [
-                      SizedBox(
-                        height: 7.0
-                      ),
+                      SizedBox(height: 7.0),
                       Text(
-                          'Hoy, ' + DateTime.now().day.toString() + ' de ' + monthNumberToString(DateTime.now().month),
-                        style: TextStyle(fontSize: 16.0,),
+                        'Hoy, ' +
+                            DateTime.now().day.toString() +
+                            ' de ' +
+                            monthNumberToString(DateTime.now().month),
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
                       ),
                     ],
                   ),
@@ -288,11 +372,11 @@ class TablonState extends State<TablonScreen> {
             Padding(
               padding: EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
               child: Text(
-                  'Notitas:',
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                  ),
+                'Notitas:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Container(

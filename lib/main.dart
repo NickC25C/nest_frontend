@@ -228,29 +228,32 @@ class _MyHomePageState extends State<MyHomePage> {
           elevation: 16,
           selectedItemColor: actual.colorScheme.primary,
           unselectedItemColor: actual.colorScheme.onPrimary,
-
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              activeIcon: Icon(Icons.home_filled, color: actual.colorScheme.primary),
+              activeIcon:
+                  Icon(Icons.home_filled, color: actual.colorScheme.primary),
               label: 'Home',
               backgroundColor: actual.colorScheme.surface,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              activeIcon: Icon(Icons.saved_search, color: actual.colorScheme.primary),
+              activeIcon:
+                  Icon(Icons.saved_search, color: actual.colorScheme.primary),
               label: 'Search',
               backgroundColor: actual.colorScheme.surface,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.email_outlined),
-              activeIcon: Icon(Icons.email_rounded, color: actual.colorScheme.primary),
+              activeIcon:
+                  Icon(Icons.email_rounded, color: actual.colorScheme.primary),
               label: 'Mail',
               backgroundColor: actual.colorScheme.surface,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.hourglass_top),
-              activeIcon: Icon(Icons.hourglass_bottom, color: actual.colorScheme.primary),
+              activeIcon: Icon(Icons.hourglass_bottom,
+                  color: actual.colorScheme.primary),
               label: 'Capsule',
               backgroundColor: actual.colorScheme.surface,
             ),
