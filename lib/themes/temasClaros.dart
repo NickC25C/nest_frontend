@@ -31,16 +31,31 @@ ThemeData matcha = ThemeData.from(
 ));
 
 ThemeData bellasArtes = ThemeData.from(
-    colorScheme: const ColorScheme(
-      brightness: Brightness.light,
-      primary: Color(0xffAE93FF),
-      onPrimary: Color(0xff080E00),
-      secondary: Color(0xff8574EE),
-      onSecondary: Color(0xffF9F9F9),
-      error: Colors.white,
-      onError: Colors.redAccent,
-      background: Color(0xffF9F9F9),
-      onBackground: Colors.black,
-      surface: Color(0xffffffff),
-      onSurface: Colors.black,
-    ));
+  colorScheme: const ColorScheme(
+    brightness: Brightness.light,
+    primary: Color(0xffAE93FF),
+    onPrimary: Color(0xff080E00),
+    secondary: Color(0xff8574EE),
+    onSecondary: Color(0xffF9F9F9),
+    error: Colors.white,
+    onError: Colors.redAccent,
+    background: Color(0xffF9F9F9),
+    onBackground: Colors.black,
+    surface: Color(0xffffffff),
+    onSurface: Colors.black,
+  ),
+  textTheme: TextTheme().copyWith(
+    headlineLarge: TextStyle(fontFamily: 'LeagueSpartan'),
+    headlineMedium: TextStyle(fontFamily: 'LeagueSpartan'),
+    headlineSmall: TextStyle(fontFamily: 'LeagueSpartan'),
+    titleLarge: TextStyle(fontFamily: 'LeagueSpartan'),
+    titleMedium: TextStyle(fontFamily: 'LeagueSpartan'),
+    titleSmall: TextStyle(fontFamily: 'LeagueSpartan'),
+    bodyLarge: TextStyle(fontFamily: 'LeagueSpartan'),
+    bodyMedium: TextStyle(fontFamily: 'LeagueSpartan'),
+    bodySmall: TextStyle(fontFamily: 'LeagueSpartan'),
+    labelLarge: TextStyle(fontFamily: 'LeagueSpartan'),
+    labelMedium: TextStyle(fontFamily: 'LeagueSpartan'),
+    labelSmall: TextStyle(fontFamily: 'LeagueSpartan'),
+  ),
+);

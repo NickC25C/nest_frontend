@@ -123,9 +123,6 @@ class TablonState extends State<TablonScreen> {
     Picture fotita = imagensitas[selectedIndexImage] as Picture;
     return PhotoView(
       imageProvider: NetworkImage(fotita.image!.path),
-      minScale: PhotoViewComputedScale.contained * 0.8,
-      maxScale: PhotoViewComputedScale.covered * 2,
-      initialScale: PhotoViewComputedScale.contained * 0.8,
       backgroundDecoration: BoxDecoration(color: Colors.transparent),
     );
   }
@@ -200,15 +197,31 @@ class TablonState extends State<TablonScreen> {
             color: Color.fromRGBO(255, 255, 255, 1),
           ),
           child: Column(children: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    open = !open;
+                    openNote =
+                        false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
+                  });
+                },
+                icon: Icon(Icons.close),
+                alignment: Alignment.topRight,
+              )
+            ]),
             Container(
-              width: 300,
-              height: 430,
+              width: 250,
+              height: 335,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
               child: _buildPhotoView(),
+            ),
+            SizedBox(
+              height: 25,
             ),
             Text(
               fotita.description,
@@ -223,21 +236,21 @@ class TablonState extends State<TablonScreen> {
 
   Widget _building() {
     if (open) {
-      return GestureDetector(
-          onTap: () => {_buildContentView()},
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              BackdropFilter(
-                filter:
-                    ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-              fotoAbierta()
-            ],
-          ));
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
+            child: Container(
+              color: Colors.transparent,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 80),
+            child: fotoAbierta(),
+          )
+        ],
+      );
     } else if (openNote) {
       return Card(
         child: GestureDetector(
