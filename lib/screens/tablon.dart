@@ -332,6 +332,7 @@ class TablonState extends State<TablonScreen> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     children: [
@@ -343,7 +344,7 @@ class TablonState extends State<TablonScreen> {
                         child: Text(
                           '¡Hola ' + api.loggedUser.name + '!',
                           style: TextStyle(
-                              fontSize: 28.0, fontWeight: FontWeight.bold),
+                              fontSize: 31.0, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
