@@ -4,6 +4,7 @@ import 'package:nest_fronted/models/user.dart';
 import 'package:nest_fronted/screens/busqueda.dart';
 import 'package:nest_fronted/models/letter.dart';
 import 'package:nest_fronted/screens/capsulaCerrada.dart';
+import 'package:nest_fronted/models/capsule.dart';
 import 'package:nest_fronted/screens/enviar_carta.dart';
 import 'package:nest_fronted/screens/pub_imagen.dart';
 import 'package:nest_fronted/screens/pub_nota.dart';
@@ -36,6 +37,21 @@ void main() {
 
   void tuPropioAmigo(User u1, User u2) async {
     await api.addFriend(u1.id, u2.id);
+  }
+
+  void crearCapsula(){
+    DateTime tomorrow = DateTime.now().add(Duration(days: 1));
+    List<String> miembros = [api.loggedUser.id];
+    Capsule capsulita = Capsule(
+      id: '',
+      title: 'PXXR GVNG',
+      description: 'Me he follado a tantas putas que me va matar el sida',
+      openDate: tomorrow,
+      members: miembros,
+
+    );
+    print('holis');
+    api.createCapsule(capsulita, miembros);
   }
 
   void crearCarta() {
@@ -82,7 +98,7 @@ void main() {
         api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
   }
 
-  //poblarUsers();
+  poblarUsers();
 
   // enviarSolicitudAmistad();
 
@@ -100,6 +116,7 @@ void main() {
                 DeviceOrientation.portraitDown,
               ]),
               //crearCarta(),
+              crearCapsula(),
               runApp(const MyApp())
             }),
   );
