@@ -15,8 +15,7 @@ class AmisGrupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         child: Column(
           children: [
             BarraPublicar(titulo: tituloScreen),
@@ -25,8 +24,7 @@ class AmisGrupScreen extends StatelessWidget {
             BotonCrear(),
           ],
         ),
-      ),
-    );
+      );
   }
 }
 

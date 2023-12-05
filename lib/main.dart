@@ -142,16 +142,9 @@ class _MyHomePageState extends State<MyHomePage> {
   // Listado de screens o widgets
   final List<Widget> _children = [
     Center(child: TablonScreen()),
-    Center(child: BusquedaScreen()),
     Center(child: CorreoScreen()),
     Center(child: CapsulaScreen()),
-  ];
-
-  final List<String> _nombresitos = [
-    'MI TABLÓN PERSONAL',
-    'BÚSQUEDA',
-    'CORREO',
-    'CÁPSULAS',
+    Center(child: AmisGrupScreen()),
   ];
 
   void onTabTapped(int index) {
@@ -168,56 +161,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(api.loggedUser.name),
-              accountEmail: Text(api.loggedUser.username),
-              currentAccountPicture: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: actual.colorScheme.onPrimary,
-                      width: 2.0,
-                    )),
-                child: CircleAvatar(
-                  backgroundColor: actual.colorScheme.surface,
-                  backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.group),
-              title: Text('Amistades y Grupos'),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    child: AmisGrupScreen(),
-                    type: PageTransitionType.fade,
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Configuración'),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    child: ConfiguracionScreen(),
-                    type: PageTransitionType.fade,
-                  ),
-                );
-              },
-            )
-          ],
-        ),
-      ),
       body: SingleChildScrollView(
         child: _children[_currentIndex], // Mostramos el widget según el índice
       ),
@@ -237,13 +180,6 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: actual.colorScheme.surface,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              activeIcon:
-                  Icon(Icons.saved_search, color: actual.colorScheme.primary),
-              label: 'Search',
-              backgroundColor: actual.colorScheme.surface,
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.email_outlined),
               activeIcon:
                   Icon(Icons.email_rounded, color: actual.colorScheme.primary),
@@ -255,6 +191,13 @@ class _MyHomePageState extends State<MyHomePage> {
               activeIcon: Icon(Icons.hourglass_bottom,
                   color: actual.colorScheme.primary),
               label: 'Capsule',
+              backgroundColor: actual.colorScheme.surface,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              activeIcon:
+              Icon(Icons.person, color: actual.colorScheme.primary),
+              label: 'Perfil',
               backgroundColor: actual.colorScheme.surface,
             ),
           ]),
