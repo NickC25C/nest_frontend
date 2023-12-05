@@ -5,6 +5,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:nest_fronted/models/letter.dart';
 
 import '../main.dart';
+import '../widgets/CartasAbiertas.dart';
+import '../widgets/CartasCerradas.dart';
 
 class CorreoScreen extends StatefulWidget {
   CorreoScreen({super.key});
@@ -49,10 +51,12 @@ class _CorreoScreenState extends State<CorreoScreen> {
                       if (cartasRecibidas[index].opened) {
                         return CartasAbiertas(
                           carta: cartasRecibidas[index],
+                          usuarios: usuarios
                         );
                       } else {
                         return CartasCerradas(
                           carta: cartasRecibidas[index],
+                          usuarios: usuarios
                         );
                       }
                     },
@@ -67,190 +71,6 @@ class _CorreoScreenState extends State<CorreoScreen> {
             child: BotonEnviarCarta(),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class CartasAbiertas extends StatelessWidget {
-  final Letter carta;
-
-  CartasAbiertas({
-    required this.carta,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          PageTransition(
-            child: CartaScreen(
-                tituloCarta: carta.title,
-                mensaje: carta.text,
-                usuario: usuarios
-                    .firstWhere((element) => element.id == carta.originUserId)
-                    .username),
-            type: PageTransitionType.fade,
-          ),
-        );
-      },
-      elevation: 2.0,
-      // Altura de la sombra del botón
-      fillColor: actual.colorScheme.primary,
-      // Color de fondo del botón
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0), // Bordes redondeados
-        side: BorderSide(color: Colors.white), // Borde blanco
-      ),
-      constraints: BoxConstraints(
-        minWidth: double.infinity, // Ancho mínimo
-        minHeight: 100.0, // Altura mínima
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            CircleAvatar(
-              backgroundColor: actual.colorScheme.secondary,
-              radius: 35,
-              backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  usuarios
-                      .firstWhere((element) => element.id == carta.originUserId)
-                      .username,
-                  style: TextStyle(
-                      color: actual.colorScheme.onPrimary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                Text(
-                  carta.title,
-                  style: TextStyle(
-                    color: actual.colorScheme.secondary,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: 80,
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Icon(
-                  Icons.star,
-                  color: actual.colorScheme.onSecondary,
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CartasCerradas extends StatelessWidget {
-  final Letter carta;
-
-  CartasCerradas({
-    required this.carta,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: () async {
-        await api.updateLetter(carta.id, carta);
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          PageTransition(
-            child: CartaScreen(
-                tituloCarta: carta.title,
-                mensaje: carta.text,
-                usuario: usuarios
-                    .firstWhere((element) => element.id == carta.originUserId)
-                    .username),
-            type: PageTransitionType.fade,
-          ),
-        );
-      },
-      elevation: 2.0,
-      // Altura de la sombra del botón
-      fillColor: actual.colorScheme.secondary,
-      // Color de fondo del botón
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0), // Bordes redondeados
-        side: BorderSide(color: Colors.white), // Borde blanco
-      ),
-      constraints: BoxConstraints(
-        minWidth: double.infinity, // Ancho mínimo
-        minHeight: 100.0, // Altura mínima
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            CircleAvatar(
-              backgroundColor: actual.colorScheme.onSecondary,
-              radius: 35,
-              backgroundImage: AssetImage('assets/images/PAJAROTOS.png'),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  usuarios
-                      .firstWhere((element) => element.id == carta.originUserId)
-                      .username,
-                  style: TextStyle(
-                      color: actual.colorScheme.onSecondary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                Text(
-                  carta.title,
-                  style: TextStyle(
-                    color: actual.colorScheme.onSecondary,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: 80,
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Icon(
-                  Icons.star,
-                  color: actual.colorScheme.onSecondary,
-                )
-              ],
-            )
-          ],
-        ),
       ),
     );
   }
