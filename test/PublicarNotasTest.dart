@@ -5,9 +5,12 @@ import 'package:nest_fronted/models/publication.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/screens/tablon.dart';
+import 'package:nest_fronted/models/user.dart';
+
 
 
 ApiService api = ApiService();
+TablonState a = TablonScreen().createState();
 
 void main() {
   test('Inicialización de Nota', () {
@@ -22,7 +25,7 @@ void main() {
     expect(nota.usu, equals(username));
   });
 
- /* testWidgets('Widget Nota muestra información correctamente', (WidgetTester tester) async {
+  testWidgets('Widget Nota muestra información correctamente', (WidgetTester tester) async {
     final tituloNota = 'Título de prueba';
     final mensaje = 'Mensaje de prueba';
     final usu = 'Usuario de prueba';
@@ -41,56 +44,34 @@ void main() {
     // Verificar que la nota se ve bien antes del toquesito
     expect(find.text(tituloNota), findsOneWidget);
     expect(find.text('De: $usu'), findsOneWidget);
-
-    // Simular el toquesito
-    await tester.tap(find.byType(PublicationType.note));
-    await tester.pump(); // Esperar a que la aplicación se actualice después del toque
-    print('Después del toque:');
-    print(tester.binding.renderView.toString());
-
-    // Verificar que la pantalla de vista de la nota se muestra correctamente
-    expect(find.text(tituloNota), findsOneWidget);
-    print("tuki");
-    expect(find.text(mensaje), findsOneWidget);
-    print("tuki2");
-    expect(find.text('De: $usu'), findsOneWidget);
-  });*/
-
-  //Ni puto caso a esta basura lo comentado tiene mas sentido
-  testWidgets('Widget PublicationWidget muestra información correctamente', (WidgetTester tester) async {
-    final tituloNota = 'Título de prueba';
-    final mensaje = 'Mensaje de prueba';
-    final usu = 'Usuario de prueba';
-
-    final  List<String> U = [api.loggedUser.id];
-    Note nota = Note(
-      id: '',
-      owner: api.loggedUser,
-      date: DateTime.now(),
-      publiType: PublicationType.note,
-      title: 'Título de prueba',
-      message: 'Mensaje de prueba',
-      watchers: U,
-    );
-
-    await tester.pumpWidget(PublicationWidget(pub: nota));
-    await tester.pump();
-
-    // Verificar que el título de la nota y el nombre del usuario se muestran correctamente antes de tocar la nota
-    expect(find.text(tituloNota), findsOneWidget);
-    expect(find.text('De: $usu'), findsOneWidget);
-
-    // Simular el toque en la nota
-    await tester.tap(find.byType(PublicationWidget));
-    await tester.pump(); // Esperar a que la aplicación se actualice después del toque
-    print('Después del toque:');
-
-    // Verificar que la pantalla de vista de la nota se muestra correctamente
-    expect(find.text(tituloNota), findsOneWidget);
-    print("tuki");
-    expect(find.text(mensaje), findsOneWidget);
-    print("tuki2");
-    expect(find.text('De: $usu'), findsOneWidget);
   });
 
+  testWidgets('Verificar que la nota se ve correctamente al abrirla', (WidgetTester tester) async {
+    // Mock de la nota para simular datos
+    final note = Note(
+        id: '',
+        owner: User(
+            id: '',
+            name: '',
+            lastname: '',
+            username: 'Usuario de prueba',
+            password: '',
+            mail: ''),
+        date: DateTime.now(),
+        publiType: PublicationType.note,
+        title: 'Título de la nota',
+        message: 'Contenido de la nota',
+        watchers: []);
+
+    // Construye el widget
+    await tester.pumpWidget(a.buildNoteViewContent(note));
+    // Verifica que se muestre el título de la nota
+    expect(find.text('Título de la nota'), findsOneWidget);
+
+    // Verifica que se muestre el contenido de la nota
+    expect(find.text('Contenido de la nota'), findsOneWidget);
+
+    // Verifica que se muestre el nombre del propietario con la arroba delante
+    expect(find.text('De: Usuario de prueba'), findsOneWidget);;
+  });
 }
