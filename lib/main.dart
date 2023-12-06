@@ -115,7 +115,7 @@ void main() {
                 DeviceOrientation.portraitDown,
               ]),
               //crearCarta(),
-              crearCapsula(),
+              //crearCapsula(),
               runApp(const MyApp())
             }),
   );

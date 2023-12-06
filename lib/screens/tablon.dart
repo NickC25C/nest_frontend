@@ -128,8 +128,7 @@ class TablonState extends State<TablonScreen> {
     );
   }
 
-  Widget _buildNoteViewContent() {
-    Note notita = notitas[selectedIndexNote] as Note;
+  Widget _buildNoteViewContent(Note notita) {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(16.0),
@@ -262,7 +261,7 @@ class TablonState extends State<TablonScreen> {
             height: 625,
             width: double.infinity,
             child: Stack(
-              children: [_buildNoteViewContent()],
+              children: [_buildNoteViewContent(notitas[selectedIndexNote] as Note)],
             ),
           ),
         ),
