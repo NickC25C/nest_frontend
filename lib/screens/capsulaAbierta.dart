@@ -249,53 +249,55 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
   }
 
   Widget capsula() {
-    return Directionality(
-        textDirection: TextDirection.ltr,
-        child: Column(
-          children: [
-            BarraPublicar(titulo: widget.capsula.title),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                widget.capsula.description,
-                style: TextStyle(
-                  fontSize: 18.0,
+    return SingleChildScrollView(
+      child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: Column(
+            children: [
+              BarraPublicar(titulo: widget.capsula.title),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  widget.capsula.description,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              height: 600,
-              width: double.infinity,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ListView.builder(
-                    itemCount: publis.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (publis[index].publiType == PublicationType.note) {
-                        return GestureDetector(
-                          onTap: () {
-                            _buildNoteView();
-                            selectedIndex = index;
-                          },
-                          child: PublicationWidget(pub: publis[index]),
-                        );
-                      } else {
-                        return GestureDetector(
-                          onTap: () {
-                            _buildContentView();
-                            selectedIndex = index;
-                          },
-                          child: PublicationWidget(pub: publis[index]),
-                        );
-                      }
-                    },
-                  ),
-                ],
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                height: 600,
+                width: double.infinity,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ListView.builder(
+                      itemCount: publis.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (publis[index].publiType == PublicationType.note) {
+                          return GestureDetector(
+                            onTap: () {
+                              _buildNoteView();
+                              selectedIndex = index;
+                            },
+                            child: PublicationWidget(pub: publis[index]),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              _buildContentView();
+                              selectedIndex = index;
+                            },
+                            child: PublicationWidget(pub: publis[index]),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 }
