@@ -19,11 +19,16 @@ class BarraPublicar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
+          TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_circle_left, size: 30),
+            style: TextButton.styleFrom(
+              shape: CircleBorder(),
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+            ),
+            child: Icon(Icons.arrow_circle_left, size: 30, color: Colors.black),
           ),
           Text(
             titulo,
