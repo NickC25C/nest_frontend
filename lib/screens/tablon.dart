@@ -345,7 +345,7 @@ class TablonState extends State<TablonScreen> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 80),
-            child: notaAbierta(notitas[selectedIndexImage] as Note),
+            child: notaAbierta(notitas[selectedIndexNote] as Note),
           )
         ],
       );
