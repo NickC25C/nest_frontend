@@ -122,7 +122,7 @@ void main() {
     expect(find.byType(PhotoView), findsOneWidget);
   });
 
-  testWidgets('Test de buildPhotoView', (WidgetTester tester) async {
+  testWidgets('Test de buildPhotoView en Capsula Abierta', (WidgetTester tester) async {
     // Construye nuestro widget en un ambiente de prueba
     final file = File('assets/images/anyadir_imagen.png');
     await tester.pumpWidget(a.buildPhotoView(Picture(
