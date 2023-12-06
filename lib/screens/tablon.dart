@@ -239,7 +239,8 @@ class TablonState extends State<TablonScreen> {
     );
   }
 
-  Widget notaAbierta(Note notita) {
+  Widget notaAbierta() {
+    Note notita = notitas[selectedIndexNote] as Note;
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Container(
@@ -345,7 +346,7 @@ class TablonState extends State<TablonScreen> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 80),
-            child: notaAbierta(notitas[selectedIndexImage] as Note),
+            child: notaAbierta(),
           )
         ],
       );

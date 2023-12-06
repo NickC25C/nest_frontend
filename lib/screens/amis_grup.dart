@@ -7,7 +7,7 @@ import 'package:nest_fronted/models/user.dart';
 
 import '../models/diffusionList.dart';
 
-const tituloScreen = 'GRUPOS Y AMISTADES';
+//const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
 
 class AmisGrupScreen extends StatelessWidget {
@@ -16,17 +16,31 @@ class AmisGrupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Column(
-          children: [
-            BarraPublicar(titulo: tituloScreen),
-            TusAmigos(),
-            Grupos(),
-            BotonCrear(),
-          ],
-        ),
-      );
+      child: Column(
+        children: [
+          // Agrega la imagen centrada aquí
+          Container(
+            width: double.infinity,
+            height: 250.0, // Ajusta la altura según tus necesidades
+            alignment: Alignment.center,
+            child: Image.asset(
+              'assets/images/pollo_deportivo2.png', // Reemplaza con la ruta de tu imagen
+              fit: BoxFit.contain, // Ajusta la imagen al contenedor
+            ),
+          ),
+          UserInfoWidget(),
+          EstadoUser(),
+          //BarraPublicar(titulo: tituloScreen),
+          GruposAmistadesTxt(),
+          TusAmigos(),
+          Grupos(),
+          BotonCrear(),
+        ],
+      ),
+    );
   }
 }
+
 
 class TusAmigos extends StatefulWidget {
   @override
@@ -68,18 +82,19 @@ class _TusAmigos extends State<TusAmigos> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(width: 8.0),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Text(
             'Tus Amigos:',
             style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 19.0,
+              //fontWeight: FontWeight.bold,
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: Container(
             height: 250.0,
             width: double.infinity,
@@ -118,22 +133,16 @@ class CustomListView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(width: 8.0),
-              ElevatedButton(
+              IconButton(
                 onPressed: () async {
                   User aux = await api.getUserByUsername(items[index]);
                   api.deleteFriend(api.loggedUser.id, aux.id);
                   onItemRemoved(index);
                 },
-                child: Icon(
-                  Icons.delete_forever,
-                  color: actual.colorScheme.secondary,
+                icon: Icon(
+                  Icons.delete_outline,
+                    color: Colors.black,
                 ),
-                style: ElevatedButton.styleFrom(
-                    side: BorderSide(
-                      color: actual.colorScheme.secondary,
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0))),
               ),
             ],
           ),
@@ -176,18 +185,18 @@ class _Grupos extends State<Grupos> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(width: 8.0),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Text(
             'Tus Grupos:',
             style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 19.0,
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: Container(
             height: 250.0,
             width: double.infinity,
@@ -246,6 +255,111 @@ class CustomListViewGrupos extends StatelessWidget {
     );
   }
 }
+
+class UserInfoWidget extends StatelessWidget {
+  const UserInfoWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 5.0),
+        Text(
+          '@${api.loggedUser.username}',
+          style: TextStyle(
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 5.0), // Espacio adicional
+        Text(
+          api.loggedUser.name +' '+ api.loggedUser.lastname, // Reemplaza con la propiedad correcta del usuario
+          style: TextStyle(
+            fontSize: 18.0,
+          ),
+        ),
+      ],
+    );
+  }
+}
+class GruposAmistadesTxt extends StatelessWidget {
+  const GruposAmistadesTxt({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 30.0),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Text(
+            'Grupos y amistades',
+            style: TextStyle(
+              fontSize: 23.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 15.0),
+        Container(
+          width: double.infinity,
+          height: 1.5,
+          color: actual.colorScheme.secondary,
+        ),
+      ],
+    );
+  }
+}
+
+class EstadoUser extends StatelessWidget {
+  const EstadoUser({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 10.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          child: Text(
+            'Tu Estado:',
+            style: TextStyle(
+              fontSize: 23.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 10.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: actual.colorScheme.secondary),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: TextFormField(
+              decoration: InputDecoration(
+                hintText: 'Cómo te encuentras hoy?',
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 //boton de redireccion a crear grupos
 class BotonCrear extends StatelessWidget {
