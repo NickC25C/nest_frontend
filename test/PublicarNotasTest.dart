@@ -25,7 +25,7 @@ void main() {
     expect(nota.usu, equals(username));
   });
 
-  testWidgets('Widget Nota muestra información correctamente', (WidgetTester tester) async {
+  testWidgets('Widget Nota muestra información correctamente en el tablón', (WidgetTester tester) async {
     final tituloNota = 'Título de prueba';
     final mensaje = 'Mensaje de prueba';
     final usu = 'Usuario de prueba';
@@ -46,7 +46,7 @@ void main() {
     expect(find.text('De: $usu'), findsOneWidget);
   });
 
-  testWidgets('Verificar que la nota se ve correctamente al abrirla', (WidgetTester tester) async {
+  testWidgets('Verificar que la nota se ve correctamente al abrirla en el tablón', (WidgetTester tester) async {
     // Mock de la nota para simular datos
     final note = Note(
         id: '',

@@ -12,6 +12,9 @@ import 'package:nest_fronted/screens/capsulaCerrada.dart';
 import 'package:nest_fronted/widgets/MostrarCapsulaAbierta.dart';
 import 'package:nest_fronted/widgets/MostrarCapsulaCerrada.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:nest_fronted/models/note.dart';
+import 'package:nest_fronted/widgets/nota.dart';
+
 
 CapsulaAbiertaState a = CapsulaAbiertaState();
 void main() {
@@ -147,5 +150,49 @@ void main() {
     final photoViewWidget = tester.widget<PhotoView>(photoViewFinder);
     expect(photoViewWidget.backgroundDecoration,
         BoxDecoration(color: Colors.transparent));
+  });
+
+  testWidgets('Widget Nota muestra información correctamente en al Cápsula', (WidgetTester tester) async {
+    final tituloNota = 'Título de prueba';
+    final mensaje = 'Mensaje de prueba';
+    final usu = 'Usuario de prueba';
+
+    await tester.pumpWidget(Nota(tituloNota: tituloNota, mensaje: mensaje, usu: usu));
+    await tester.pump();
+
+    await tester.pumpAndSettle();
+
+    // Verificar que la nota se ve bien antes del toquesito
+    expect(find.text(tituloNota), findsOneWidget);
+    expect(find.text('De: $usu'), findsOneWidget);
+  });
+
+  testWidgets('Verificar que la nota se ve correctamente al abrirla en una capsula', (WidgetTester tester) async {
+    // Mock de la nota para simular datos
+    final note = Note(
+        id: '',
+        owner: User(
+            id: '',
+            name: '',
+            lastname: '',
+            username: 'Usuario de prueba',
+            password: '',
+            mail: ''),
+        date: DateTime.now(),
+        publiType: PublicationType.note,
+        title: 'Título de la nota',
+        message: 'Contenido de la nota',
+        watchers: []);
+
+    // Construye el widget
+    await tester.pumpWidget(a.buildNoteViewContent(note));
+    // Verifica que se muestre el título de la nota
+    expect(find.text('Título de la nota'), findsOneWidget);
+
+    // Verifica que se muestre el contenido de la nota
+    expect(find.text('Contenido de la nota'), findsOneWidget);
+
+    // Verifica que se muestre el nombre del propietario con la arroba delante
+    expect(find.text('De: Usuario de prueba'), findsOneWidget);;
   });
 }
