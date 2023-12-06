@@ -79,34 +79,37 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
     );
   }
 
-  Widget _buildNoteViewContent() {
-    Note notita = publis[selectedIndex] as Note;
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.all(16.0),
-      child: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            notita.title,
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textScaleFactor: 2,
-          ),
-          Text(
-            notita.message,
-            style: TextStyle(fontSize: 18.0),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                'De: ${notita.owner.username}',
-              )
-            ],
-          )
-        ],
-      )),
+  Widget buildNoteViewContent(Note notita) {
+
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Container(
+        color: Colors.white,
+        padding: EdgeInsets.all(16.0),
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              notita.title,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textScaleFactor: 2,
+            ),
+            Text(
+              notita.message,
+              style: TextStyle(fontSize: 18.0),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'De: ${notita.owner.username}',
+                )
+              ],
+            )
+          ],
+        )),
+      ),
     );
   }
 
@@ -238,7 +241,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
             height: 625,
             width: double.infinity,
             child: Stack(
-              children: [_buildNoteViewContent()],
+              children: [buildNoteViewContent(publis[selectedIndex] as Note)],
             ),
           ),
         ),
