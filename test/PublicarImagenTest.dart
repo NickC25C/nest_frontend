@@ -71,7 +71,7 @@ void main() {
 
     // Puedes agregar más aserciones según tus necesidades
   });
-  /*testWidgets('fotoAbierta muestra correctamente la información',
+  testWidgets('fotoAbierta muestra correctamente la información',
       (WidgetTester tester) async {
     // Mock del objeto Picture para simular datos
     final file = File('assets/images/anyadir_imagen.png');
@@ -102,5 +102,5 @@ void main() {
 
     // Verifica la presencia de PhotoView
     expect(find.byType(PhotoView), findsOneWidget);
-  });*/
+  });
 }

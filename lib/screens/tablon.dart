@@ -160,77 +160,80 @@ class TablonState extends State<TablonScreen> {
   }
 
   Widget fotoAbierta(Picture fotita) {
-    return Container(
-      width: 310,
-      height: 551,
-      child: Column(children: [
-        Row(
-          children: [
-            Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/bobby_formulario.png'),
-                      fit: BoxFit.fitWidth),
-                )),
-            Text(
-              '@' + fotita.owner.username,
-              textAlign: TextAlign.left,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        Container(
-          width: 310,
-          height: 491,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                  offset: Offset(0, 1),
-                  blurRadius: 13)
-            ],
-            color: Color.fromRGBO(255, 255, 255, 1),
-          ),
-          child: Column(children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    open = !open;
-                    openNote =
-                        false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
-                  });
-                },
-                icon: Icon(Icons.close),
-                alignment: Alignment.topRight,
-              )
-            ]),
-            Container(
-              width: 250,
-              height: 335,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Container(
+        width: 310,
+        height: 551,
+        child: Column(children: [
+          Row(
+            children: [
+              Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/bobby_formulario.png'),
+                        fit: BoxFit.fitWidth),
+                  )),
+              Text(
+                '@' + fotita.owner.username,
+                textAlign: TextAlign.left,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              child: buildPhotoView(fotita),
+            ],
+          ),
+          Container(
+            width: 310,
+            height: 491,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(0, 1),
+                    blurRadius: 13)
+              ],
+              color: Color.fromRGBO(255, 255, 255, 1),
             ),
-            SizedBox(
-              height: 25,
-            ),
-            Text(
-              fotita.description,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15, height: 1.5),
-            ),
-          ]),
-        )
-      ]),
+            child: Column(children: <Widget>[
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      open = !open;
+                      openNote =
+                          false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
+                    });
+                  },
+                  icon: Icon(Icons.close),
+                  alignment: Alignment.topRight,
+                )
+              ]),
+              Container(
+                width: 250,
+                height: 335,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: buildPhotoView(fotita),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                fotita.description,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15, height: 1.5),
+              ),
+            ]),
+          )
+        ]),
+      ),
     );
   }
 
