@@ -73,7 +73,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
 
   Widget buildPhotoView(Picture fotita) {
     return PhotoView(
-      key: Key('photoViewKey'),
+      key: Key('photoViewKeyCapsula'),
       imageProvider: NetworkImage(fotita.image!.path),
       backgroundDecoration: BoxDecoration(color: Colors.transparent),
     );
