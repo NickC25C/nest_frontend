@@ -38,7 +38,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
     Completer<List<Publication>> completer = Completer();
 
     try {
-      if(publis.isEmpty){
+      if (publis.isEmpty) {
         publis = await api.getPublications(widget.capsula.id);
       }
 
@@ -71,9 +71,12 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
     });
   }
 
-  Widget _buildPhotoView() {
-    Picture fotita = publis[selectedIndex] as Picture;
-    return PhotoView(imageProvider: NetworkImage(fotita.image!.path));
+  Widget buildPhotoView(Picture fotita) {
+    return PhotoView(
+      key: Key('photoViewKey'),
+      imageProvider: NetworkImage(fotita.image!.path),
+      backgroundDecoration: BoxDecoration(color: Colors.transparent),
+    );
   }
 
   Widget _buildNoteViewContent() {
@@ -83,27 +86,108 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
       padding: EdgeInsets.all(16.0),
       child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            notita.title,
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textScaleFactor: 2,
+          ),
+          Text(
+            notita.message,
+            style: TextStyle(fontSize: 18.0),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                notita.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textScaleFactor: 2,
-              ),
-              Text(
-                notita.message,
-                style: TextStyle(fontSize: 18.0),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'De: ${notita.owner.username}',
-                  )
-                ],
+                'De: ${notita.owner.username}',
               )
             ],
-          )),
+          )
+        ],
+      )),
+    );
+  }
+
+  Widget fotoAbierta(Picture fotita) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Container(
+        width: 310,
+        height: 551,
+        child: Column(children: [
+          Row(
+            children: [
+              Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/bobby_formulario.png'),
+                        fit: BoxFit.fitWidth),
+                  )),
+              Text(
+                '@' + fotita.owner.username,
+                textAlign: TextAlign.left,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          Container(
+            width: 310,
+            height: 491,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(0, 1),
+                    blurRadius: 13)
+              ],
+              color: Color.fromRGBO(255, 255, 255, 1),
+            ),
+            child: Column(children: <Widget>[
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      open = !open;
+                      openNote = false;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: Colors.transparent,
+                    shape: CircleBorder(),
+                    backgroundColor: Colors.transparent,
+                  ),
+                  child: Icon(Icons.close, color: Colors.black),
+                ),
+              ]),
+              Container(
+                width: 250,
+                height: 335,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: buildPhotoView(fotita),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                fotita.description,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15, height: 1.5),
+              ),
+            ]),
+          )
+        ]),
+      ),
     );
   }
 
@@ -117,97 +201,101 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            if (open) {
-              return Card(
-                child: GestureDetector(
-                  onTap: () => {_buildContentView()},
-                  child: Container(
-                    height: 625,
-                    width: double.infinity,
-                    child: _buildPhotoView(),
-                  ),
-                ),
-              );
-            } else if (openNote) {
-              return Card(
-                child: GestureDetector(
-                  onTap: () => {_buildNoteView()},
-                  child: Container(
-                    height: 625,
-                    width: double.infinity,
-                    child: _buildNoteViewContent(),
-                  ),
-                ),
-              );
-            } else {
-              return Scaffold(
-                body: SingleChildScrollView(
-                  child: Stack(
-                    children: <Widget>[
-                      capsula(),
-                      BackdropFilter(
-                        filter:
-                        ImageFilter.blur(sigmaX: _sigmaLevel, sigmaY: _sigmaLevel),
-                        child: Container(
-                          color: Colors.black.withOpacity(_opacityLevel),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }
+            return Scaffold(
+              body: Stack(
+                children: <Widget>[
+                  capsula(),
+                  _building(),
+                ],
+              ),
+            );
           }
         });
   }
 
-  Widget capsula() {
-    return Column(
-      children: [
-        BarraPublicar(titulo: widget.capsula.title),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            widget.capsula.description,
-            style: TextStyle(
-                fontSize: 18.0,
+  Widget _building() {
+    if (open) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              color: Colors.transparent,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 0),
+            child: fotoAbierta(publis[selectedIndex] as Picture),
+          )
+        ],
+      );
+    } else if (openNote) {
+      return Card(
+        child: GestureDetector(
+          onTap: () => {_buildNoteView()},
+          child: Container(
+            height: 625,
+            width: double.infinity,
+            child: Stack(
+              children: [_buildNoteViewContent()],
             ),
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          height: 600,
-          width: double.infinity,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              ListView.builder(
-                itemCount: publis.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if(publis[index].publiType == PublicationType.note){
-                    return GestureDetector(
-                      onTap: () {
-                        _buildNoteView();
-                        selectedIndex = index;
-                      },
-                      child: PublicationWidget(pub: publis[index]),
-                    );
-                  }
-                  else{
-                    return GestureDetector(
-                      onTap: () {
-                        _buildContentView();
-                        selectedIndex = index;
-                      },
-                      child: PublicationWidget(pub: publis[index]),
-                    );
-                  }
-                },
+      );
+    } else {
+      return Stack();
+    }
+  }
+
+  Widget capsula() {
+    return Directionality(
+        textDirection: TextDirection.ltr,
+        child: Column(
+          children: [
+            BarraPublicar(titulo: widget.capsula.title),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                widget.capsula.description,
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
               ),
-            ],
-          ),
-        ),
-      ],
-    );
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              height: 600,
+              width: double.infinity,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ListView.builder(
+                    itemCount: publis.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (publis[index].publiType == PublicationType.note) {
+                        return GestureDetector(
+                          onTap: () {
+                            _buildNoteView();
+                            selectedIndex = index;
+                          },
+                          child: PublicationWidget(pub: publis[index]),
+                        );
+                      } else {
+                        return GestureDetector(
+                          onTap: () {
+                            _buildContentView();
+                            selectedIndex = index;
+                          },
+                          child: PublicationWidget(pub: publis[index]),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }
