@@ -39,7 +39,7 @@ void main() {
     await api.addFriend(u1.id, u2.id);
   }
 
-  void crearCapsula(){
+  void crearCapsula() {
     DateTime tomorrow = DateTime.now().add(Duration(days: 1));
     List<String> miembros = [api.loggedUser.id];
     Capsule capsulita = Capsule(
@@ -48,7 +48,6 @@ void main() {
       description: 'Me he follado a tantas putas que me va matar el sida',
       openDate: tomorrow,
       members: miembros,
-
     );
     print('holis');
     api.createCapsule(capsulita, miembros);
@@ -212,8 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
-              activeIcon:
-              Icon(Icons.person, color: actual.colorScheme.primary),
+              activeIcon: Icon(Icons.person, color: actual.colorScheme.primary),
               label: 'Perfil',
               backgroundColor: actual.colorScheme.surface,
             ),

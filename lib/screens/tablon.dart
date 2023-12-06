@@ -19,7 +19,9 @@ double _opacityLevel = 0;
 double _sigmaLevel = 0;
 
 class TablonScreen extends StatefulWidget {
-  const TablonScreen({Key? key}) : super(key: key);
+  const TablonScreen({
+    Key? key,
+  }) : super(key: key);
   @override
   TablonState createState() => TablonState();
 }
@@ -38,7 +40,6 @@ class TablonState extends State<TablonScreen> {
 
     try {
       publis = await api.getFeed(api.loggedUser.id);
-
       // Separar las publicaciones en listas de notas y fotos
       if (notitas.isEmpty) {
         notitas = publis
@@ -119,9 +120,9 @@ class TablonState extends State<TablonScreen> {
     );
   }
 
-  Widget _buildPhotoView() {
-    Picture fotita = imagensitas[selectedIndexImage] as Picture;
+  Widget buildPhotoView(Picture fotita) {
     return PhotoView(
+      key: Key('photoViewKey'),
       imageProvider: NetworkImage(fotita.image!.path),
       backgroundDecoration: BoxDecoration(color: Colors.transparent),
     );
@@ -158,8 +159,7 @@ class TablonState extends State<TablonScreen> {
     );
   }
 
-  Widget fotoAbierta() {
-    Picture fotita = imagensitas[selectedIndexImage] as Picture;
+  Widget fotoAbierta(Picture fotita) {
     return Container(
       width: 310,
       height: 551,
@@ -218,7 +218,7 @@ class TablonState extends State<TablonScreen> {
                   Radius.circular(20),
                 ),
               ),
-              child: _buildPhotoView(),
+              child: buildPhotoView(fotita),
             ),
             SizedBox(
               height: 25,
@@ -247,7 +247,7 @@ class TablonState extends State<TablonScreen> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 80),
-            child: fotoAbierta(),
+            child: fotoAbierta(imagensitas[selectedIndexImage] as Picture),
           )
         ],
       );
