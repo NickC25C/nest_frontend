@@ -58,4 +58,28 @@ void main() {
         expect(find.text('Descripcion de prueba'), findsOneWidget);
         expect(find.byType(RawMaterialButton), findsOneWidget);
       });
+
+  testWidgets('CapsulaCerradaScreen muestra correctamente', (WidgetTester tester) async {
+    // Construir nuestro widget fuera del alcance de los Widgets de prueba.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: CapsulaCerradaScreen(
+          capsula: Capsule(
+              id: '',
+              title: 'Título de prueba',
+              description: 'Descripcion de prueba',
+              openDate: DateTime.now(),
+              members: ['1', '2']),
+        ),
+      ),
+    );
+    // Asegúrate de que el widget de título esté presente.
+    expect(find.text('Título de prueba'), findsOneWidget);
+    expect(find.text('Descripcion de prueba'), findsOneWidget);
+
+    // Asegúrate de que los widgets de botones estén presentes.
+    expect(find.byIcon(Icons.text_snippet), findsOneWidget);
+    expect(find.byIcon(Icons.photo), findsOneWidget);
+
+  });
 }
