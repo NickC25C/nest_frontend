@@ -32,9 +32,7 @@ void main() {
       nota: noti,
     );
 
-    /*expect(nota.tituloNota, equals(tituloNota));
-    expect(nota.mensaje, equals(mensaje));
-    expect(nota.usu, equals(username));*/
+    expect(nota.nota, equals(noti));
   });
 
   testWidgets('Widget Nota muestra información correctamente en el tablón',
