@@ -16,11 +16,26 @@ void main() {
     final file = File(
         'assets/images/anyadir_imagen.png'); // Reemplaza con una ruta de archivo válida
     final username = 'Usuario de prueba';
+    final Picture foti = Picture(
+        id: '',
+        owner: User(
+            id: 'id',
+            name: 'username',
+            lastname: 'lastname',
+            username: username,
+            password: 'password',
+            mail: 'mail'),
+        date: DateTime.now(),
+        publiType: PublicationType.picture,
+        description: 'description',
+        url: 'url',
+        image: file,
+        watchers: []);
+    final foto = Foto(
+      foto: foti,
+    );
 
-    final foto = Foto(file: file, username: username);
-
-    expect(foto.file, equals(file));
-    expect(foto.username, equals(username));
+    expect(foto.foto, equals(foti));
   });
 
   testWidgets('Widget Foto muestra información correctamente',
@@ -28,8 +43,24 @@ void main() {
     final file = File(
         'i.ytimg.com/vi/CSIkNVZ7ZpY/maxresdefault.jpg'); // Reemplaza con una ruta de archivo válida
     final username = 'Usuario de prueba';
-
-    await tester.pumpWidget(Foto(file: file, username: username));
+    final Picture foti = Picture(
+        id: '',
+        owner: User(
+            id: 'id',
+            name: 'username',
+            lastname: 'lastname',
+            username: username,
+            password: 'password',
+            mail: 'mail'),
+        date: DateTime.now(),
+        publiType: PublicationType.picture,
+        description: 'description',
+        url: 'url',
+        image: file,
+        watchers: []);
+    await tester.pumpWidget(Foto(
+      foto: foti,
+    ));
     await tester.pump();
 
     // Verificar que el nombre del propietario y la imagen se muestran correctamente

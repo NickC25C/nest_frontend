@@ -17,14 +17,12 @@ class PublicationWidget extends StatelessWidget {
     if (pub.publiType == PublicationType.note) {
       Note notaPubli = pub as Note;
       return Nota(
-          tituloNota: notaPubli.title,
-          mensaje: notaPubli.message,
-          usu: notaPubli.owner.username);
+        nota: notaPubli,
+      );
     } else {
       Picture pic = pub as Picture;
       return Foto(
-        file: pic.image!,
-        username: pic.owner.username,
+        foto: pic,
       );
     }
   }

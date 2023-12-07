@@ -15,7 +15,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:nest_fronted/models/note.dart';
 import 'package:nest_fronted/widgets/nota.dart';
 
-
 CapsulaAbiertaState a = CapsulaAbiertaState();
 void main() {
   testWidgets(
@@ -125,7 +124,8 @@ void main() {
     expect(find.byType(PhotoView), findsOneWidget);
   });
 
-  testWidgets('Test de buildPhotoView en Capsula Abierta', (WidgetTester tester) async {
+  testWidgets('Test de buildPhotoView en Capsula Abierta',
+      (WidgetTester tester) async {
     // Construye nuestro widget en un ambiente de prueba
     final file = File('assets/images/anyadir_imagen.png');
     await tester.pumpWidget(a.buildPhotoView(Picture(
@@ -152,12 +152,27 @@ void main() {
         BoxDecoration(color: Colors.transparent));
   });
 
-  testWidgets('Widget Nota muestra información correctamente en al Cápsula', (WidgetTester tester) async {
+  testWidgets('Widget Nota muestra información correctamente en al Cápsula',
+      (WidgetTester tester) async {
     final tituloNota = 'Título de prueba';
     final mensaje = 'Mensaje de prueba';
     final usu = 'Usuario de prueba';
-
-    await tester.pumpWidget(Nota(tituloNota: tituloNota, mensaje: mensaje, usu: usu));
+    final Note nota = Note(
+        id: '',
+        owner: User(
+            id: '',
+            name: ' Usuario de prueba',
+            lastname: 'lastname',
+            username: usu,
+            password: 'password',
+            mail: 'mail'),
+        date: DateTime.now(),
+        publiType: PublicationType.note,
+        title: tituloNota,
+        message: mensaje);
+    await tester.pumpWidget(Nota(
+      nota: nota,
+    ));
     await tester.pump();
 
     await tester.pumpAndSettle();
@@ -167,7 +182,9 @@ void main() {
     expect(find.text('De: $usu'), findsOneWidget);
   });
 
-  testWidgets('Verificar que la nota se ve correctamente al abrirla en una capsula', (WidgetTester tester) async {
+  testWidgets(
+      'Verificar que la nota se ve correctamente al abrirla en una capsula',
+      (WidgetTester tester) async {
     // Mock de la nota para simular datos
     final note = Note(
         id: '',
@@ -193,6 +210,7 @@ void main() {
     expect(find.text('Contenido de la nota'), findsOneWidget);
 
     // Verifica que se muestre el nombre del propietario con la arroba delante
-    expect(find.text('De: Usuario de prueba'), findsOneWidget);;
+    expect(find.text('De: Usuario de prueba'), findsOneWidget);
+    ;
   });
 }

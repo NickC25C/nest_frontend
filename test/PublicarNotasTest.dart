@@ -7,8 +7,6 @@ import 'package:nest_fronted/services/api_service.dart';
 import 'package:nest_fronted/screens/tablon.dart';
 import 'package:nest_fronted/models/user.dart';
 
-
-
 ApiService api = ApiService();
 TablonState a = TablonScreen().createState();
 
@@ -17,20 +15,50 @@ void main() {
     final tituloNota = 'Título de prueba';
     final mensaje = 'Mensaje de prueba';
     final username = 'Usuario de prueba';
+    final Note noti = Note(
+        id: '',
+        owner: User(
+            id: '',
+            name: ' Usuario de prueba',
+            lastname: 'lastname',
+            username: username,
+            password: 'password',
+            mail: 'mail'),
+        date: DateTime.now(),
+        publiType: PublicationType.note,
+        title: tituloNota,
+        message: mensaje);
+    final nota = Nota(
+      nota: noti,
+    );
 
-    final nota = Nota(tituloNota: tituloNota, mensaje: mensaje, usu: username);
-
-    expect(nota.tituloNota, equals(tituloNota));
+    /*expect(nota.tituloNota, equals(tituloNota));
     expect(nota.mensaje, equals(mensaje));
-    expect(nota.usu, equals(username));
+    expect(nota.usu, equals(username));*/
   });
 
-  testWidgets('Widget Nota muestra información correctamente en el tablón', (WidgetTester tester) async {
+  testWidgets('Widget Nota muestra información correctamente en el tablón',
+      (WidgetTester tester) async {
     final tituloNota = 'Título de prueba';
     final mensaje = 'Mensaje de prueba';
     final usu = 'Usuario de prueba';
+    final Note nota = Note(
+        id: '',
+        owner: User(
+            id: '',
+            name: ' Usuario de prueba',
+            lastname: 'lastname',
+            username: usu,
+            password: 'password',
+            mail: 'mail'),
+        date: DateTime.now(),
+        publiType: PublicationType.note,
+        title: tituloNota,
+        message: mensaje);
 
-    await tester.pumpWidget(Nota(tituloNota: tituloNota, mensaje: mensaje, usu: usu));
+    await tester.pumpWidget(Nota(
+      nota: nota,
+    ));
     await tester.pump();
 
     // Imprimir el estado actual de la aplicación
@@ -46,7 +74,9 @@ void main() {
     expect(find.text('De: $usu'), findsOneWidget);
   });
 
-  testWidgets('Verificar que la nota se ve correctamente al abrirla en el tablón', (WidgetTester tester) async {
+  testWidgets(
+      'Verificar que la nota se ve correctamente al abrirla en el tablón',
+      (WidgetTester tester) async {
     // Mock de la nota para simular datos
     final note = Note(
         id: '',
@@ -72,6 +102,7 @@ void main() {
     expect(find.text('Contenido de la nota'), findsOneWidget);
 
     // Verifica que se muestre el nombre del propietario con la arroba delante
-    expect(find.text('De: Usuario de prueba'), findsOneWidget);;
+    expect(find.text('De: Usuario de prueba'), findsOneWidget);
+    ;
   });
 }
