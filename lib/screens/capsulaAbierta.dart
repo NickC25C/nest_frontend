@@ -80,7 +80,6 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
   }
 
   Widget buildNoteViewContent(Note notita) {
-
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Container(
@@ -205,12 +204,14 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
             return Text('Error: ${snapshot.error}');
           } else {
             return Scaffold(
-              body: Stack(
-                children: <Widget>[
-                  capsula(),
-                  _building(),
-                ],
-              ),
+              body: Column(children: [
+                Stack(
+                  children: <Widget>[
+                    capsula(),
+                    _building(),
+                  ],
+                ),
+              ]),
             );
           }
         });
@@ -268,7 +269,6 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 height: 600,
                 width: double.infinity,
                 child: Stack(
@@ -278,20 +278,25 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                       itemCount: publis.length,
                       itemBuilder: (BuildContext context, int index) {
                         if (publis[index].publiType == PublicationType.note) {
-                          return GestureDetector(
-                            onTap: () {
-                              _buildNoteView();
-                              selectedIndex = index;
-                            },
-                            child: PublicationWidget(pub: publis[index]),
-                          );
+                          return Padding(
+                              padding: EdgeInsets.only(top: 20, left: 90),
+                              child: GestureDetector(
+                                onTap: () {
+                                  _buildNoteView();
+                                  selectedIndex = index;
+                                },
+                                child: PublicationWidget(pub: publis[index]),
+                              ));
                         } else {
-                          return GestureDetector(
-                            onTap: () {
-                              _buildContentView();
-                              selectedIndex = index;
-                            },
-                            child: PublicationWidget(pub: publis[index]),
+                          return Padding(
+                            padding: EdgeInsets.only(top: 20, left: 80),
+                            child: GestureDetector(
+                              onTap: () {
+                                _buildContentView();
+                                selectedIndex = index;
+                              },
+                              child: PublicationWidget(pub: publis[index]),
+                            ),
                           );
                         }
                       },

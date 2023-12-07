@@ -109,12 +109,15 @@ class TablonState extends State<TablonScreen> {
     return ListView.builder(
       itemCount: imagensitas.length,
       itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () {
-            _buildContentView();
-            selectedIndexImage = index;
-          },
-          child: PublicationWidget(pub: imagensitas[index]),
+        return Padding(
+          padding: EdgeInsets.only(bottom: 20, left: 80, right: 80),
+          child: GestureDetector(
+            onTap: () {
+              _buildContentView();
+              selectedIndexImage = index;
+            },
+            child: PublicationWidget(pub: imagensitas[index]),
+          ),
         );
       },
     );
@@ -495,7 +498,7 @@ class TablonState extends State<TablonScreen> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+              margin: const EdgeInsets.fromLTRB(0, 20.0, 0, 0.0),
               height: 350,
               width: double.infinity,
               child: Stack(

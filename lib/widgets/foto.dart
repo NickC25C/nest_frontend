@@ -26,43 +26,45 @@ class _FotoState extends State<Foto> {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: SingleChildScrollView(
-        child: Column(children: [
-          Row(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/Anselmo.png'),
-                        fit: BoxFit.fitWidth),
-                  )),
-              Text(
-                '@' + foto.owner.username,
-                textAlign: TextAlign.left,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
+              Row(
+                children: [
+                  Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/Anselmo.png'),
+                            fit: BoxFit.fitWidth),
+                      )),
+                  Text(
+                    '@' + foto.owner.username,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.1),
-                        offset: Offset(0, 1),
-                        blurRadius: 13)
-                  ],
-                  image: DecorationImage(
-                    image: NetworkImage(foto.image!.path),
-                    fit: BoxFit.cover,
-                  ))),
-        ]),
+                ],
+              ),
+              Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                            offset: Offset(0, 1),
+                            blurRadius: 13)
+                      ],
+                      image: DecorationImage(
+                        image: NetworkImage(foto.image!.path),
+                        fit: BoxFit.cover,
+                      ))),
+            ]),
       ),
     );
   }
