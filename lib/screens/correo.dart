@@ -29,46 +29,79 @@ class _CorreoScreenState extends State<CorreoScreen> {
     Size screenSize = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
-      child: Stack(
+      child: Column(
         children: [
-          FutureBuilder<List<Letter>>(
-            future: _cartasRecibidasFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Mientras se carga, puedes mostrar un indicador de carga.
-                return CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                // En caso de error, muestra un mensaje de error.
-                return Text('Error: ${snapshot.error}');
-              } else {
-                // Si la operación es exitosa, construye el ListView.
-                List<Letter> cartasRecibidas = snapshot.data ?? [];
-                return Container(
-                  height: screenSize.height - 150,
-                  child: ListView.builder(
-                    itemCount: cartasRecibidas.length,
-                    itemBuilder: (context, index) {
-                      if (cartasRecibidas[index].opened) {
-                        return CartasAbiertas(
-                          carta: cartasRecibidas[index],
-                          usuarios: usuarios
-                        );
-                      } else {
-                        return CartasCerradas(
-                          carta: cartasRecibidas[index],
-                          usuarios: usuarios
-                        );
-                      }
-                    },
-                  ),
-                );
-              }
-            },
+          Row(
+            children: [
+              SizedBox(
+                width: 110.0,
+              ),
+              Container(
+                width: 250.0,
+                height: 250.0,
+                child: Image.asset(
+                  'assets/images/bobby_formulario.png', // Reemplaza con la ruta de tu imagen
+                  fit: BoxFit.contain, // Ajusta la imagen al contenedor
+                ),
+              ),
+            ],
           ),
-          Positioned(
-            bottom: 20,
-            right: 8.0,
-            child: BotonEnviarCarta(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+                child: Text(
+                  'Correo',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 32.0,
+                  ),
+                )
+            ),
+          ),
+          Stack(
+            children: [
+              FutureBuilder<List<Letter>>(
+                future: _cartasRecibidasFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Mientras se carga, puedes mostrar un indicador de carga.
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    // En caso de error, muestra un mensaje de error.
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    // Si la operación es exitosa, construye el ListView.
+                    List<Letter> cartasRecibidas = snapshot.data ?? [];
+                    return Container(
+                      height: screenSize.height - 355,
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        itemCount: cartasRecibidas.length,
+                        itemBuilder: (context, index) {
+                          if (cartasRecibidas[index].opened) {
+                            return CartasAbiertas(
+                              carta: cartasRecibidas[index],
+                              usuarios: usuarios
+                            );
+                          } else {
+                            return CartasCerradas(
+                              carta: cartasRecibidas[index],
+                              usuarios: usuarios
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
+              Positioned(
+                bottom: 20,
+                right: 8.0,
+                child: BotonEnviarCarta(),
+              ),
+            ],
           ),
         ],
       ),
