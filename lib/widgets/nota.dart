@@ -24,7 +24,7 @@ class Nota extends StatelessWidget {
                         height: 40,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('assets/images/Anselmo.png'),
+                              image: AssetImage('assets/images/2.png'),
                               fit: BoxFit.fitWidth),
                         )),
                     SizedBox(

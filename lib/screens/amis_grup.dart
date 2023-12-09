@@ -24,7 +24,7 @@ class AmisGrupScreen extends StatelessWidget {
             height: 250.0, // Ajusta la altura según tus necesidades
             alignment: Alignment.center,
             child: Image.asset(
-              'assets/images/bobby.png', // Reemplaza con la ruta de tu imagen
+              'assets/images/1.png', // Reemplaza con la ruta de tu imagen
               fit: BoxFit.contain, // Ajusta la imagen al contenedor
             ),
           ),

@@ -58,7 +58,7 @@ class CartasAbiertas extends StatelessWidget {
                     width: 50.0,
                     height: 50.0,
                     child: Image.asset(
-                      'assets/images/Anselmo.png', // Reemplaza con la ruta de tu imagen
+                      'assets/images/2.png', // Reemplaza con la ruta de tu imagen
                       fit: BoxFit.contain, // Ajusta la imagen al contenedor
                     ),
                   ),

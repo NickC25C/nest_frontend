@@ -289,7 +289,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                               ));
                         } else {
                           return Padding(
-                            padding: EdgeInsets.only(top: 20, left: 80),
+                            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                             child: GestureDetector(
                               onTap: () {
                                 _buildContentView();
