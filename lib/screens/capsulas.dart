@@ -30,7 +30,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
     _initializeCapsules();
 
     // Iniciar un temporizador para actualizar la lista cada 30 segundos
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(Duration(seconds: 30), (timer) {
       _updateCapsules();
     });
   }
@@ -99,6 +99,8 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                             return CapsulaCerrada(
                               capsula: snapshot.data![index],
                             );
+                          } else {
+                            return Stack();
                           }
                         }),
                   ),
@@ -120,9 +122,11 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           if (snapshot.data![index].openDate
-                              .isAfter(DateTime.now())) {
+                              .isBefore(DateTime.now())) {
                             return CapsulaAbierta(
                                 capsula: snapshot.data![index]);
+                          } else {
+                            return Stack();
                           }
                         }),
                   ),
