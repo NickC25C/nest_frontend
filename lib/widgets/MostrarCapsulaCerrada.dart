@@ -70,55 +70,66 @@ class _CapsulaCerradaState extends State<CapsulaCerrada> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  width: 158,
-                  height: 105,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  PageTransition(
+                    child: CapsulaCerradaScreen(
+                      capsula: widget.capsula,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.1),
-                          offset: Offset(0, 1),
-                          blurRadius: 13)
-                    ],
-                    color: Color.fromRGBO(255, 255, 255, 1),
+                    type: PageTransitionType.fade,
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 2, 10, 8),
-                          child: Text(
-                            widget.capsula.title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17),
+                ),
+                child: Container(
+                    width: 158,
+                    height: 105,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                            offset: Offset(0, 1),
+                            blurRadius: 13)
+                      ],
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 2, 10, 8),
+                            child: Text(
+                              widget.capsula.title,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 10, 12),
-                          child: Text(
-                            txt,
-                            style: TextStyle(fontSize: 14),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 12),
+                            child: Text(
+                              txt,
+                              style: TextStyle(fontSize: 14),
+                            ),
                           ),
-                        ),
-                        StreamBuilder<Duration>(
-                          stream: _durationController.stream,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Text(
-                                _formatDuration(snapshot.data!),
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              );
-                            } else {
-                              return Container(); // Puedes mostrar un indicador de carga aquí si lo deseas
-                            }
-                          },
-                        ),
-                      ])),
+                          StreamBuilder<Duration>(
+                            stream: _durationController.stream,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                  _formatDuration(snapshot.data!),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                );
+                              } else {
+                                return Container(); // Puedes mostrar un indicador de carga aquí si lo deseas
+                              }
+                            },
+                          ),
+                        ])),
+              )
             ],
           ),
         ));
