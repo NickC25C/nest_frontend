@@ -55,47 +55,80 @@ class _CapsulaCerradaState extends State<CapsulaCerrada> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(),
-      child: Opacity(
-        opacity: 0.6,
-        child: Container(
-          color: Colors.black,
-          child: RawMaterialButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  child: CapsulaCerradaScreen(
-                    capsula: widget.capsula,
+    String txt;
+    if (widget.capsula.description.length <= 15) {
+      txt = widget.capsula.description;
+    } else {
+      txt = '${widget.capsula.description.substring(0, 15)}...';
+    }
+    return Directionality(
+        textDirection: TextDirection.ltr,
+        child: Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Column(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  width: 158,
+                  height: 105,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.1),
+                          offset: Offset(0, 1),
+                          blurRadius: 13)
+                    ],
+                    color: Color.fromRGBO(255, 255, 255, 1),
                   ),
-                  type: PageTransitionType.fade,
-                ),
-              );
-            },
-            elevation: 2.0,
-            fillColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              side: BorderSide(color: Colors.white),
-            ),
-            constraints: BoxConstraints(
-              minWidth: double.infinity,
-              minHeight: 150.0,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.capsula.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                StreamBuilder<Duration>(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 2, 10, 8),
+                          child: Text(
+                            widget.capsula.title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 12),
+                          child: Text(
+                            txt,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                        StreamBuilder<Duration>(
+                          stream: _durationController.stream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Text(
+                                _formatDuration(snapshot.data!),
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              );
+                            } else {
+                              return Container(); // Puedes mostrar un indicador de carga aquí si lo deseas
+                            }
+                          },
+                        ),
+                      ])),
+            ],
+          ),
+        ));
+  }
+}
+
+
+
+
+/*StreamBuilder<Duration>(
                   stream: _durationController.stream,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -110,12 +143,4 @@ class _CapsulaCerradaState extends State<CapsulaCerrada> {
                       return Container(); // Puedes mostrar un indicador de carga aquí si lo deseas
                     }
                   },
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+                ), */

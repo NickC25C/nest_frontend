@@ -66,38 +66,73 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    return StreamBuilder<List<Capsule>>(
-      stream: _capsulasRecibidasController.stream,
-      initialData: _capsulasRecibidas,
-      builder: (context, snapshot) {
-        return SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                height: screenSize.height - 160,
-                child: ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    if (snapshot.data![index].openDate
-                        .isAfter(DateTime.now())) {
-                      return CapsulaCerrada(
-                        capsula: snapshot.data![index],
-                      );
-                    } else {
-                      return CapsulaAbierta(capsula: snapshot.data![index]);
-                    }
-                  },
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 8.0,
-                child: BotonCrearCapsula(),
-              ),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 40.0, 15.0, 20.0),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Tu Capsulas',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 32.0,
+                  ),
+                )),
           ),
-        );
-      },
+          TextDivider(text: 'Cerradas'),
+          StreamBuilder<List<Capsule>>(
+            stream: _capsulasRecibidasController.stream,
+            initialData: _capsulasRecibidas,
+            builder: (context, snapshot) {
+              return Stack(
+                children: [
+                  Container(
+                    height: 200,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          if (snapshot.data![index].openDate
+                              .isAfter(DateTime.now())) {
+                            return CapsulaCerrada(
+                              capsula: snapshot.data![index],
+                            );
+                          }
+                        }),
+                  ),
+                ],
+              );
+            },
+          ),
+          TextDivider(text: 'Abiertas'),
+          StreamBuilder<List<Capsule>>(
+            stream: _capsulasRecibidasController.stream,
+            initialData: _capsulasRecibidas,
+            builder: (context, snapshot) {
+              return Stack(
+                children: [
+                  Container(
+                    height: 200,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          if (snapshot.data![index].openDate
+                              .isAfter(DateTime.now())) {
+                            return CapsulaAbierta(
+                                capsula: snapshot.data![index]);
+                          }
+                        }),
+                  ),
+                ],
+              );
+            },
+          ),
+          BotonCrearCapsula(),
+        ],
+      ),
     );
   }
 
@@ -105,6 +140,36 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
   void dispose() {
     _capsulasRecibidasController.close();
     super.dispose();
+  }
+}
+
+class TextDivider extends StatelessWidget {
+  final String text;
+
+  const TextDivider({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(20.0, 40.0, 15.0, 20.0),
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              text,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 23.0,
+              ),
+            )),
+      ),
+      SizedBox(height: 5.0),
+      Container(
+        width: double.infinity,
+        height: 1.5,
+        color: actual.colorScheme.secondary,
+      ),
+    ]);
   }
 }
 
