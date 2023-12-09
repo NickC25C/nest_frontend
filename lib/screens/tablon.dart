@@ -107,10 +107,11 @@ class TablonState extends State<TablonScreen> {
 
   Widget _buildImagenes() {
     return ListView.builder(
+      padding: EdgeInsets.only(top: 0.0),
       itemCount: imagensitas.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: EdgeInsets.only(bottom: 20, left: 80, right: 80),
+          padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
           child: GestureDetector(
             onTap: () {
               _buildContentView();
@@ -432,7 +433,7 @@ class TablonState extends State<TablonScreen> {
                         child: Text(
                           '¡Hola ' + api.loggedUser.name + '!',
                           style: TextStyle(
-                              fontSize: 31.0, fontWeight: FontWeight.bold),
+                              fontSize: 32.0, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -452,7 +453,7 @@ class TablonState extends State<TablonScreen> {
                   Text(
                     'Tu tablón',
                     style:
-                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600),
                   ),
                   Column(
                     children: [
@@ -474,12 +475,17 @@ class TablonState extends State<TablonScreen> {
             Padding(
               padding: EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
               child: Text(
-                'Notitas:',
+                'Notitas',
                 style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
+            ),
+            Divider(
+              height: 20,  // Altura de la línea (opcional)
+              thickness: 2, // Grosor de la línea (opcional)
+              color: Color.fromRGBO(200, 182, 255, 0.5), // Color de la línea (opcional)
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 20),
@@ -490,12 +496,17 @@ class TablonState extends State<TablonScreen> {
             Padding(
               padding: EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
               child: Text(
-                'Imagensitas:',
+                'Imagensitas',
                 style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
+            ),
+            Divider(
+              height: 20,  // Altura de la línea (opcional)
+              thickness: 2, // Grosor de la línea (opcional)
+              color: Color.fromRGBO(200, 182, 255, 0.5), // Color de la línea (opcional)
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(0, 20.0, 0, 0.0),

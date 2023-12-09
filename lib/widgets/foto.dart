@@ -28,28 +28,31 @@ class _FotoState extends State<Foto> {
       child: SingleChildScrollView(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 children: [
                   Container(
-                      width: 30,
-                      height: 30,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/images/Anselmo.png'),
                             fit: BoxFit.fitWidth),
                       )),
+                  SizedBox(
+                    width: 8.0,
+                  ),
                   Text(
                     '@' + foto.owner.username,
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),
                   ),
                 ],
               ),
               Container(
-                  height: 200,
-                  width: 200,
+                  height: 300,
+                  width: 300,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
