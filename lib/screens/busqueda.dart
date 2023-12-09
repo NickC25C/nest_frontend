@@ -11,13 +11,15 @@ class BusquedaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          FormBusqueda(),
-          Solicitudes(),
-        ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FormBusqueda(),
+            Solicitudes(),
+          ],
+        ),
       ),
     );
   }

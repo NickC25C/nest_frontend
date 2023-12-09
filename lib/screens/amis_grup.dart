@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
+import 'package:nest_fronted/screens/configuracion.dart';
 import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:nest_fronted/models/user.dart';
 
 import '../models/diffusionList.dart';
+import 'busqueda.dart';
 
 //const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
@@ -16,26 +18,98 @@ class AmisGrupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          // Agrega la imagen centrada aquí
-          Container(
-            width: double.infinity,
-            height: 250.0, // Ajusta la altura según tus necesidades
-            alignment: Alignment.center,
-            child: Image.asset(
-              'assets/images/1.png', // Reemplaza con la ruta de tu imagen
-              fit: BoxFit.contain, // Ajusta la imagen al contenedor
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            // Agrega la imagen centrada aquí
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Mostrar el menú desplegable desde la parte inferior
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ListTile(
+                                    leading: Icon(Icons.settings),
+                                    title: Text('Configuración'),
+                                    onTap: () {
+                                      // Acciones al seleccionar Música
+                                      Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          child: ConfiguracionScreen(),
+                                          type: PageTransitionType.fade,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: Icon(Icons.group),
+                                    title: Text('Búsqueda de amigos'),
+                                    onTap: () {
+                                      // Acciones al seleccionar Fotos
+                                      Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          child: BusquedaScreen(),
+                                          type: PageTransitionType.fade,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        child: Icon(Icons.menu, size: 36,),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: actual.colorScheme.background,
+                        elevation: 0.0,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 200.0,
+                  height: 200.0, // Ajusta la altura según tus necesidades
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/images/1.png', // Reemplaza con la ruta de tu imagen
+                    fit: BoxFit.contain, // Ajusta la imagen al contenedor
+                  ),
+                ),
+                SizedBox(
+                  height: 80,
+                  width: 70,
+                ),
+              ],
             ),
-          ),
-          UserInfoWidget(),
-          EstadoUser(),
-          //BarraPublicar(titulo: tituloScreen),
-          GruposAmistadesTxt(),
-          TusAmigos(),
-          Grupos(),
-          BotonCrear(),
-        ],
+            UserInfoWidget(),
+            EstadoUser(),
+            //BarraPublicar(titulo: tituloScreen),
+            GruposAmistadesTxt(),
+            TusAmigos(),
+            Grupos(),
+            BotonCrear(),
+          ],
+        ),
       ),
     );
   }
