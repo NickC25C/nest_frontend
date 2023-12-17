@@ -113,7 +113,7 @@ class BotonCrear extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 150,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () async {
               Note n = Note(
                   id: '',
@@ -126,15 +126,12 @@ class BotonCrear extends StatelessWidget {
               api.createNote(n).whenComplete(() => print('¿Nota subida?'));
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.sticky_note_2_outlined,
-            ),
-            label: Text(
+            child: Text(
               'Publicar nota',
-              style: TextStyle(),
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: actual.colorScheme.secondary,
+                backgroundColor: actual.colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

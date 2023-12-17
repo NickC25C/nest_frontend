@@ -65,72 +65,96 @@ class _FormBusquedaState extends State<FormBusqueda> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextFormField(
-              controller: _controller,
-              decoration: InputDecoration(
-                  hintText: 'Nombre de usuario',
-                  border: OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: actual.colorScheme.secondary),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: actual.colorScheme.secondary, width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                  labelStyle: TextStyle(color: actual.colorScheme.secondary)),
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'El usuario introducido no existe';
-                }
-                return null;
-              },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                'Búsqueda',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              height: 50.0,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: actual.colorScheme.secondary,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    )),
-                onPressed: _isButtonDisabled
-                    ? null
-                    : () async {
-                        // Validate will return true if the form is valid, or false if
-                        // the form is invalid.
-                        User u = await api.getUserByUsername(_controller.text);
-                        if (u.id != api.loggedUser.id) {
-                          if (u.id != '') {
-                            await api.postRequest(api.loggedUser.id, u.id);
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: const Text('Solicitud enviada'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('OK'))
-                                      ],
-                                    ));
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextFormField(
+                controller: _controller,
+                decoration: InputDecoration(
+                    hintText: 'Nombre de usuario',
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: actual.colorScheme.primary),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: actual.colorScheme.primary, width: 2),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                    labelStyle: TextStyle(color: actual.colorScheme.primary)),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'El usuario introducido no existe';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                height: 50.0,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: actual.colorScheme.primary,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      )),
+                  onPressed: _isButtonDisabled
+                      ? null
+                      : () async {
+                          // Validate will return true if the form is valid, or false if
+                          // the form is invalid.
+                          User u = await api.getUserByUsername(_controller.text);
+                          if (u.id != api.loggedUser.id) {
+                            if (u.id != '') {
+                              await api.postRequest(api.loggedUser.id, u.id);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text('Solicitud enviada'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text('OK'))
+                                        ],
+                                      ));
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text(
+                                            'El usuario introducido no existe'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text('OK'))
+                                        ],
+                                      ));
+                            }
                           } else {
                             showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
                                       title: const Text(
-                                          'El usuario introducido no existe'),
+                                          'No puedes ser tu propio amigo'),
                                       actions: <Widget>[
                                         TextButton(
                                             onPressed: () {
@@ -140,31 +164,17 @@ class _FormBusquedaState extends State<FormBusqueda> {
                                       ],
                                     ));
                           }
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: const Text(
-                                        'No puedes ser tu propio amigo'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text('OK'))
-                                    ],
-                                  ));
-                        }
-                      },
-                child: Text(
-                  'Enviar solicitud',
-                  style: TextStyle(color: actual.colorScheme.onSecondary),
-                  textAlign: TextAlign.center,
+                        },
+                  child: Text(
+                    'Enviar solicitud',
+                    style: TextStyle(color: actual.colorScheme.onPrimary),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

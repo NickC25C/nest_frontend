@@ -179,7 +179,7 @@ class TablonState extends State<TablonScreen> {
                   height: 60,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/bobby_formulario.png'),
+                        image: AssetImage('assets/images/${api.loggedUser.avatar}.png'),
                         fit: BoxFit.fitWidth),
                   )),
               Text(
@@ -257,7 +257,7 @@ class TablonState extends State<TablonScreen> {
                   height: 60,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/bobby_formulario.png'),
+                        image: AssetImage('assets/images/${api.loggedUser.avatar}.png'),
                         fit: BoxFit.fitWidth),
                   )),
               Text(

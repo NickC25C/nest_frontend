@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/note.dart';
 
+import '../main.dart';
+
 class Nota extends StatelessWidget {
   final Note nota;
 
@@ -24,7 +26,7 @@ class Nota extends StatelessWidget {
                         height: 40,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('assets/images/2.png'),
+                              image: AssetImage('assets/images/${api.loggedUser.avatar}.png'),
                               fit: BoxFit.fitWidth),
                         )),
                     SizedBox(

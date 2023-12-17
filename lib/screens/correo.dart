@@ -133,20 +133,9 @@ class BotonEnviarCarta extends StatelessWidget {
                 ),
               );
             },
-            child: Row(
-              children: [
-                Icon(
-                  Icons.mark_email_unread_outlined,
-                  color: actual.colorScheme.onPrimary,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
+            child: Text(
                   'Enviar Carta',
-                  style: TextStyle(color: actual.colorScheme.onPrimary),
-                )
-              ],
+                  style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
             style: TextButton.styleFrom(
                 backgroundColor: actual.colorScheme.primary,

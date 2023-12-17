@@ -188,7 +188,7 @@ class BotonCrearCapsula extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
-      width: 180,
+      width: 150,
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(
@@ -209,8 +209,8 @@ class BotonCrearCapsula extends StatelessWidget {
           child: Text(
             'Crear Cápsula',
             style: TextStyle(
-              color: actual.colorScheme.onBackground,
-              fontSize: 18,
+              color: actual.colorScheme.onPrimary,
+              fontSize: 16,
             ),
           ),
         ),

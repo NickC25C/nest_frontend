@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/models/picture.dart';
 
+import '../main.dart';
+
 class Foto extends StatefulWidget {
   final Picture foto;
   const Foto({
@@ -37,7 +39,7 @@ class _FotoState extends State<Foto> {
                       height: 50,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/images/2.png'),
+                            image: AssetImage('assets/images/${api.loggedUser.avatar}.png'),
                             fit: BoxFit.fitWidth),
                       )),
                   SizedBox(

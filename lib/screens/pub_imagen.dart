@@ -109,20 +109,21 @@ class BotonIzquierdo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
-                Icons.photo,
-                color: actual.colorScheme.onSecondary,
+                Icons.photo_outlined,
+                color: actual.colorScheme.onBackground,
+                size: 30,
               ),
               SizedBox(
                 height: 3.0,
               ),
               Text('Seleccionar foto',
                   style: TextStyle(
-                      fontSize: 16, color: actual.colorScheme.onSecondary))
+                      fontSize: 16, color: actual.colorScheme.onBackground))
             ],
           ),
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
-            backgroundColor: actual.colorScheme.secondary,
+            backgroundColor: actual.colorScheme.background,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0),
@@ -163,20 +164,21 @@ class BotonDerecho extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              Icons.camera_alt,
-              color: actual.colorScheme.onSecondary,
+              Icons.camera_alt_outlined,
+              color: actual.colorScheme.onBackground,
+              size: 30,
             ),
             SizedBox(
               height: 3.0,
             ),
             Text('Hacer foto',
                 style: TextStyle(
-                    fontSize: 16, color: actual.colorScheme.onSecondary))
+                    fontSize: 16, color: actual.colorScheme.onBackground))
           ],
         ),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
-          backgroundColor: actual.colorScheme.secondary,
+          backgroundColor: actual.colorScheme.background,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topRight: Radius.circular(30.0),
@@ -221,7 +223,7 @@ class BotonCrear extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 170,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () async {
               if (imageToPub != null) {
                 await api
@@ -229,15 +231,12 @@ class BotonCrear extends StatelessWidget {
               }
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.image_outlined,
-            ),
-            label: Text(
+            child: Text(
               'Publicar imagen',
-              style: TextStyle(),
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: actual.colorScheme.secondary,
+                backgroundColor: actual.colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

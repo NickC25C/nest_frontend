@@ -35,12 +35,12 @@ class AmisGrupScreen extends StatelessWidget {
                   height: 200.0, // Ajusta la altura según tus necesidades
                   alignment: Alignment.center,
                   child: Image.asset(
-                    'assets/images/1.png', // Reemplaza con la ruta de tu imagen
+                    'assets/images/${api.loggedUser.avatar}.png', // Reemplaza con la ruta de tu imagen
                     fit: BoxFit.contain, // Ajusta la imagen al contenedor
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, right: 20),
+                  padding: const EdgeInsets.only(top: 20, right: 10),
                   child: SizedBox(
                     child: ElevatedButton(
                       onPressed: () {
@@ -443,7 +443,7 @@ class BotonCrear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
       child: Align(
         alignment: Alignment.centerRight,
         child: SizedBox(
@@ -466,7 +466,7 @@ class BotonCrear extends StatelessWidget {
                 )),
             child: Text(
               'Crear grupo',
-              style: TextStyle(color: actual.colorScheme.onBackground, fontSize: 15),
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
           ),
         ),
