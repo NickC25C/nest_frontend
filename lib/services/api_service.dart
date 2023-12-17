@@ -393,6 +393,37 @@ class ApiService {
     }
   }
 
+  Future<Letter> addToFavourite(String id) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/letter/favourite/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return Letter.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to add to favourites');
+    }
+  }
+
+  Future<Letter> deleteFromFavourite(String id) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/letter/favourite/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return Letter.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to delete from favourites');
+    }
+  }
+
+
   Future<Letter> getLetter(String letterId) async {
     final response = await http.get(Uri.parse('$baseUrl/letter/$letterId'));
 
