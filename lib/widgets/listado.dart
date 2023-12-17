@@ -87,39 +87,6 @@ class _ListadoState extends State<Listado> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Row(
-                children: [
-                  Container(
-                    width: 105.0,
-                    child: Text(
-                      'Añadir a todos',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value!;
-                        if (isChecked) {
-                          isSelectedList = List.generate(
-                            userFriends.length,
-                            (index) => true,
-                          );
-                        } else {
-                          isSelectedList = List.generate(
-                            userFriends.length,
-                            (index) => false,
-                          );
-                        }
-                      });
-                    },
-                  ),
-                ],
-              ),
             ],
           ),
         ),

@@ -134,7 +134,11 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
               );
             },
           ),
-          BotonCrearCapsula(),
+          Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 20),
+            child: BotonCrearCapsula()
+          ),
         ],
       ),
     );
@@ -182,28 +186,32 @@ class BotonCrearCapsula extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          PageTransition(
-            child: CrearCapsula(),
-            type: PageTransitionType.fade,
+    return SizedBox(
+      height: 50,
+      width: 180,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            PageTransition(
+              child: CrearCapsula(),
+              type: PageTransitionType.fade,
+            ),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
           ),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          'Crear Cápsula',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            'Crear Cápsula',
+            style: TextStyle(
+              color: actual.colorScheme.onBackground,
+              fontSize: 18,
+            ),
           ),
         ),
       ),

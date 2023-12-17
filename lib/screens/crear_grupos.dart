@@ -85,10 +85,11 @@ class BotonCrear extends StatelessWidget {
             },
             icon: Icon(
               Icons.groups,
+              color: actual.colorScheme.onBackground,
             ),
             label: Text(
               'Crear grupo',
-              style: TextStyle(),
+              style: TextStyle(color: actual.colorScheme.onBackground),
             ),
             style: TextButton.styleFrom(
                 backgroundColor: actual.colorScheme.secondary,

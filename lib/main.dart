@@ -75,6 +75,8 @@ void main() {
       username: "g4net",
       password: "pass123",
       mail: "g@g.com",
+      state: '',
+      avatar: '1',
     );
     User newUser1 = User(
       id: "",
@@ -83,6 +85,8 @@ void main() {
       username: "El_nicoloau",
       password: "123",
       mail: "ahhrh@hmail.com",
+      state: '',
+      avatar: '2',
     );
     User newUser2 = User(
       id: "",
@@ -91,13 +95,49 @@ void main() {
       username: "Reshulon21",
       password: "123",
       mail: "ahhsh@hmail.com",
+      state: '',
+      avatar: '3',
+    );
+    User newUser3 = User(
+      id: "",
+      name: "Ivan",
+      lastname: "Harito",
+      username: "ivansiTo",
+      password: "123",
+      mail: "yuio@hmail.com",
+      state: '',
+      avatar: '4',
+    );
+    User newUser4 = User(
+      id: "",
+      name: "Carlos",
+      lastname: "Zamora",
+      username: "carlitos34",
+      password: "123",
+      mail: "car@hmail.com",
+      state: '',
+      avatar: '5',
+    );
+    User newUser5 = User(
+      id: "",
+      name: "Irene",
+      lastname: "Guti",
+      username: "irenn15",
+      password: "123",
+      mail: "ipask@hmail.com",
+      state: '',
+      avatar: '1',
     );
     print('hola');
     api.createUser(newUser).whenComplete(() =>
-        api.createUser(newUser1).whenComplete(() => api.createUser(newUser2)));
+        api.createUser(newUser1).whenComplete(() =>
+            api.createUser(newUser2).whenComplete(() =>
+              api.createUser(newUser3).whenComplete(() =>
+                api.createUser(newUser4).whenComplete(() =>
+                  api.createUser(newUser5))))));
   }
 
-  //poblarUsers();
+  poblarUsers();
 
   // enviarSolicitudAmistad();
 

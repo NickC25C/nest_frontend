@@ -22,13 +22,25 @@ class AmisGrupScreen extends StatelessWidget {
         padding: const EdgeInsets.only(top: 20),
         child: Column(
           children: [
-            // Agrega la imagen centrada aquí
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 80,
+                  width: 70,
+                ),
+                Container(
+                  width: 200.0,
+                  height: 200.0, // Ajusta la altura según tus necesidades
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/images/1.png', // Reemplaza con la ruta de tu imagen
+                    fit: BoxFit.contain, // Ajusta la imagen al contenedor
+                  ),
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20, right: 20),
                   child: SizedBox(
                     child: ElevatedButton(
                       onPressed: () {
@@ -75,8 +87,8 @@ class AmisGrupScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        height: 40,
-                        width: 40,
+                        height: 30,
+                        width: 30,
                         child: Icon(Icons.menu, size: 36,),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -85,19 +97,6 @@ class AmisGrupScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  width: 200.0,
-                  height: 200.0, // Ajusta la altura según tus necesidades
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/images/1.png', // Reemplaza con la ruta de tu imagen
-                    fit: BoxFit.contain, // Ajusta la imagen al contenedor
-                  ),
-                ),
-                SizedBox(
-                  height: 80,
-                  width: 70,
                 ),
               ],
             ),
@@ -312,14 +311,14 @@ class CustomListViewGrupos extends StatelessWidget {
               Text(
                 items[index].friendsIds.length.toString(),
                 style: TextStyle(
-                    fontSize: 20.0, color: actual.colorScheme.secondary),
+                    fontSize: 20.0, color: actual.colorScheme.onBackground),
               ),
               SizedBox(
                 width: 10.0,
               ),
               Icon(
                 Icons.group,
-                color: actual.colorScheme.secondary,
+                color: actual.colorScheme.onBackground,
                 size: 30.0,
               ),
             ],
@@ -450,7 +449,7 @@ class BotonCrear extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 150,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
@@ -460,17 +459,15 @@ class BotonCrear extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(
-              Icons.groups,
-            ),
-            label: Text(
-              'Crear grupo',
-            ),
             style: TextButton.styleFrom(
-                backgroundColor: actual.colorScheme.secondary,
+                backgroundColor: actual.colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),
+            child: Text(
+              'Crear grupo',
+              style: TextStyle(color: actual.colorScheme.onBackground, fontSize: 15),
+            ),
           ),
         ),
       ),
