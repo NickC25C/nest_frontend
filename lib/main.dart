@@ -62,6 +62,7 @@ void main() {
       originUserId: api.loggedUser.id,
       receiverUserId: api.loggedUser.id,
       opened: true,
+      favUserId: "",
     );
     print('adios');
     api.createLetter(cartita);

@@ -142,6 +142,7 @@ class BotonCrear extends StatelessWidget {
       originUserId: api.loggedUser.id,
       receiverUserId: receiverUser.id,
       opened: false,
+      favUserId: "",
     );
 
     api.createLetter(cartita);
