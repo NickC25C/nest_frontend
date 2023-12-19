@@ -193,6 +193,84 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
     );
   }
 
+  Widget notaAbierta(Note notita) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Container(
+        width: 310,
+        height: 551,
+        child: Column(children: [
+          Row(
+            children: [
+              Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/${api.loggedUser.avatar}.png'),
+                        fit: BoxFit.fitWidth),
+                  )),
+              Text(
+                '@' + notita.owner.username,
+                textAlign: TextAlign.left,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          Container(
+            width: 310,
+            height: 491,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(0, 1),
+                    blurRadius: 13)
+              ],
+              color: Color.fromRGBO(255, 255, 255, 1),
+            ),
+            child: Column(children: <Widget>[
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      openNote = !openNote;
+                      open =
+                          false; // Pa asegurarse de que la nota esté cerrada al abrir la imagen
+                    });
+                  },
+                  icon: Icon(Icons.close),
+                  alignment: Alignment.topRight,
+                )
+              ]),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                notita.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15, height: 1.5, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                notita.message,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15, height: 1.5),
+              ),
+            ]),
+          )
+        ]),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Publication>>(
@@ -235,17 +313,20 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
         ],
       );
     } else if (openNote) {
-      return Card(
-        child: GestureDetector(
-          onTap: () => {_buildNoteView()},
-          child: Container(
-            height: 625,
-            width: double.infinity,
-            child: Stack(
-              children: [buildNoteViewContent(publis[selectedIndex] as Note)],
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              color: Colors.transparent,
             ),
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.only(top: 0),
+            child: notaAbierta(publis[selectedIndex] as Note),
+          )
+        ],
       );
     } else {
       return Stack();
@@ -289,7 +370,8 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                               ));
                         } else {
                           return Padding(
-                            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                            padding:
+                                EdgeInsets.only(top: 20, left: 20, right: 20),
                             child: GestureDetector(
                               onTap: () {
                                 _buildContentView();
