@@ -150,6 +150,26 @@ class TusAmigos extends StatefulWidget {
 class _TusAmigos extends State<TusAmigos> {
   late List<User> listaAmigos = List.empty(growable: true);
   late List<String> listaAuxiliar = List.empty(growable: true);
+  late User usuario;
+
+  @override
+  void initState() {
+    super.initState();
+    extractUsers();
+    usuario = api.loggedUser;
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      _updateUser();
+    });
+  }
+
+  void _updateUser() {
+    if (usuario != api.loggedUser) {
+      setState(() {
+        usuario = api.loggedUser;
+        extractUsers();
+      });
+    }
+  }
 
   Future<void> extractUsers() async {
     try {
@@ -162,12 +182,6 @@ class _TusAmigos extends State<TusAmigos> {
       // Manejar el error de la solicitud
       print('Error en la solicitud: $e');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    extractUsers();
   }
 
   void _removeItem(int index) {
@@ -259,6 +273,26 @@ class Grupos extends StatefulWidget {
 
 class _Grupos extends State<Grupos> {
   late List<DiffusionList> listaDifusion = List.empty(growable: true);
+  late User usuario;
+
+  @override
+  void initState() {
+    super.initState();
+    extractDiffusionLists();
+    usuario = api.loggedUser;
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      _updateUser();
+    });
+  }
+
+  void _updateUser() {
+    if (usuario != api.loggedUser) {
+      setState(() {
+        usuario = api.loggedUser;
+        extractDiffusionLists();
+      });
+    }
+  }
 
   Future<void> extractDiffusionLists() async {
     try {
@@ -271,12 +305,6 @@ class _Grupos extends State<Grupos> {
       // Manejar el error de la solicitud
       print('Error en la solicitud: $e');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    extractDiffusionLists();
   }
 
   @override
