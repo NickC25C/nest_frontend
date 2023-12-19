@@ -5,7 +5,7 @@ class User {
   final String username;
   final String password;
   final String mail;
-  final String state;
+  String state;
   final String avatar;
 
   User({

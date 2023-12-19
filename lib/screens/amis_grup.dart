@@ -11,6 +11,7 @@ import 'busqueda.dart';
 
 //const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
+String texto = '';
 
 class AmisGrupScreen extends StatefulWidget {
   const AmisGrupScreen({super.key});
@@ -443,19 +444,48 @@ class EstadoUser extends StatelessWidget {
         SizedBox(height: 10.0),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40.0),
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: actual.colorScheme.secondary),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Cómo te encuentras hoy?',
-                border: InputBorder.none,
+          child: Row(
+            children: [
+              Container(
+                width: 205,
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: actual.colorScheme.secondary),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                  ),
+                ),
+                child: TextFormField(
+                  onChanged: (value) => {texto = value},
+                  decoration: InputDecoration(
+                    hintText: 'Cómo te encuentras hoy?',
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
-            ),
+              Container(
+                width: 66,
+                height: 66,
+                child: ElevatedButton(
+                  onPressed: () {
+                    api.loggedUser.state = texto;
+                    api.updateUser(api.loggedUser.id, api.loggedUser);
+
+                  },
+                  child: Icon(Icons.check, color: actual.colorScheme.onSecondary,),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    backgroundColor: actual.colorScheme.secondary,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0),
+                        )),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ],
