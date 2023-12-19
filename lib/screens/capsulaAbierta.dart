@@ -287,6 +287,20 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                   children: <Widget>[
                     capsula(),
                     _building(),
+                    WillPopScope(
+                      child: Stack(),
+                      onWillPop: () async {
+                        if (open || openNote) {
+                          setState(() {
+                            open = false;
+                            openNote = false;
+                          });
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      },
+                    )
                   ],
                 ),
               ]),
