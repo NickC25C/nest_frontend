@@ -5,15 +5,39 @@ import 'package:nest_fronted/screens/crear_grupos.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:nest_fronted/models/user.dart';
-
+import 'dart:async';
 import '../models/diffusionList.dart';
 import 'busqueda.dart';
 
 //const tituloScreen = 'GRUPOS Y AMISTADES';
 int selectedIndex = 0;
 
-class AmisGrupScreen extends StatelessWidget {
+class AmisGrupScreen extends StatefulWidget {
   const AmisGrupScreen({super.key});
+
+  @override
+  AmisGrupScreenState createState() => AmisGrupScreenState();
+}
+
+class AmisGrupScreenState extends State<AmisGrupScreen> {
+  late User usuario;
+
+  @override
+  void initState() {
+    super.initState();
+    usuario = api.loggedUser;
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      _updateUser();
+    });
+  }
+
+  void _updateUser() {
+    if (usuario != api.loggedUser) {
+      setState(() {
+        usuario = api.loggedUser;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +113,10 @@ class AmisGrupScreen extends StatelessWidget {
                       child: Container(
                         height: 30,
                         width: 30,
-                        child: Icon(Icons.menu, size: 36,),
+                        child: Icon(
+                          Icons.menu,
+                          size: 36,
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
                         primary: actual.colorScheme.background,
@@ -113,7 +140,6 @@ class AmisGrupScreen extends StatelessWidget {
     );
   }
 }
-
 
 class TusAmigos extends StatefulWidget {
   @override
@@ -214,7 +240,7 @@ class CustomListView extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.delete_outline,
-                    color: Colors.black,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -348,7 +374,10 @@ class UserInfoWidget extends StatelessWidget {
         ),
         SizedBox(height: 5.0), // Espacio adicional
         Text(
-          api.loggedUser.name +' '+ api.loggedUser.lastname, // Reemplaza con la propiedad correcta del usuario
+          api.loggedUser.name +
+              ' ' +
+              api.loggedUser
+                  .lastname, // Reemplaza con la propiedad correcta del usuario
           style: TextStyle(
             fontSize: 18.0,
           ),
@@ -357,6 +386,7 @@ class UserInfoWidget extends StatelessWidget {
     );
   }
 }
+
 class GruposAmistadesTxt extends StatelessWidget {
   const GruposAmistadesTxt({
     super.key,
@@ -433,7 +463,6 @@ class EstadoUser extends StatelessWidget {
   }
 }
 
-
 //boton de redireccion a crear grupos
 class BotonCrear extends StatelessWidget {
   const BotonCrear({
@@ -466,7 +495,8 @@ class BotonCrear extends StatelessWidget {
                 )),
             child: Text(
               'Crear grupo',
-              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
+              style:
+                  TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
           ),
         ),

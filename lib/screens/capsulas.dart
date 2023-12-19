@@ -29,8 +29,8 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
     _capsulasRecibidasController = StreamController<List<Capsule>>.broadcast();
     _initializeCapsules();
 
-    // Iniciar un temporizador para actualizar la lista cada 30 segundos
-    Timer.periodic(Duration(seconds: 30), (timer) {
+    // Iniciar un temporizador para actualizar la lista cada 5 segundos
+    Timer.periodic(Duration(seconds: 5), (timer) {
       _updateCapsules();
     });
   }
