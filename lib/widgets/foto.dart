@@ -39,7 +39,7 @@ class _FotoState extends State<Foto> {
                       height: 50,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/images/${api.loggedUser.avatar}.png'),
+                            image: AssetImage('assets/images/${foto.owner.avatar}.png'),
                             fit: BoxFit.fitWidth),
                       )),
                   SizedBox(

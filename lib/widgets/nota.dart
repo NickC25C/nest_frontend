@@ -26,7 +26,7 @@ class Nota extends StatelessWidget {
                         height: 40,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('assets/images/${api.loggedUser.avatar}.png'),
+                              image: AssetImage('assets/images/${nota.owner.avatar}.png'),
                               fit: BoxFit.fitWidth),
                         )),
                     SizedBox(
