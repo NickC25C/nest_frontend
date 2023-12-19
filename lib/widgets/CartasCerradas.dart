@@ -7,7 +7,7 @@ import '../models/letter.dart';
 import '../models/user.dart';
 import '../screens/cartica.dart';
 
-class CartasCerradas extends StatelessWidget {
+class CartasCerradas extends StatefulWidget {
   final Letter carta;
   final List<User> usuarios;
 
@@ -17,36 +17,47 @@ class CartasCerradas extends StatelessWidget {
   });
 
   @override
+  _CartasCerradasState createState() => _CartasCerradasState();
+}
+
+class _CartasCerradasState extends State<CartasCerradas> {
+
+  late bool isFavorita;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorita = widget.carta.favUserId != null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
       child: RawMaterialButton(
         onPressed: () async {
-          await api.updateLetter(carta.id, carta);
-          // ignore: use_build_context_synchronously
+          await api.updateLetter(widget.carta.id, widget.carta);
           Navigator.push(
             context,
             PageTransition(
               child: CartaScreen(
-                  tituloCarta: carta.title,
-                  mensaje: carta.text,
-                  usuario: usuarios
-                      .firstWhere((element) => element.id == carta.originUserId)
+                  tituloCarta: widget.carta.title,
+                  mensaje: widget.carta.text,
+                  usuario: widget.usuarios
+                      .firstWhere((element) => element.id == widget.carta.originUserId)
                       .username),
               type: PageTransitionType.fade,
             ),
           );
         },
         elevation: 8.0,
-        // Altura de la sombra del botón
         fillColor: actual.colorScheme.secondary,
-        // Color de fondo del botón
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0), // Bordes redondeados
+          borderRadius: BorderRadius.circular(30.0),
         ),
         constraints: BoxConstraints(
-          minWidth: double.infinity, // Ancho mínimo
-          minHeight: 100.0, // Altura mínima
+          minWidth: double.infinity,
+          minHeight: 100.0,
         ),
         child: Padding(
           padding: EdgeInsets.all(10.0),
@@ -59,8 +70,8 @@ class CartasCerradas extends StatelessWidget {
                     width: 50.0,
                     height: 50.0,
                     child: Image.asset(
-                      'assets/images/${api.loggedUser.avatar}.png', // Reemplaza con la ruta de tu imagen
-                      fit: BoxFit.contain, // Ajusta la imagen al contenedor
+                      'assets/images/${api.loggedUser.avatar}.png',
+                      fit: BoxFit.contain,
                     ),
                   ),
                   SizedBox(
@@ -72,8 +83,8 @@ class CartasCerradas extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '@' + usuarios
-                        .firstWhere((element) => element.id == carta.originUserId)
+                    '@' + widget.usuarios
+                        .firstWhere((element) => element.id == widget.carta.originUserId)
                         .username,
                     style: TextStyle(
                         color: actual.colorScheme.onSecondary,
@@ -84,7 +95,7 @@ class CartasCerradas extends StatelessWidget {
                     height: 16.0,
                   ),
                   Text(
-                    carta.title,
+                    widget.carta.title,
                     style: TextStyle(
                       color: actual.colorScheme.onSecondary,
                       fontSize: 18,
@@ -99,9 +110,21 @@ class CartasCerradas extends StatelessWidget {
               Column(
                 children: [
                   IconButton(
-                    color: actual.colorScheme.onSecondary,
-                    onPressed: () {  },
-                    icon: Icon(Icons.favorite_outline),
+                    onPressed: () {
+                      setState(() {
+                        isFavorita = !isFavorita;
+                      });
+
+                      if (isFavorita) {
+                        api.addToFavourite(widget.carta.id);
+                      } else {
+                        api.deleteFromFavourite(widget.carta.id);
+                      }
+                    },
+                    icon: Icon(
+                      isFavorita ? Icons.favorite : Icons.favorite_outline,
+                      color: isFavorita ? Colors.black : actual.colorScheme.onSecondary,
+                    ),
                   ),
                   SizedBox(
                     height: 35,

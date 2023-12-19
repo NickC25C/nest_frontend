@@ -6,6 +6,7 @@ class Letter {
   final bool opened;
   final String originUserId;
   final String receiverUserId;
+  final String? favUserId;
 
   Letter({
     required this.id,
@@ -15,6 +16,7 @@ class Letter {
     required this.opened,
     required this.originUserId,
     required this.receiverUserId,
+    required this.favUserId,
   });
 
   factory Letter.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class Letter {
       opened: json['opened'],
       originUserId: json['originUserId'],
       receiverUserId: json['receiverUserId'],
+      favUserId: json['favUserId'],
     );
   }
 
@@ -36,6 +39,7 @@ class Letter {
       'date': date,
       'originUserId': originUserId,
       'receiverUserId': receiverUserId,
+      'favUserId': favUserId,
     };
   }
 }
