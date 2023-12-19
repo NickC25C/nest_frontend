@@ -127,22 +127,19 @@ class BotonCrearCapsula extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 170,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () {
               crearCapsula();
               print('pimpampum');
               Navigator.pop(context);
               //cositas
             },
-            icon: Icon(
-              Icons.hourglass_bottom,
-            ),
-            label: Text(
+            child: Text(
               'Crear cápsula',
-              style: TextStyle(),
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: actual.colorScheme.secondary,
+                backgroundColor: actual.colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),
