@@ -88,57 +88,50 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
             builder: (context, snapshot) {
               return Stack(
                 children: [
-                  Container(
-                    height: 200,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          if (snapshot.data![index].openDate
-                              .isAfter(DateTime.now())) {
-                            return CapsulaCerrada(
-                              capsula: snapshot.data![index],
-                            );
-                          } else {
-                            return Stack();
-                          }
-                        }),
-                  ),
-                ],
-              );
-            },
-          ),
-          TextDivider(text: 'Abiertas'),
-          StreamBuilder<List<Capsule>>(
-            stream: _capsulasRecibidasController.stream,
-            initialData: _capsulasRecibidas,
-            builder: (context, snapshot) {
-              return Stack(
-                children: [
-                  Container(
-                    height: 200,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          if (snapshot.data![index].openDate
-                              .isBefore(DateTime.now())) {
-                            return CapsulaAbierta(
-                                capsula: snapshot.data![index]);
-                          } else {
-                            return Stack();
-                          }
-                        }),
-                  ),
+                  Column(
+                    children: [
+                      Container(
+                        height: 200,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              if (snapshot.data![index].openDate
+                                  .isAfter(DateTime.now())) {
+                                return CapsulaCerrada(
+                                  capsula: snapshot.data![index],
+                                );
+                              } else {
+                                return Stack();
+                              }
+                            }),
+                      ),
+                      TextDivider(text: 'Abiertas'),
+                      Container(
+                        height: 200,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              if (snapshot.data![index].openDate
+                                  .isBefore(DateTime.now())) {
+                                return CapsulaAbierta(
+                                    capsula: snapshot.data![index]);
+                              } else {
+                                return Stack();
+                              }
+                            }),
+                      ),
+                    ],
+                  )
                 ],
               );
             },
           ),
           Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(right: 20),
-            child: BotonCrearCapsula()
-          ),
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.only(right: 20),
+              child: BotonCrearCapsula()),
         ],
       ),
     );

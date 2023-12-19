@@ -129,15 +129,16 @@ void main() {
       avatar: '1',
     );
     print('hola');
-    api.createUser(newUser).whenComplete(() =>
-        api.createUser(newUser1).whenComplete(() =>
-            api.createUser(newUser2).whenComplete(() =>
-              api.createUser(newUser3).whenComplete(() =>
-                api.createUser(newUser4).whenComplete(() =>
-                  api.createUser(newUser5))))));
+    api.createUser(newUser).whenComplete(() => api
+        .createUser(newUser1)
+        .whenComplete(() => api.createUser(newUser2).whenComplete(() => api
+            .createUser(newUser3)
+            .whenComplete(() => api
+                .createUser(newUser4)
+                .whenComplete(() => api.createUser(newUser5))))));
   }
 
-  poblarUsers();
+  //poblarUsers();
 
   // enviarSolicitudAmistad();
 
