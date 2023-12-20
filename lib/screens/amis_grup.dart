@@ -151,6 +151,7 @@ class TusAmigos extends StatefulWidget {
 class _TusAmigos extends State<TusAmigos> {
   late List<User> listaAmigos = List.empty(growable: true);
   late List<String> listaAuxiliar = List.empty(growable: true);
+  late List<String> avatares = List.empty(growable: true);
   late User usuario;
 
   @override
@@ -178,10 +179,17 @@ class _TusAmigos extends State<TusAmigos> {
       setState(() {
         listaAmigos = users;
         listaAuxiliar = users.map((user) => user.username).toList();
+        chargeAvatares();
       });
     } catch (e) {
       // Manejar el error de la solicitud
       print('Error en la solicitud: $e');
+    }
+  }
+
+  Future<void> chargeAvatares() async {
+    for(int i = 0; i <= listaAmigos.length; i++){
+      avatares.add(listaAmigos[i].avatar);
     }
   }
 
@@ -219,6 +227,7 @@ class _TusAmigos extends State<TusAmigos> {
             child: Scrollbar(
               child: CustomListView(
                 items: listaAuxiliar,
+                avatares: avatares,
                 onItemRemoved: _removeItem,
               ),
             ),
@@ -232,8 +241,9 @@ class _TusAmigos extends State<TusAmigos> {
 class CustomListView extends StatelessWidget {
   final List<String> items;
   final Function(int) onItemRemoved;
+  final List<String> avatares;
 
-  CustomListView({required this.items, required this.onItemRemoved});
+  CustomListView({required this.items, required this.onItemRemoved, required this.avatares});
 
   @override
   Widget build(BuildContext context) {
@@ -242,11 +252,18 @@ class CustomListView extends StatelessWidget {
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(items[index]),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(width: 8.0),
+              Container(
+                height: 40,
+                width: 40,
+                child: Image.asset(
+                  'assets/images/${avatares[index]}.png'
+                ),
+              ),
+              Text(items[index]),
+              SizedBox(width: 60.0),
               IconButton(
                 onPressed: () async {
                   User aux = await api.getUserByUsername(items[index]);

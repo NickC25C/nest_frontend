@@ -70,11 +70,11 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 40.0, 15.0, 20.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 50.0, 15.0, 20.0),
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Tu Capsulas',
+                  'Tus Cápsulas',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 32.0,
@@ -130,7 +130,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
           ),
           Container(
               alignment: Alignment.centerRight,
-              padding: EdgeInsets.only(right: 20),
+              padding: EdgeInsets.only(right: 20, bottom: 10),
               child: BotonCrearCapsula()),
         ],
       ),
