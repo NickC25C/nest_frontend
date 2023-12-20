@@ -22,7 +22,7 @@ void main() {
               originUserId: '1',
               date: '',
               opened: false,
-              receiverUserId: '0',
+              receiverUserId: '0', favUserId: '',
             ), usuarios: [User(id: '1', name: 'name', lastname: 'lastname', username: 'username', password: 'password', mail: 'mail', state: '', avatar: '')],
           ),
         ),
@@ -45,7 +45,7 @@ void main() {
       originUserId: '1',
       date: '',
       opened: true,
-      receiverUserId: '0',
+      receiverUserId: '0', favUserId: '',
     );
     await tester.pumpWidget(
       MaterialApp(
@@ -81,7 +81,7 @@ void main() {
               originUserId: '1',
               date: '',
               opened: false,
-              receiverUserId: '0',
+              receiverUserId: '0', favUserId: '',
             ),
             usuarios: [User(id: '1', name: 'name', lastname: 'lastname', username: 'username', password: 'password', mail: 'mail', state: '', avatar: '')],
           ),

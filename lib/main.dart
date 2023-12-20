@@ -93,7 +93,7 @@ void main() {
       id: "",
       name: "Javier",
       lastname: "Lanza",
-      username: "Reshulon21",
+      username: "Javila21",
       password: "123",
       mail: "ahhsh@hmail.com",
       state: '',
@@ -139,7 +139,7 @@ void main() {
                 .whenComplete(() => api.createUser(newUser5))))));
   }
 
-  //poblarUsers();
+  poblarUsers();
 
   // enviarSolicitudAmistad();
 

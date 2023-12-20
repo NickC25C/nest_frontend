@@ -419,7 +419,7 @@ class TablonState extends State<TablonScreen> {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                  const EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -447,6 +447,16 @@ class TablonState extends State<TablonScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+              child: Text(
+                api.loggedUser.state,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

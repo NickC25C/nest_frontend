@@ -21,13 +21,27 @@ class CartasCerradas extends StatefulWidget {
 }
 
 class _CartasCerradasState extends State<CartasCerradas> {
-
+  late String avatar = api.loggedUser.avatar;
   late bool isFavorita;
 
   @override
   void initState() {
     super.initState();
+    extractUser();
     isFavorita = widget.carta.favUserId != null;
+  }
+
+  Future<void> extractUser() async {
+    try {
+      User usu =
+      await api.getUser(widget.carta.originUserId);
+      setState(() {
+        avatar = usu.avatar;
+      });
+    } catch (e) {
+      // Manejar el error de la solicitud
+      print('Error en la solicitud: $e');
+    }
   }
 
   @override
@@ -70,7 +84,7 @@ class _CartasCerradasState extends State<CartasCerradas> {
                     width: 50.0,
                     height: 50.0,
                     child: Image.asset(
-                      'assets/images/${api.loggedUser.avatar}.png',
+                      'assets/images/${avatar}.png',
                       fit: BoxFit.contain,
                     ),
                   ),

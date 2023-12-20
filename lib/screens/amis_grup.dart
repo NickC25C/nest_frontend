@@ -448,10 +448,13 @@ class GruposAmistadesTxt extends StatelessWidget {
   }
 }
 
-class EstadoUser extends StatelessWidget {
-  const EstadoUser({
-    super.key,
-  });
+class EstadoUser extends StatefulWidget{
+  @override
+  _EstadoUser createState() => _EstadoUser();
+}
+
+class _EstadoUser extends State<EstadoUser> {
+  TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -485,6 +488,7 @@ class EstadoUser extends StatelessWidget {
                   ),
                 ),
                 child: TextFormField(
+                  controller: _textController,
                   onChanged: (value) => {texto = value},
                   decoration: InputDecoration(
                     hintText: 'Cómo te encuentras hoy?',
@@ -498,8 +502,7 @@ class EstadoUser extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     api.loggedUser.state = texto;
-                    api.updateUser(api.loggedUser.id, api.loggedUser);
-
+                    _textController.text = '';
                   },
                   child: Icon(Icons.check, color: actual.colorScheme.onSecondary,),
                   style: ElevatedButton.styleFrom(

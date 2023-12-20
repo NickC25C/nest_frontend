@@ -95,7 +95,7 @@ class CambiarUser3 extends StatelessWidget {
       width: 150,
       child: ElevatedButton(
         onPressed: () async {
-          api.loggedUser = await api.getUserByUsername('Reshulon21');
+          api.loggedUser = await api.getUserByUsername('Javila21');
           Navigator.pop(context);
         },
         child: Text('Cambiar Lanza'),

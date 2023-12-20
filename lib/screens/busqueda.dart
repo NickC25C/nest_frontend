@@ -293,6 +293,7 @@ class CustomListView extends StatelessWidget {
                       width: 1,
                       color: actual.colorScheme.secondary,
                     ),
+                    backgroundColor: actual.colorScheme.background,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50.0))),
               ),
@@ -309,6 +310,7 @@ class CustomListView extends StatelessWidget {
                     side: BorderSide(
                       color: actual.colorScheme.secondary,
                     ),
+                    backgroundColor: actual.colorScheme.background,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50.0))),
               ),

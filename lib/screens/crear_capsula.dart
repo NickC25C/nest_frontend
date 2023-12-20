@@ -150,7 +150,8 @@ class BotonCrearCapsula extends StatelessWidget {
   }
 
   void crearCapsula() async {
-    await listadito.getIds();
+    List<String> ids = await listadito.getIds();
+    ids.add(api.loggedUser.id);
 
     Capsule capsulita = Capsule(
       id: "",
