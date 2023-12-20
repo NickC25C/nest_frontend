@@ -2,12 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
 import 'package:nest_fronted/widgets/barra_publi.dart';
-import 'package:nest_fronted/widgets/listado.dart';
 import 'package:nest_fronted/widgets/listadoMarianoRajoy.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:image_picker/image_picker.dart';
 
-const tituloScreen = 'PUBLICAR IMAGEN';
+const tituloScreen = 'FOTOS';
 Titulo titulete = const Titulo();
 ListadoCreacion listadito = ListadoCreacion();
 

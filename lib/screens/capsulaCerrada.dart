@@ -13,69 +13,78 @@ class CapsulaCerradaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Stack(
+    return Center(
+      child: Container(
+        width: 300.0,
+        height: 600.0,
+        child: Card(
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              BotonAtras(),
+              Stack(
+                children: [
+                  BotonAtras(),
+                ],
+              ),
+              Titulo(
+                titulo: capsula.title,
+              ),
+              Descripcion(
+                descripcion: capsula.description,
+              ),
+              Container(
+                height: 200,
+                width: 50,
+                child: Image.asset('assets/images/Huevo2.png'),
+              ),
+              Spacer(), // ocupa t0do el espacio q puede
+              CuentaAtras(
+                fechaApertura: capsula.openDate,
+              ),
+              SizedBox(height: 16),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    BotonAnyadir(
+                      capsula: capsula,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            child: PubNotaCapsula(
+                              capsula: capsula,
+                            ),
+                            type: PageTransitionType.fade,
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.text_snippet),
+                    ),
+                    BotonAnyadir(
+                      capsula: capsula,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            child: PubImagenCapScreen(
+                              capsula: capsula,
+                            ),
+                            type: PageTransitionType.fade,
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.photo),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-          Titulo(
-            titulo: capsula.title,
-          ),
-          BarraDivisoria(),
-          Descripcion(
-            descripcion: capsula.description,
-          ),
-          Spacer(), // ocupa t0do el espacio q puede
-          BarraDivisoria(),
-          CuentaAtras(
-            fechaApertura: capsula.openDate,
-          ),
-          SizedBox(height: 16),
-          BarraDivisoria(),
-          SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BotonAnyadir(
-                  capsula: capsula,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        child: PubNotaCapsula(
-                          capsula: capsula,
-                        ),
-                        type: PageTransitionType.fade,
-                      ),
-                    );
-                  },
-                  icon: Icon(Icons.text_snippet),
-                ),
-                BotonAnyadir(
-                  capsula: capsula,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        child: PubImagenCapScreen(
-                          capsula: capsula,
-                        ),
-                        type: PageTransitionType.fade,
-                      ),
-                    );
-                  },
-                  icon: Icon(Icons.photo),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -128,6 +137,7 @@ class Descripcion extends StatelessWidget {
         style: TextStyle(
           fontSize: 20,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -214,10 +224,10 @@ class _CuentaAtrasState extends State<CuentaAtras> {
     return Column(
       children: [
         Text(
-          'Tiempo hasta desbloqueo:',
+          'Cuenta atrás:',
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
         ),
         SizedBox(height: 8),

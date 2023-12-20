@@ -64,7 +64,7 @@ class BotonCrear extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 150,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () async {
               if (!listado.getSelectedItems().isEmpty) {
                 try {
@@ -83,16 +83,12 @@ class BotonCrear extends StatelessWidget {
               }
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.groups,
-              color: actual.colorScheme.onPrimary,
-            ),
-            label: Text(
+            child: Text(
               'Crear grupo',
-              style: TextStyle(color: actual.colorScheme.onPrimary),
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: actual.colorScheme.secondary,
+                backgroundColor: actual.colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

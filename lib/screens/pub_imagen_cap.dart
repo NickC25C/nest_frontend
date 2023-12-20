@@ -8,7 +8,7 @@ import 'package:nest_fronted/widgets/barra_publi.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 
-const tituloScreen = 'SUBIR IMAGEN';
+const tituloScreen = 'FOTOS';
 Titulo titulete = const Titulo();
 
 class PubImagenCapScreen extends StatelessWidget {
@@ -113,7 +113,7 @@ class BotonIzquierdo extends StatelessWidget {
           children: [
             Icon(
               Icons.photo,
-              color: actual.colorScheme.onSecondary,
+              color: actual.colorScheme.onPrimary,
             ),
             SizedBox(
               height: 3.0,
@@ -122,14 +122,14 @@ class BotonIzquierdo extends StatelessWidget {
               'Seleccionar foto',
               style: TextStyle(
                 fontSize: 16,
-                color: actual.colorScheme.onSecondary,
+                color: actual.colorScheme.onPrimary,
               ),
             ),
           ],
         ),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
-          backgroundColor: actual.colorScheme.secondary,
+          backgroundColor: actual.colorScheme.background,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0),
@@ -173,7 +173,7 @@ class BotonDerecho extends StatelessWidget {
           children: [
             Icon(
               Icons.camera_alt,
-              color: actual.colorScheme.onSecondary,
+              color: actual.colorScheme.onPrimary,
             ),
             SizedBox(
               height: 3.0,
@@ -182,14 +182,14 @@ class BotonDerecho extends StatelessWidget {
               'Hacer foto',
               style: TextStyle(
                 fontSize: 16,
-                color: actual.colorScheme.onSecondary,
+                color: actual.colorScheme.onPrimary,
               ),
             ),
           ],
         ),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 30.0),
-          backgroundColor: actual.colorScheme.secondary,
+          backgroundColor: actual.colorScheme.background,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(30.0),
@@ -237,7 +237,7 @@ class BotonCrear extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 170,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () async {
               if (imageToPub != null) {
                 print('va');
@@ -257,15 +257,12 @@ class BotonCrear extends StatelessWidget {
               }
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.image_outlined,
-            ),
-            label: Text(
-              'Subir imagen',
-              style: TextStyle(),
+            child: Text(
+              'Subir',
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16, fontWeight: FontWeight.w600),
             ),
             style: TextButton.styleFrom(
-              backgroundColor: actual.colorScheme.secondary,
+              backgroundColor: actual.colorScheme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),

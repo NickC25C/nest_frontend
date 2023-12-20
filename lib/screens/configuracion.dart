@@ -43,6 +43,18 @@ class ConfiguracionScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: CambiarUser3(),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: CambiarUser4(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: CambiarUser5(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: CambiarUser6(),
+                ),
               ]),
         ),
       ),
@@ -99,6 +111,60 @@ class CambiarUser3 extends StatelessWidget {
           Navigator.pop(context);
         },
         child: Text('Cambiar Lanza'),
+      ),
+    );
+  }
+}
+
+class CambiarUser4 extends StatelessWidget {
+  const CambiarUser4({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      width: 150,
+      child: ElevatedButton(
+        onPressed: () async {
+          api.loggedUser = await api.getUserByUsername('carlitos34');
+          Navigator.pop(context);
+        },
+        child: Text('Cambiar Carlos'),
+      ),
+    );
+  }
+}
+
+class CambiarUser5 extends StatelessWidget {
+  const CambiarUser5({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      width: 150,
+      child: ElevatedButton(
+        onPressed: () async {
+          api.loggedUser = await api.getUserByUsername('antoN');
+          Navigator.pop(context);
+        },
+        child: Text('Cambiar Antón'),
+      ),
+    );
+  }
+}
+
+class CambiarUser6 extends StatelessWidget {
+  const CambiarUser6({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      width: 150,
+      child: ElevatedButton(
+        onPressed: () async {
+          api.loggedUser = await api.getUserByUsername('ivansiTo');
+          Navigator.pop(context);
+        },
+        child: Text('Cambiar Ivan'),
       ),
     );
   }

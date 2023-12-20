@@ -39,7 +39,7 @@ class EnviarCartaScreen extends StatelessWidget {
               ),
               EscribirNota(),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
+                padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 10.0),
                 child: BotonCrear(),
               ),
             ],
@@ -106,21 +106,18 @@ class BotonCrear extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 150,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () {
               crearCarta();
               print('putoooo');
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.send,
-            ),
-            label: Text(
+            child: Text(
               'Enviar',
-              style: TextStyle(),
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: actual.colorScheme.secondary,
+                backgroundColor: actual.colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

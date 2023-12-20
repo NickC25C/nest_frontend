@@ -8,7 +8,7 @@ import 'package:nest_fronted/widgets/listadoMarianoRajoy.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
 
-const tituloScreen = 'SUBIR NOTA';
+const tituloScreen = 'NOTAS';
 int selectedIndex = 0;
 Titulo titulin = Titulo();
 ListadoCreacion listado = ListadoCreacion();
@@ -22,7 +22,7 @@ class PubNotaCapsula extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             //Barra de título
             BarraPublicar(titulo: tituloScreen),
@@ -76,7 +76,7 @@ class EscribirNota extends StatelessWidget {
             width: double.infinity,
             child: TextField(
               onChanged: (value) => msj = value,
-              maxLines: 5,
+              maxLines: 20,
               decoration: InputDecoration(
                 labelText: 'Mensaje',
                 border: OutlineInputBorder(),
@@ -114,7 +114,7 @@ class BotonCrear extends StatelessWidget {
         child: SizedBox(
           height: 50,
           width: 150,
-          child: TextButton.icon(
+          child: ElevatedButton(
             onPressed: () async {
               Note n = Note(
                   id: '',
@@ -127,15 +127,12 @@ class BotonCrear extends StatelessWidget {
               await api.addNoteToCapsule(n, capsula.id);
               Navigator.pop(context);
             },
-            icon: Icon(
-              Icons.sticky_note_2_outlined,
-            ),
-            label: Text(
-              'Subir Nota',
-              style: TextStyle(),
+            child: Text(
+              'Subir',
+              style: TextStyle(color: actual.colorScheme.onPrimary, fontSize: 16, fontWeight: FontWeight.w600),
             ),
             style: TextButton.styleFrom(
-                backgroundColor: actual.colorScheme.secondary,
+                backgroundColor: actual.colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 )),

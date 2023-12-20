@@ -113,12 +113,12 @@ class _ListadoState extends State<ListadoCreacion> {
             itemCount: listaNombres.length,
             itemBuilder: (BuildContext context, int index) {
               if (index < diffusionList.length) {
-                // Amigos
+                // Difusion
                 return Material(
                   child: ListTile(
                     title: Text(listaNombres[index]),
                     tileColor: isSelectedList[index]
-                        ? actual.colorScheme.primary
+                        ? actual.colorScheme.secondary
                         : null,
                     onTap: () {
                       if (names
@@ -143,7 +143,7 @@ class _ListadoState extends State<ListadoCreacion> {
                   child: ListTile(
                     title: Text(listaNombres[index]),
 
-                    tileColor: isSelectedList[index] ? actual.colorScheme.surface : null,
+                    tileColor: isSelectedList[index] ? actual.colorScheme.primary : null,
                     onTap: () {
                       if (selectedItems
                           .contains(listaNombres[index]) ) {

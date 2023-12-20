@@ -8,7 +8,7 @@ import 'package:nest_fronted/widgets/listadoMarianoRajoy.dart';
 import 'package:nest_fronted/widgets/titulo_pub.dart';
 import 'package:nest_fronted/main.dart';
 
-const tituloScreen = 'PUBLICAR NOTA';
+const tituloScreen = 'NOTAS';
 int selectedIndex = 0;
 Titulo titulin = Titulo();
 ListadoCreacion listado = ListadoCreacion();
