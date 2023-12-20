@@ -114,11 +114,18 @@ class BotonAtras extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_circle_left, size: 30),
-      onPressed: () {
-        Navigator.pop(context);
-      },
+    return Align(
+      alignment: Alignment.centerRight,
+      child: IconButton(
+        icon: Icon(
+          Icons.close,
+          size: 30,
+          color: actual.colorScheme.primary,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 }
@@ -254,11 +261,60 @@ class _CuentaAtrasState extends State<CuentaAtras> {
           stream: _durationController.stream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text(
-                _formatDuration(snapshot.data!),
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        _formatHour(snapshot.data!),
+                        style: TextStyle(
+                          fontSize: 39,
+                          color: actual.colorScheme.secondary
+                        ),
+                      ),
+                      Text('Horas')
+                    ],
+                  ),
+                  Text(
+                    ':',
+                    style: TextStyle(
+                      fontSize: 39,
+                      color: actual.colorScheme.secondary
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        _formatMinutes(snapshot.data!),
+                        style: TextStyle(
+                          fontSize: 39,
+                          color: actual.colorScheme.secondary
+                        ),
+                      ),
+                      Text('Minutos')
+                    ],
+                  ),
+                  Text(
+                    ':',
+                    style: TextStyle(
+                      fontSize: 39,
+                      color: actual.colorScheme.secondary
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        _formatSeconds(snapshot.data!),
+                        style: TextStyle(
+                          fontSize: 39,
+                          color: actual.colorScheme.secondary
+                        ),
+                      ),
+                      Text('Segundos')
+                    ],
+                  ),
+                ],
               );
             } else {
               return Text(
@@ -274,10 +330,20 @@ class _CuentaAtrasState extends State<CuentaAtras> {
     );
   }
 
-  String _formatDuration(Duration duration) {
+  String _formatHour(Duration duration) {
     int hours = duration.inHours;
-    int minutes = (duration.inMinutes % 60);
-    int seconds = (duration.inSeconds % 60);
-    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+    return hours.toString().padLeft(2, '0');
   }
+
+  String _formatMinutes(Duration duration){
+    int minutes = (duration.inMinutes % 60);
+    return minutes.toString().padLeft(2, '0');
+  }
+
+  String _formatSeconds(Duration duration){
+    int seconds = (duration.inSeconds % 60);
+    return seconds.toString().padLeft(2, '0');
+  }
+
+
 }

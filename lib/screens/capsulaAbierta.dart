@@ -126,7 +126,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                   height: 60,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/bobby_formulario.png'),
+                        image: AssetImage('assets/images/${fotita.owner.avatar}.png'),
                         fit: BoxFit.fitWidth),
                   )),
               Text(
@@ -208,7 +208,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(
-                            'assets/images/${api.loggedUser.avatar}.png'),
+                            'assets/images/${notita.owner.avatar}.png'),
                         fit: BoxFit.fitWidth),
                   )),
               Text(
@@ -321,7 +321,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 0),
+            padding: EdgeInsets.only(top: 80),
             child: fotoAbierta(publis[selectedIndex] as Picture),
           )
         ],
@@ -337,7 +337,7 @@ class CapsulaAbiertaState extends State<CapsulaAbiertaScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 0),
+            padding: EdgeInsets.only(top: 80),
             child: notaAbierta(publis[selectedIndex] as Note),
           )
         ],

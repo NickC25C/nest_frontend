@@ -93,6 +93,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                       Container(
                         height: 200,
                         child: ListView.builder(
+                            padding: EdgeInsets.only(right: 10),
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
@@ -110,6 +111,7 @@ class _CapsulaScreenState extends State<CapsulaScreen> {
                       Container(
                         height: 200,
                         child: ListView.builder(
+                            padding: EdgeInsets.only(right: 10),
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {

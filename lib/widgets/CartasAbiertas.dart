@@ -93,34 +93,37 @@ class _CartasAbiertasState extends State<CartasAbiertas> {
                   )
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '@' + widget.usuarios
-                        .firstWhere((element) => element.id == widget.carta.originUserId)
-                        .username,
-                    style: TextStyle(
-                      color: actual.colorScheme.onPrimary,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
+              Container(
+                width: 122,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '@' + widget.usuarios
+                          .firstWhere((element) => element.id == widget.carta.originUserId)
+                          .username,
+                      style: TextStyle(
+                        color: actual.colorScheme.onPrimary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  Text(
-                    widget.carta.title,
-                    style: TextStyle(
-                      color: actual.colorScheme.onPrimary,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                    SizedBox(
+                      height: 16.0,
                     ),
-                  ),
-                ],
+                    Text(
+                      widget.carta.title,
+                      style: TextStyle(
+                        color: actual.colorScheme.onPrimary,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container(
-                width: 80,
+                width: 50,
               ),
               Column(
                 children: [
