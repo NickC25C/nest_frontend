@@ -139,7 +139,7 @@ void main() {
                 .whenComplete(() => api.createUser(newUser5))))));
   }
 
-  poblarUsers();
+  //poblarUsers();
 
   // enviarSolicitudAmistad();
 

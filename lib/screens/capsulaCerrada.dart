@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nest_fronted/main.dart';
@@ -13,79 +14,97 @@ class CapsulaCerradaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 300.0,
-        height: 600.0,
-        child: Card(
-
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Stack(
-                children: [
-                  BotonAtras(),
-                ],
-              ),
-              Titulo(
-                titulo: capsula.title,
-              ),
-              Descripcion(
-                descripcion: capsula.description,
-              ),
-              Container(
-                height: 200,
-                width: 50,
-                child: Image.asset('assets/images/Huevo2.png'),
-              ),
-              Spacer(), // ocupa t0do el espacio q puede
-              CuentaAtras(
-                fechaApertura: capsula.openDate,
-              ),
-              SizedBox(height: 16),
-              SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    BotonAnyadir(
-                      capsula: capsula,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            child: PubNotaCapsula(
-                              capsula: capsula,
-                            ),
-                            type: PageTransitionType.fade,
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.text_snippet),
-                    ),
-                    BotonAnyadir(
-                      capsula: capsula,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            child: PubImagenCapScreen(
-                              capsula: capsula,
-                            ),
-                            type: PageTransitionType.fade,
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.photo),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return Stack(
+      children: [
+        BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Container(
+            color: Colors.transparent,
           ),
         ),
-      ),
+        Center(
+          child: Container(
+            width: 300.0,
+            height: 600.0,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                    offset: Offset(0, 1),
+                    blurRadius: 13)
+              ],
+              color: Color.fromRGBO(255, 255, 255, 1),
+            ),
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Stack(
+                    children: [
+                      BotonAtras(),
+                    ],
+                  ),
+                  Titulo(
+                    titulo: capsula.title,
+                  ),
+                  Descripcion(
+                    descripcion: capsula.description,
+                  ),
+                  Container(
+                    height: 200,
+                    width: 50,
+                    child: Image.asset('assets/images/Huevo2.png'),
+                  ),
+                  Spacer(), // ocupa t0do el espacio q puede
+                  CuentaAtras(
+                    fechaApertura: capsula.openDate,
+                  ),
+                  SizedBox(height: 16),
+                  SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        BotonAnyadir(
+                          capsula: capsula,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                child: PubNotaCapsula(
+                                  capsula: capsula,
+                                ),
+                                type: PageTransitionType.fade,
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.text_snippet),
+                        ),
+                        BotonAnyadir(
+                          capsula: capsula,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                child: PubImagenCapScreen(
+                                  capsula: capsula,
+                                ),
+                                type: PageTransitionType.fade,
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.photo),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
